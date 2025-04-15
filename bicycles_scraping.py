@@ -5,6 +5,7 @@ from os import system
 import json
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 
 
 class Bicycle:
@@ -106,8 +107,26 @@ def prices_graph():
         dates = sorted(bicycle["prices"].keys())
         prices = [bicycle["prices"][date] for date in dates]
         print(prices)
+
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=dates, y=prices, mode="lines+markers", name="Precio"))
+
+        fig.update_layout(
+            title=f"Evolucion del precio - {bicycle['name']}",
+            xaxis_title="Fecha",
+            yaxis_title = "Precio (€)",
+            hovermode="x unified"
+        )
+        fig.write_html(f"prices_html/price_{bicycle['reference']}.html")
     
-    plt.figure(figsize=(10, 5))
+        
+        plt.figure(figsize=(10, 5))
+        plt.plot(dates, prices, marker="o", linestyle="-", color="blue")
+        plt.title(f"Evolucion del precio - {bicycle['name']}")
+        plt.xlabel("Fecha")
+        plt.ylabel("Precio")
+        plt.savefig(f"prices_png/prices_{bicycle['reference']}.png")
+        
 
 
 system("clear")
