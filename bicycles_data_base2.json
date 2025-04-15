@@ -5,7 +5,8 @@
         "url": "https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-world-cup-evo-2025.html",
         "reference": "34209",
         "prices": {
-            "2025-04-15": 10899.0
+            "2025-04-15": 10899.0,
+            "2025-04-16": 10899.0
         }
     },
     {
@@ -14,7 +15,8 @@
         "url": "https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-sl-tr-2024.html",
         "reference": "32505",
         "prices": {
-            "2025-04-15": 9499.0
+            "2025-04-15": 9499.0,
+            "2025-04-16": 9499.0
         }
     },
     {
@@ -23,7 +25,8 @@
         "url": "https://www.bikingpoint.es/es/bicicleta-scott-spark-900-ultimate-evo-axs-2022.html",
         "reference": "27229",
         "prices": {
-            "2025-04-15": 8219.4
+            "2025-04-15": 8219.4,
+            "2025-04-16": 8219.4
         }
     }
 ]

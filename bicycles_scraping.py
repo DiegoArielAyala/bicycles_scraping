@@ -3,7 +3,8 @@ import requests
 from urllib.parse import urljoin
 from os import system
 import json
-import datetime
+from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
 
 
 class Bicycle:
@@ -67,19 +68,50 @@ def get_todays_price(bicycle):
 # Agregar precio de hoy al archivo json
 def add_todays_price():
     search_endpoint = "catalogsearch/result/?q={}"
+    today = str((datetime.date(datetime.now()) + timedelta(days=1)))
     with open("bicycles_data_base.json", "r") as file:
         json_file = json.load(file.buffer)
-        # print(json_file)
-    for bicycle in bicycles_list:
-        todays_price = get_todays_price(bicycle)
-        print(bicycle.bicycle_reference)
-    # Entrar al json_file, buscar la referencia de cada bicicleta y "buscarla" usando el search_endpoint para obtener despues el precio de hoy
+    for bicycle in json_file:
+        response_search_reference = requests.get(urljoin(url, search_endpoint.format(bicycle["reference"])))
+        if response_search_reference.status_code == 200:
+            reference_soup = BeautifulSoup(response_search_reference.text, "html.parser")
+            todays_price = reference_soup.find_all("span", class_="price")[0].text.replace('\xa0', '').replace('€', '').replace('.', '').replace(',', '.')
+            bicycle["prices"][today] = float(todays_price)
+            print(json_file, "\n")
+    print(json_file, "\n")
+    with open("bicycles_data_base2.json", "w") as file:
+        json.dump(json_file, file, indent=4, ensure_ascii="utf-8")
+
     
 
 # Crear funcion para eliminar las bicicletas que ya no esten publicadas (o quizas pasarlas a un registro a parte para no perder los datos)
+
+bicicleta  = {
+        "name": "Bicicleta Scott Spark 900 Ultimate Evo Axs",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/2/7/27229_0_07032025_040602.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-spark-900-ultimate-evo-axs-2022.html",
+        "reference": "27229",
+        "prices": {
+            "2025-04-15": 8219.4,
+            "2025-04-16": 8219.4
+        }
+    }
+print(bicicleta.keys())
+
+# Graficar los precios
+def prices_graph():
+    with open("bicycles_data_base2.json", "r") as file:
+        json_file = json.load(file)
+    for bicycle in json_file:
+        dates = sorted(bicycle["prices"].keys())
+        prices = [bicycle["prices"][date] for date in dates]
+        print(prices)
+    
+    plt.figure(figsize=(10, 5))
 
 
 system("clear")
 # create_bicycles_list()
 # create_json()
-add_todays_price()
+# add_todays_price()
+prices_graph()
