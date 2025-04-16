@@ -3,9 +3,10 @@ import requests
 from urllib.parse import urljoin
 from os import system
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
+
 
 
 class Bicycle:
@@ -15,7 +16,7 @@ class Bicycle:
         self.price = price
         self.url = url
         self.reference = reference
-        self.time = str(datetime.date.today())
+        self.time = str(datetime.date(datetime.now()))
 
     def to_dict(self):
         return {
@@ -31,20 +32,29 @@ class Bicycle:
 # Creamos variables con los links necesarios
 
 url = "https://www.bikingpoint.es/es/"
-mtb_endpoint = "bicicletas/mtb-full-suspencion.html"
+bicycles_endpoint = "bicicletas.html"
 page_endpoint = "?p={}"
-mtb_full_suspencion_url = urljoin(url, mtb_endpoint)
-response = requests.get(mtb_full_suspencion_url)
+bicycles_url = urljoin(url, bicycles_endpoint)
 
-# Creamos la soup con BeautifulSoup
-if response.status_code == 200:
-    soup = BeautifulSoup(response.text, "html.parser")
-    clean_prices = [p.text.replace("\xa0", "") for p in soup.find_all("span", class_="price")]
+## Crear una funcion para hacer un llamado de requests por cada pagina de bicicletas
+def get_requests():
+    usp_warn = False
+    counter = 1
+    while usp_warn == False:
+        print(f"Get request page {counter}")
+        response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
+        if "No podemos encontrar productos que coincida con la selección." in response.text:
+            usp_warn = True
+        # Creamos la soup con BeautifulSoup
+        soup = BeautifulSoup(response.text, "html.parser")
+        # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
+        bicycles = soup.find_all("li", class_="item product product-item")
+        counter+=1
+        create_bicycles_list(bicycles)
 
-# Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
 bicycles_list = []
-bicycles = soup.find_all("li", class_="item product product-item")
-def create_bicycles_list():
+def create_bicycles_list(bicycles):
+    print("Creando lista de bicicletas")
     for bicycle in bicycles:
         bicycle_name = bicycle.find("strong", class_="product-item-name").text.strip()
         bicycle_img = bicycle.find("img")["src"] 
@@ -54,11 +64,11 @@ def create_bicycles_list():
         if response_href.status_code == 200:
             bicycle_reference = BeautifulSoup(response_href.text, "html.parser").find("div", itemprop="sku").text
         bicycles_list.append(Bicycle(bicycle_name, float(bicycle_price), bicycle_href, bicycle_reference, bicycle_img))
+    print(f"Cantidad de bicicletas en la lista: {len(bicycles_list)}")
 
 # Crear un archivo json donde guardar toda la informacion de las bicicletas
 def create_json():
     with open("bicycles_data_base.json", "w", encoding="utf-8") as file:
-        # print(f"{bicycle.name} {bicycle.img} {bicycle.price:.2f}€ {bicycle.url} {bicycle.reference}","\n")
         json.dump([bicycle.to_dict() for bicycle in bicycles_list], file, ensure_ascii=False, indent=4)
 
 
@@ -69,7 +79,7 @@ def get_todays_price(bicycle):
 # Agregar precio de hoy al archivo json
 def add_todays_price():
     search_endpoint = "catalogsearch/result/?q={}"
-    today = str((datetime.date(datetime.now()) + timedelta(days=1)))
+    today = str(datetime.date(datetime.now()))
     with open("bicycles_data_base.json", "r") as file:
         json_file = json.load(file.buffer)
     for bicycle in json_file:
@@ -100,6 +110,7 @@ bicicleta  = {
 print(bicicleta.keys())
 
 # Graficar los precios
+    ## Crear un endpoint que ejecute este codigo con la bicicleta que se quiere mostrar el grafico, para no tener todos los graficos en la base de datos de antemano
 def prices_graph():
     with open("bicycles_data_base2.json", "r") as file:
         json_file = json.load(file)
@@ -133,4 +144,6 @@ system("clear")
 # create_bicycles_list()
 # create_json()
 # add_todays_price()
-prices_graph()
+# prices_graph()
+# get_requests()
+print(len(bicycles_list))
