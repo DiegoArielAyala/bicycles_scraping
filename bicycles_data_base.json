@@ -1,12 +1,83 @@
 [
     {
+        "name": "Bicicleta Giant TCR Advanced SL 0 Red Disc 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34687_0_12032025_040745.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-tcr-advanced-sl-0-red-disc-2025.html",
+        "reference": "34687",
+        "current_price": 12499.0,
+        "prices": {
+            "2025-04-16": 12499.0
+        }
+    },
+    {
+        "name": "Bicicleta Look 795 Blade RS Etap RED Chrome 2024",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/6/2/62039_0_12122024_040434.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-look-795-blade-rs-etap-red-chrome-2024-62039.html",
+        "reference": "62039",
+        "prices": {
+            "2025-04-16": 11689.0
+        },
+        "current_price": 11689.0
+    },
+    {
+        "name": "Bicicleta Look 795 Blade RS RED AXS Bl.Thun 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/6/2/62771_0_15112024_105227.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-look-795-blade-rs-red-axs-bl-thun-2025.html",
+        "reference": "62771",
+        "prices": {
+            "2025-04-16": 11490.0
+        },
+        "current_price": 11490.0
+    },
+    {
+        "name": "Bicicleta Giant Propel Advanced SL 0 Dura-Ace 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34548_0_12032025_040743.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-propel-advanced-sl-0-dura-ace-2025.html",
+        "reference": "34548",
+        "prices": {
+            "2025-04-16": 11399.0
+        },
+        "current_price": 11399.0
+    },
+    {
+        "name": "Bicicleta Scott Lumen Eride 900 SL",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/0/30465_0_28022025_040446.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-lumen-eride-900-sl.html",
+        "reference": "30465",
+        "prices": {
+            "2025-04-16": 10999.0
+        },
+        "current_price": 10999.0
+    },
+    {
         "name": "Bicicleta Scott Spark RC World Cup EVO 2025",
         "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34209_0_15042025_030448.jpg",
         "url": "https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-world-cup-evo-2025.html",
         "reference": "34209",
         "prices": {
-            "2025-04-15": 10899.0
-        }
+            "2025-04-16": 10899.0
+        },
+        "current_price": 10899.0
+    },
+    {
+        "name": "Bicicleta Giant Trance X Advanced E+ 0 Elite 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/1/31140_0_12032025_040554.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-trance-x-advanced-e-0-elite-2025.html",
+        "reference": "31140",
+        "prices": {
+            "2025-04-16": 9749.25
+        },
+        "current_price": 9749.25
+    },
+    {
+        "name": "Bicicleta Scott Solace Eride 10 2023",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/0/30712_0_15112024_075928.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-solace-eride-10-2023.html",
+        "reference": "30712",
+        "prices": {
+            "2025-04-16": 9599.0
+        },
+        "current_price": 9599.0
     },
     {
         "name": "Bicicleta Scott Spark RC SL TR 2024",
@@ -14,8 +85,69 @@
         "url": "https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-sl-tr-2024.html",
         "reference": "32505",
         "prices": {
-            "2025-04-15": 9499.0
-        }
+            "2025-04-16": 9499.0
+        },
+        "current_price": 9499.0
+    },
+    {
+        "name": "Bicicleta Giant Trance X Advanced E+ LTD",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/2/9/29910_0_11122024_040439.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-trance-x-advanced-e-ltd.html",
+        "reference": "29910",
+        "prices": {
+            "2025-04-16": 9499.0
+        },
+        "current_price": 9499.0
+    },
+    {
+        "name": "Bicicleta Look 795 Blade RS Dura Ace DI2 2024",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/6/1/61563_0_12122024_040433.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-look-795-blade-rs-dura-ace-di2-2024-61563.html",
+        "reference": "61563",
+        "prices": {
+            "2025-04-16": 8799.0
+        },
+        "current_price": 8799.0
+    },
+    {
+        "name": "Bicicleta Giant Propel Advanced SL 0",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/0/30636_0_15112024_075837.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-propel-advanced-sl-0-2023.html",
+        "reference": "30636",
+        "prices": {
+            "2025-04-16": 8499.0
+        },
+        "current_price": 8499.0
+    },
+    {
+        "name": "Bicicleta Look E765 Optimum 2 Rival AXS 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/6/3/63076_0_15112024_105310.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-look-e765-optimum-2-rival-axs-2025.html",
+        "reference": "63076",
+        "prices": {
+            "2025-04-16": 8490.0
+        },
+        "current_price": 8490.0
+    },
+    {
+        "name": "Bicicleta Look 795 Blade RS Pro Team Ulte DI2 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/6/1/61562_0_12122024_040436.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-look-795-blade-rs-pro-team-ulte-di2-2025.html",
+        "reference": "61562",
+        "prices": {
+            "2025-04-16": 8490.0
+        },
+        "current_price": 8490.0
+    },
+    {
+        "name": "Bicicleta Giant TCR Advanced SL 1 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34872_0_20032025_040450.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-tcr-advanced-sl-1-2025.html",
+        "reference": "34872",
+        "prices": {
+            "2025-04-16": 8299.0
+        },
+        "current_price": 8299.0
     },
     {
         "name": "Bicicleta Scott Spark 900 Ultimate Evo Axs",
@@ -23,7 +155,298 @@
         "url": "https://www.bikingpoint.es/es/bicicleta-scott-spark-900-ultimate-evo-axs-2022.html",
         "reference": "27229",
         "prices": {
-            "2025-04-15": 8219.4
-        }
+            "2025-04-16": 8219.4
+        },
+        "current_price": 8219.4
+    },
+    {
+        "name": "Bicicleta Scott Patron 900 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34189_0_08032025_040516.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-patron-900-2025.html",
+        "reference": "34189",
+        "prices": {
+            "2025-04-16": 8054.1
+        },
+        "current_price": 8054.1
+    },
+    {
+        "name": "Bicicleta Scott Voltage Eride 900 Tuned 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34136_0_27022025_040603.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-voltage-eride-900-tuned-2025.html",
+        "reference": "34136",
+        "prices": {
+            "2025-04-16": 7999.0
+        },
+        "current_price": 7999.0
+    },
+    {
+        "name": "Bicicleta Scott Patron Eride 900 Ultimate",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/2/7/27890_0_18022025_040423.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-patron-eride-900-ultimate-2022.html",
+        "reference": "27890",
+        "prices": {
+            "2025-04-16": 7999.0
+        },
+        "current_price": 7999.0
+    },
+    {
+        "name": "Bicicleta Liv Avail Advanced E+ Elite 1 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34082_0_12032025_040842.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-liv-avail-advanced-e-elite-1-2025.html",
+        "reference": "34082",
+        "prices": {
+            "2025-04-16": 7999.0
+        },
+        "current_price": 7999.0
+    },
+    {
+        "name": "Bicicleta Scott Spark RC World Cup 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34210_0_08032025_040531.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-world-cup-2025.html",
+        "reference": "34210",
+        "prices": {
+            "2025-04-16": 7784.1
+        },
+        "current_price": 7784.1
+    },
+    {
+        "name": "Bicicleta Scott Addict Gravel Tuned",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/1/31209_0_15112024_080607.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-addict-gravel-tuned.html",
+        "reference": "31209",
+        "prices": {
+            "2025-04-16": 7499.0
+        },
+        "current_price": 7499.0
+    },
+    {
+        "name": "Bicicleta Scott Foil RC Pro 2024",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/3/33711_0_03122024_040559.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-foil-rc-pro-2024.html",
+        "reference": "33711",
+        "prices": {
+            "2025-04-16": 7499.0
+        },
+        "current_price": 7499.0
+    },
+    {
+        "name": "Bicicleta Giant Trance X Advanced E+ 1 Elite 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/1/31078_0_12032025_040552.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-trance-x-advanced-e-1-elite-2025.html",
+        "reference": "31078",
+        "prices": {
+            "2025-04-16": 7124.25
+        },
+        "current_price": 7124.25
+    },
+    {
+        "name": "Bicicleta Scott Patron 910 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34195_0_08032025_040518.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-patron-910-2025.html",
+        "reference": "34195",
+        "prices": {
+            "2025-04-16": 7064.1
+        },
+        "current_price": 7064.1
+    },
+    {
+        "name": "Bicicleta Massi Arrow Race Dura Ace Di2 Alu",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/5/9/59925_0_13022025_040704.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-massi-arrow-race-dura-ace-di2-alu.html",
+        "reference": "59925",
+        "prices": {
+            "2025-04-16": 6999.0
+        },
+        "current_price": 6999.0
+    },
+    {
+        "name": "Bicicleta Look E765 Gravel 2 Apex 1x12 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/6/3/63291_0_15112024_105352.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-look-e765-gravel-2-apex-1x12-2025.html",
+        "reference": "63291",
+        "prices": {
+            "2025-04-16": 6990.0
+        },
+        "current_price": 6990.0
+    },
+    {
+        "name": "Bicicleta Scott Spark RC Supersonic T/L Ed.Esp.",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/0/30689_0_19022025_040546.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-supersonic-t-l-ed-esp.html",
+        "reference": "30689",
+        "prices": {
+            "2025-04-16": 6899.0
+        },
+        "current_price": 6899.0
+    },
+    {
+        "name": "Bicicleta Scott Lumen 905 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34632_0_12042025_030429.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-lumen-905-2025.html",
+        "reference": "34632",
+        "prices": {
+            "2025-04-16": 6883.95
+        },
+        "current_price": 6883.95
+    },
+    {
+        "name": "Bicicleta Giant Defy Advanced E+ Elite 1 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34080_0_12042025_030441.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-defy-advanced-e-elite-1-2025.html",
+        "reference": "34080",
+        "prices": {
+            "2025-04-16": 6799.0
+        },
+        "current_price": 6799.0
+    },
+    {
+        "name": "Bicicleta Scott Spark RC World Cup EVO TR 2024",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/1/31529_0_20032025_040437.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-world-cup-evo-tr-2024.html",
+        "reference": "31529",
+        "prices": {
+            "2025-04-16": 6799.0
+        },
+        "current_price": 6799.0
+    },
+    {
+        "name": "Bicicleta Giant Revolt Advanced Pro 0 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/3/33986_0_12032025_040707.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-revolt-advanced-pro-0-2025.html",
+        "reference": "33986",
+        "prices": {
+            "2025-04-16": 6699.0
+        },
+        "current_price": 6699.0
+    },
+    {
+        "name": "Bicicleta Giant TCR Advanced Pro 0 Di2 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/3/33154_0_12032025_040640.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-tcr-advanced-pro-0-di2-2025.html",
+        "reference": "33154",
+        "prices": {
+            "2025-04-16": 6499.0
+        },
+        "current_price": 6499.0
+    },
+    {
+        "name": "Bicicleta Giant Trance X Advanced E+ 0",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/2/8/28114_0_11122024_040437.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-trance-x-advanced-e-0.html",
+        "reference": "28114",
+        "prices": {
+            "2025-04-16": 6499.0
+        },
+        "current_price": 6499.0
+    },
+    {
+        "name": "Bicicleta Liv Avail Advanced E+ Elite 2 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34083_0_12032025_040844.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-liv-avail-advanced-e-elite-2-2025.html",
+        "reference": "34083",
+        "prices": {
+            "2025-04-16": 6499.0
+        },
+        "current_price": 6499.0
+    },
+    {
+        "name": "Bicicleta Giant TCR Advanced Pro 0 Di2 Plata 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34694_0_12032025_040748.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-tcr-advanced-pro-0-di2-plata-2025.html",
+        "reference": "34694",
+        "prices": {
+            "2025-04-16": 6499.0
+        },
+        "current_price": 6499.0
+    },
+    {
+        "name": "Bicicleta Look 785 Huez Ultegra Di2 Proteam 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/6/1/61576_0_12122024_040429.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-look-785-huez-ultegra-di2-proteam-2025.html",
+        "reference": "61576",
+        "prices": {
+            "2025-04-16": 6490.0
+        },
+        "current_price": 6490.0
+    },
+    {
+        "name": "Bicicleta Scott Lumen Eride 900",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/0/30435_0_15042025_030432.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-lumen-eride-900-2023.html",
+        "reference": "30435",
+        "prices": {
+            "2025-04-16": 6399.0
+        },
+        "current_price": 6399.0
+    },
+    {
+        "name": "Bicicleta Giant Stormguard E+ 2 29 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/0/30947_0_12032025_040547.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-stormguard-e-2-29-2023.html",
+        "reference": "30947",
+        "prices": {
+            "2025-04-16": 6399.0
+        },
+        "current_price": 6399.0
+    },
+    {
+        "name": "Bicicleta Liv Avail Advanced Pro 0 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/2/32190_0_12032025_040812.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-liv-avail-advanced-pro-0-2024.html",
+        "reference": "32190",
+        "prices": {
+            "2025-04-16": 6299.0
+        },
+        "current_price": 6299.0
+    },
+    {
+        "name": "Bicicleta Giant Propel Advanced Pro 0 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34003_0_15042025_030446.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-propel-advanced-pro-0-2025.html",
+        "reference": "34003",
+        "prices": {
+            "2025-04-16": 6299.0
+        },
+        "current_price": 6299.0
+    },
+    {
+        "name": "Bicicleta Giant Propel Advanced SL 1",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/0/30688_0_23112024_040510.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-propel-advanced-sl-1.html",
+        "reference": "30688",
+        "prices": {
+            "2025-04-16": 6299.0
+        },
+        "current_price": 6299.0
+    },
+    {
+        "name": "Bicicleta Scott Addict RC 10 Yellow 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34171_0_08032025_040506.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-10-yellow-2025.html",
+        "reference": "34171",
+        "prices": {
+            "2025-04-16": 6164.1
+        },
+        "current_price": 6164.1
+    },
+    {
+        "name": "Bicicleta Scott Addict RC Supersonic T/M Ed.Esp.",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/0/30703_0_15112024_075921.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-supersonic-t-m-ed-esp.html",
+        "reference": "30703",
+        "prices": {
+            "2025-04-16": 5999.0
+        },
+        "current_price": 5999.0
+    },
+    {
+        "name": "Bicicleta Giant Trance X Advanced E+ 1 2025",
+        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/1/31063_0_12032025_040549.jpg",
+        "url": "https://www.bikingpoint.es/es/bicicleta-giant-trance-x-advanced-e-1-2023.html",
+        "reference": "31063",
+        "prices": {
+            "2025-04-16": 5999.0
+        },
+        "current_price": 5999.0
     }
 ]

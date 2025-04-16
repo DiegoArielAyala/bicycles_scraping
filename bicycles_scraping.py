@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import requests
+import requests, re, os, dotenv
 from urllib.parse import urljoin
 from os import system
 import json
@@ -8,12 +8,16 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
 
+dotenv.load_dotenv()
+
+
 
 class Bicycle:
     def __init__(self, name, price, url, reference, img="Image not available"):
         self.name = name
         self.img = img
         self.price = price
+        self.current_price = price
         self.url = url
         self.reference = reference
         self.time = str(datetime.date(datetime.now()))
@@ -24,6 +28,7 @@ class Bicycle:
             "img": self.img,
             "url": self.url,
             "reference": self.reference,
+            "current_price": self.price,
             "prices": {
                 self.time: self.price
                 }
@@ -33,14 +38,17 @@ class Bicycle:
 
 url = "https://www.bikingpoint.es/es/"
 bicycles_endpoint = "bicicletas.html"
+search_endpoint = "catalogsearch/result/?q={}"
 page_endpoint = "?p={}"
 bicycles_url = urljoin(url, bicycles_endpoint)
+bicycles_list = []
 
 ## Crear una funcion para hacer un llamado de requests por cada pagina de bicicletas
 def get_requests():
     usp_warn = False
     counter = 1
-    while usp_warn == False:
+    # while usp_warn == False:
+    while counter < 4:
         print(f"Get request page {counter}")
         response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
         if "No podemos encontrar productos que coincida con la selección." in response.text:
@@ -51,8 +59,8 @@ def get_requests():
         bicycles = soup.find_all("li", class_="item product product-item")
         counter+=1
         create_bicycles_list(bicycles)
+        create_json()
 
-bicycles_list = []
 def create_bicycles_list(bicycles):
     print("Creando lista de bicicletas")
     for bicycle in bicycles:
@@ -78,7 +86,6 @@ def get_todays_price(bicycle):
 
 # Agregar precio de hoy al archivo json
 def add_todays_price():
-    search_endpoint = "catalogsearch/result/?q={}"
     today = str(datetime.date(datetime.now()))
     with open("bicycles_data_base.json", "r") as file:
         json_file = json.load(file.buffer)
@@ -93,26 +100,68 @@ def add_todays_price():
     with open("bicycles_data_base2.json", "w") as file:
         json.dump(json_file, file, indent=4, ensure_ascii="utf-8")
 
-    
+
+# Funcion para revisar si se ha cambiado el precio y en solo ese caso, agregarlo al json
+def review_prices_changes():
+    with open("bicycles_data_base.json", "r") as file:
+        file_json = json.load(file)
+        for bicycle in file_json:
+            response = requests.get(urljoin(url, search_endpoint.format(bicycle["reference"]))).text
+            pattern = r'<span class="price">(.*?)</span>'
+            price = re.findall(pattern, response)[0]
+            clean_price = float(price.replace('\xa0', '').replace('€', '').replace('.', '').replace(',', '.'))
+            if bicycle["current_price"] != clean_price:
+                bicycle["prices"][str(datetime.date(datetime.now()))] = clean_price
+                bicycle["current_price"] = clean_price
+        with open("bicycles_data_base.json", "w") as file:
+            json.dump(file_json, file, indent=4, ensure_ascii="utf-8")
+
+# Funcion para enviar alerta por mail de cambio de precio
+def send_alert(bicycle):
+    print(os.getenv("EMAIL"))
+    ## Continuar creando funcion de alertas
+
+
+# Funcion para revisar si hay alguna bicicleta nueva
 
 # Crear funcion para eliminar las bicicletas que ya no esten publicadas (o quizas pasarlas a un registro a parte para no perder los datos)
 
-bicicleta  = {
-        "name": "Bicicleta Scott Spark 900 Ultimate Evo Axs",
-        "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/2/7/27229_0_07032025_040602.jpg",
-        "url": "https://www.bikingpoint.es/es/bicicleta-scott-spark-900-ultimate-evo-axs-2022.html",
-        "reference": "27229",
-        "prices": {
-            "2025-04-15": 8219.4,
-            "2025-04-16": 8219.4
-        }
-    }
-print(bicicleta.keys())
+# Funcion para generar una alerta si el precio bajo
+def alert_lower_price(reference, today_price):
+    with open("bicycles_data_base.json", "r") as file:
+        file_json = json.load(file)
+        for bicycle in file_json:
+            if bicycle["reference"]==str(reference) and float(bicycle["current_price"]) > today_price:
+                print(f"La {bicycle['name']} (referencia {bicycle['reference']}) ha bajado de precio!!")
+
+
+# Funcion para obtener la evolucion de el precio de una bicicleta
+def get_prices(name=None, reference=None):
+    if name==None and reference==None:
+        print("Se debe pasar un nombre o referencia")
+        return
+    with open("bicycles_data_base.json", "r") as file:
+        file_json = json.load(file)
+        for bicycle in file_json:
+            if reference != None:
+                if bicycle["reference"]==str(reference):
+                    for key in bicycle["prices"].keys():
+                        print(f'{bicycle["name"]}:')
+                        print(f'The day {key} the price was {bicycle["prices"][key]:.2f}€\n')
+                else:
+                    print("Bicycle not found")
+            else:
+                if name.lower() in bicycle["name"].lower():
+                    for key in bicycle["prices"].keys():
+                        print(f'{bicycle["name"]}:')
+                        print(f'The day {key} the price was {bicycle["prices"][key]:.2f}€\n')
+
+
 
 # Graficar los precios
     ## Crear un endpoint que ejecute este codigo con la bicicleta que se quiere mostrar el grafico, para no tener todos los graficos en la base de datos de antemano
-def prices_graph():
-    with open("bicycles_data_base2.json", "r") as file:
+def prices_graph_ploty():
+    with open("bicycles_data_base.json", "r") as file:
         json_file = json.load(file)
     for bicycle in json_file:
         dates = sorted(bicycle["prices"].keys())
@@ -129,7 +178,14 @@ def prices_graph():
             hovermode="x unified"
         )
         fig.write_html(f"prices_html/price_{bicycle['reference']}.html")
-    
+        
+def prices_graph_matplotlib():
+    with open("bicycles_data_base.json", "r") as file:
+        json_file = json.load(file)
+    for bicycle in json_file:
+        dates = sorted(bicycle["prices"].keys())
+        prices = [bicycle["prices"][date] for date in dates]
+        print(prices)
         
         plt.figure(figsize=(10, 5))
         plt.plot(dates, prices, marker="o", linestyle="-", color="blue")
@@ -144,6 +200,8 @@ system("clear")
 # create_bicycles_list()
 # create_json()
 # add_todays_price()
-# prices_graph()
-# get_requests()
-print(len(bicycles_list))
+#get_requests()
+#print(len(bicycles_list))
+#get_prices(name="addict")
+# alert_lower_price(34687, 1000.22)
+#review_prices_changes()
