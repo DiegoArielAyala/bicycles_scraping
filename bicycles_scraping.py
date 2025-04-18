@@ -143,29 +143,42 @@ def add_todays_price():
 
 # Funcion para revisar si se ha cambiado el precio y en solo ese caso, agregarlo al json
 def review_prices_changes():
+    changed_prices_bicycles = []
     with open("bicycles_data_base.json", "r") as file:
         file_json = json.load(file)
         for bicycle in file_json:
             response = requests.get(
                 urljoin(url, search_endpoint.format(bicycle["reference"]))
             ).text
-            pattern = r'<span class="price">(.*?)</span>'
-            price = re.findall(pattern, response)[0]
-            clean_price = float(
-                price.replace("\xa0", "")
-                .replace("€", "")
-                .replace(".", "")
-                .replace(",", ".")
-            )
-            if bicycle["current_price"] != clean_price:
+            if "La búsqueda no ha devuelto ningún resultado." not in response:
+                pattern = r'<span class="price">(.*?)</span>'
+                try:
+                    price = re.findall(pattern, response)[0]
+                except IndexError:
+                    print("Search finished")
+                clean_price = float(
+                    price.replace("\xa0", "")
+                    .replace("€", "")
+                    .replace(".", "")
+                    .replace(",", ".")
+                )
                 bicycle["prices"][str(datetime.date(datetime.now()))] = clean_price
-                bicycle["current_price"] = clean_price
+                if bicycle["current_price"] != clean_price:
+                    print(f"The {bicycle['name']} prices has changed")
+                    bicycle["current_price"] = clean_price
+                    changed_prices_bicycles.append(bicycle)
+            else:
+                print(f"The reference {bicycle['reference']} was deleted")
+        if len(changed_prices_bicycles) > 0:
+            send_alert(changed_prices_bicycles)
+        else:
+            print("Any price changed")
         with open("bicycles_data_base.json", "w") as file:
             json.dump(file_json, file, indent=4, ensure_ascii="utf-8")
 
 
 # Funcion para enviar alerta por mail de cambio de precio
-def send_alert(bicycle, to=os.getenv("EMAIL")):
+def send_alert(bicycles, to=os.getenv("EMAIL")):
     from_ = os.getenv("EMAIL")
     password = os.getenv("PASSWORD")
 
@@ -173,7 +186,7 @@ def send_alert(bicycle, to=os.getenv("EMAIL")):
     mail["From"] = from_
     mail["To"] = to
     mail["Subject"] = "Biking Alert"
-    message = f"La {bicycle['name']} ha cambiado de precio!\n{bicycle['url']}"
+    message = [f"La {bicycle['name']} ha cambiado de precio!\n{bicycle['url']}\n\n" for bicycle in bicycles]
     mail.attach(MIMEText(message, "plain"))
     print(mail)
 
@@ -273,7 +286,7 @@ system("clear")
 # get_requests()
 # get_prices(name="addict")
 # alert_lower_price(34687, 1000.22)
-# review_prices_changes()
+review_prices_changes()
 bicycle = {
     "name": "Bicicleta Giant TCR Advanced SL 0 Red Disc 2025",
     "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34687_0_12032025_040745.jpg",
@@ -282,4 +295,4 @@ bicycle = {
     "current_price": 12499.0,
     "prices": {"2025-04-17": 12499.0},
 }
-send_alert(bicycle)
+# send_alert(bicycle)
