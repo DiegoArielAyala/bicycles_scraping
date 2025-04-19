@@ -42,10 +42,9 @@ bicycles_endpoint = "bicicletas.html"
 search_endpoint = "catalogsearch/result/?q={}"
 page_endpoint = "?p={}"
 bicycles_url = urljoin(url, bicycles_endpoint)
-bicycles_list = []
 
 
-## Crear una funcion para hacer un llamado de requests por cada pagina de bicicletas
+# Hace un llamado requests.get por cada pagina de bicicletas y crea el archivo json.
 def get_requests():
     usp_warn = False
     counter = 1
@@ -62,12 +61,13 @@ def get_requests():
         # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
         bicycles = soup.find_all("li", class_="item product product-item")
         counter += 1
-        create_bicycles_list(bicycles)
-        create_json()
+        bicycles_list = create_bicycles_list(bicycles)
+        create_json(bicycles_list)
 
 
 def create_bicycles_list(bicycles):
     print("Creando lista de bicicletas")
+    bicycles_list = []
     for bicycle in bicycles:
         bicycle_name = bicycle.find("strong", class_="product-item-name").text.strip()
         bicycle_img = bicycle.find("img")["src"]
@@ -90,10 +90,11 @@ def create_bicycles_list(bicycles):
             )
         )
     print(f"Cantidad de bicicletas en la lista: {len(bicycles_list)}")
+    return bicycles_list
 
 
-# Crear un archivo json donde guardar toda la informacion de las bicicletas
-def create_json():
+# Recibe una lista de objetos Bicycle y crea un archivo json donde guardar toda la informacion de las bicicletas
+def create_json(bicycles_list):
     with open("bicycles_data_base.json", "w", encoding="utf-8") as file:
         json.dump(
             [bicycle.to_dict() for bicycle in bicycles_list],
@@ -103,7 +104,7 @@ def create_json():
         )
 
 
-# Crear funcion que obtenga el precio hoy
+# Recibe la soup de una bicicleta y retorna su precio actual
 def get_todays_price(bicycle):
     return [
         price.text.replace("\xa0", "")
@@ -114,7 +115,8 @@ def get_todays_price(bicycle):
     ][0]
 
 
-# Agregar precio de hoy al archivo json
+# Busca en el archivo json cada bicicleta por su referencia y le añade el precio de hoy
+# Funcion para ejecutar cada dia
 def add_todays_price():
     today = str(datetime.date(datetime.now()))
     with open("bicycles_data_base.json", "r") as file:
@@ -164,11 +166,13 @@ def review_prices_changes():
                 )
                 bicycle["prices"][str(datetime.date(datetime.now()))] = clean_price
                 if bicycle["current_price"] != clean_price:
-                    print(f"The {bicycle['name']} prices has changed")
+                    print(f"The {bicycle['name']} price has changed")
                     bicycle["current_price"] = clean_price
                     changed_prices_bicycles.append(bicycle)
             else:
                 print(f"The reference {bicycle['reference']} was deleted")
+                # Ejecutar funcion de eliminar bicicleta del json
+
         if len(changed_prices_bicycles) > 0:
             send_alert(changed_prices_bicycles)
         else:
@@ -186,7 +190,10 @@ def send_alert(bicycles, to=os.getenv("EMAIL")):
     mail["From"] = from_
     mail["To"] = to
     mail["Subject"] = "Biking Alert"
-    message = [f"La {bicycle['name']} ha cambiado de precio!\n{bicycle['url']}\n\n" for bicycle in bicycles]
+    message = [
+        f"La {bicycle['name']} ha cambiado de precio!\n{bicycle['url']}\n\n"
+        for bicycle in bicycles
+    ]
     mail.attach(MIMEText(message, "plain"))
     print(mail)
 
@@ -196,6 +203,59 @@ def send_alert(bicycles, to=os.getenv("EMAIL")):
 
 
 # Funcion para revisar si hay alguna bicicleta nueva
+def search_new_bikes():
+    usp_warn = False
+    counter = 1
+    while usp_warn == False:
+        print(f"Get request page {counter}")
+        try:
+            response = requests.get(
+                urljoin(bicycles_url, page_endpoint.format(counter))
+            )
+            if (
+                "No podemos encontrar productos que coincida con la selección."
+                in response.text
+            ):
+                usp_warn = True
+            # Creamos la soup con BeautifulSoup
+            soup = BeautifulSoup(response.text, "html.parser")
+            # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
+            bicycles = soup.find_all("li", class_="item product product-item")
+            for bicycle in bicycles:
+                href = bicycle.find("a")["href"]
+                try:
+                    href_response = requests.get(href).text
+                    pattern = r'itemprop="sku">(.*?)</div>'
+                    reference = re.search(pattern, href_response).group(1)
+                    # Buscar la referencia en el json
+                    with open("bicycles_data_base.json", "r") as file:
+                        file_json = str(json.load(file))
+                        reference_pattern = rf"'reference': '{reference}'"
+                        if not reference_pattern in file_json:
+                            print("Adding new bike to json")
+                            print(reference)
+                            add_new_bike_to_json(reference)
+                except:
+                    print("Error searching bicycle url")
+                    return
+            counter += 1
+        except:
+            print("An error occurred")
+
+def add_new_bike_to_json(reference):
+    response = requests.get(urljoin(url, search_endpoint.format(reference))).text
+    soup = BeautifulSoup(response, "html.parser")
+    bicycle_name = soup.find("a", class_="product-item-link").text.strip()
+    bicycle_img = soup.find("img", class_="product-image-photo")["src"]
+    bicycle_href = soup.find("a", class_="product photo product-item-photo")["href"]
+    bicycle_price = get_todays_price(soup)
+    new_bicycle = Bicycle(bicycle_name, bicycle_price, bicycle_href, reference, bicycle_img)
+    with open("bicycles_data_base.json", "r") as file:
+        file_json = json.load(file)
+        file_json.append(str(new_bicycle.to_dict()))
+        with open("bicycles_data_base.json", "w") as file:
+            json.dump(file_json, file)
+
 
 # Crear funcion para eliminar las bicicletas que ya no esten publicadas (o quizas pasarlas a un registro a parte para no perder los datos)
 
@@ -286,7 +346,7 @@ system("clear")
 # get_requests()
 # get_prices(name="addict")
 # alert_lower_price(34687, 1000.22)
-review_prices_changes()
+# review_prices_changes()
 bicycle = {
     "name": "Bicicleta Giant TCR Advanced SL 0 Red Disc 2025",
     "img": "https://www.bikingpoint.es/pub/media/catalog/product/cache/dcd4fc1bb7121d11d822775072a9f477/3/4/34687_0_12032025_040745.jpg",
@@ -296,3 +356,4 @@ bicycle = {
     "prices": {"2025-04-17": 12499.0},
 }
 # send_alert(bicycle)
+search_new_bikes()
