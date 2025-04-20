@@ -43,6 +43,32 @@ search_endpoint = "catalogsearch/result/?q={}"
 page_endpoint = "?p={}"
 bicycles_url = urljoin(url, bicycles_endpoint)
 
+# Pedir datos en consola para ejecutar las funciones que desee el cliente
+def exe_app():
+    search = input("Enter a bicycle or a reference:\n")
+    try:
+        int(search)
+        prices_graph_matplotlib(search)
+    except:
+        bicycles_searched = []
+        with open("bicycles_db.json", "r") as file:
+            file_json = json.load(file)
+            for bicycle in file_json:
+                if search.lower() in bicycle["name"].lower():
+                    bicycles_searched.append(f"{bicycle['name']} => Reference: {bicycle['reference']}")
+        if len(bicycles_searched) == 0:
+            print("There are no matches")
+            exe_app()
+        elif len(bicycles_searched) == 1:
+            pattern = r"Reference: (\d+)"
+            reference = re.search(pattern, bicycles_searched[0]).group(1)
+        else:
+            for bicycle_searched in sorted(bicycles_searched):
+                print(bicycle_searched)
+            reference = input("Enter the reference of the desired bicycle:\n")
+        prices_graph_matplotlib(reference)
+
+
 
 # Hace un llamado requests.get por cada pagina de bicicletas y crea el archivo json.
 def get_requests():
@@ -95,7 +121,7 @@ def create_bicycles_list(bicycles):
 
 # Recibe una lista de objetos Bicycle y crea un archivo json donde guardar toda la informacion de las bicicletas
 def create_json(bicycles_list):
-    with open("bicycles_data_base.json", "w", encoding="utf-8") as file:
+    with open("bicycles_db.json", "w", encoding="utf-8") as file:
         json.dump(
             [bicycle.to_dict() for bicycle in bicycles_list],
             file,
@@ -119,34 +145,38 @@ def get_todays_price(bicycle):
 # Funcion para ejecutar cada dia
 def add_todays_price():
     today = str(datetime.date(datetime.now()))
-    with open("bicycles_data_base.json", "r") as file:
+    with open("bicycles_db.json", "r") as file:
         json_file = json.load(file.buffer)
     for bicycle in json_file:
         response_search_reference = requests.get(
             urljoin(url, search_endpoint.format(bicycle["reference"]))
         )
+        print(bicycle["reference"])
         if response_search_reference.status_code == 200:
             reference_soup = BeautifulSoup(
                 response_search_reference.text, "html.parser"
             )
-            todays_price = (
-                reference_soup.find_all("span", class_="price")[0]
-                .text.replace("\xa0", "")
-                .replace("€", "")
-                .replace(".", "")
-                .replace(",", ".")
-            )
+            if "La búsqueda no ha devuelto ningún resultado." in reference_soup.text:
+                print(f"Reference {bicycle['reference']} was deleted")
+                # Agregar funcion para eliminar la referencia del json
+                continue
+            else:
+                todays_price = (reference_soup.find_all("span", class_="price")[0]
+                        .text.replace("\xa0", "")
+                        .replace("€", "")
+                        .replace(".", "")
+                        .replace(",", "."))
+            
             bicycle["prices"][today] = float(todays_price)
-            print(json_file, "\n")
-    print(json_file, "\n")
-    with open("bicycles_data_base2.json", "w") as file:
+    with open("bicycles_db.json", "w") as file:
         json.dump(json_file, file, indent=4, ensure_ascii="utf-8")
 
-
 # Funcion para revisar si se ha cambiado el precio y en solo ese caso, agregarlo al json
+# Funcion en desuso
+"""
 def review_prices_changes():
     changed_prices_bicycles = []
-    with open("bicycles_data_base.json", "r") as file:
+    with open("bicycles_db.json", "r") as file:
         file_json = json.load(file)
         for bicycle in file_json:
             response = requests.get(
@@ -177,9 +207,10 @@ def review_prices_changes():
             send_alert(changed_prices_bicycles)
         else:
             print("Any price changed")
-        with open("bicycles_data_base.json", "w") as file:
+        with open("bicycles_db.json", "w") as file:
             json.dump(file_json, file, indent=4, ensure_ascii="utf-8")
 
+"""
 
 # Funcion para enviar alerta por mail de cambio de precio
 def send_alert(bicycles, to=os.getenv("EMAIL")):
@@ -228,7 +259,7 @@ def search_new_bikes():
                     pattern = r'itemprop="sku">(.*?)</div>'
                     reference = re.search(pattern, href_response).group(1)
                     # Buscar la referencia en el json
-                    with open("bicycles_data_base.json", "r") as file:
+                    with open("bicycles_db.json", "r") as file:
                         file_json = str(json.load(file))
                         reference_pattern = rf"'reference': '{reference}'"
                         if not reference_pattern in file_json:
@@ -236,7 +267,7 @@ def search_new_bikes():
                             print(reference)
                             add_new_bike_to_json(reference)
                 except:
-                    print("Error searching bicycle url")
+                    print("Search end")
                     return
             counter += 1
         except:
@@ -245,15 +276,23 @@ def search_new_bikes():
 def add_new_bike_to_json(reference):
     response = requests.get(urljoin(url, search_endpoint.format(reference))).text
     soup = BeautifulSoup(response, "html.parser")
-    bicycle_name = soup.find("a", class_="product-item-link").text.strip()
     bicycle_img = soup.find("img", class_="product-image-photo")["src"]
     bicycle_href = soup.find("a", class_="product photo product-item-photo")["href"]
-    bicycle_price = get_todays_price(soup)
+    response_href = requests.get(bicycle_href)
+    if response_href.status_code == 200:
+        bicycle_name = (
+            BeautifulSoup(response_href.text, "html.parser")
+            .find("span", itemprop="name")
+            .text
+        )
+    print(bicycle_name)
+    bicycle_price = float(get_todays_price(soup))
     new_bicycle = Bicycle(bicycle_name, bicycle_price, bicycle_href, reference, bicycle_img)
-    with open("bicycles_data_base.json", "r") as file:
+    with open("bicycles_db.json", "r") as file:
         file_json = json.load(file)
-        file_json.append(str(new_bicycle.to_dict()))
-        with open("bicycles_data_base.json", "w") as file:
+        file_json.append(new_bicycle.to_dict())
+        # print(new_bicycle.to_dict())
+        with open("bicycles_db.json", "w") as file:
             json.dump(file_json, file)
 
 
@@ -262,7 +301,7 @@ def add_new_bike_to_json(reference):
 
 # Funcion para generar una alerta si el precio bajo
 def alert_lower_price(reference, today_price):
-    with open("bicycles_data_base.json", "r") as file:
+    with open("bicycles_db.json", "r") as file:
         file_json = json.load(file)
         for bicycle in file_json:
             if (
@@ -274,12 +313,12 @@ def alert_lower_price(reference, today_price):
                 )
 
 
-# Funcion para obtener la evolucion de el precio de una bicicleta
+# Funcion para mostrar en consola la evolucion de el precio de una bicicleta
 def get_prices(name=None, reference=None):
     if name == None and reference == None:
         print("Se debe pasar un nombre o referencia")
         return
-    with open("bicycles_data_base.json", "r") as file:
+    with open("bicycles_db.json", "r") as file:
         file_json = json.load(file)
         for bicycle in file_json:
             if reference != None:
@@ -300,45 +339,55 @@ def get_prices(name=None, reference=None):
                         )
 
 
-# Graficar los precios
+# Crea el grafico de todas las bicicletas den json
 ## Crear un endpoint que ejecute este codigo con la bicicleta que se quiere mostrar el grafico, para no tener todos los graficos en la base de datos de antemano
-def prices_graph_ploty():
-    with open("bicycles_data_base.json", "r") as file:
+def prices_graph_ploty(reference):
+    with open("bicycles_db.json", "r") as file:
         json_file = json.load(file)
     for bicycle in json_file:
-        dates = sorted(bicycle["prices"].keys())
-        prices = [bicycle["prices"][date] for date in dates]
-        print(prices)
+        if bicycle["reference"] == reference:
+            dates = sorted(bicycle["prices"].keys())
+            prices = [bicycle["prices"][date] for date in dates]
+            print(prices)
 
-        fig = go.Figure()
-        fig.add_trace(
-            go.Scatter(x=dates, y=prices, mode="lines+markers", name="Precio")
-        )
+            fig = go.Figure()
+            fig.add_trace(
+                go.Scatter(x=dates, y=prices, mode="lines+markers", name="Precio")
+            )
 
-        fig.update_layout(
-            title=f"Evolucion del precio - {bicycle['name']}",
-            xaxis_title="Fecha",
-            yaxis_title="Precio (€)",
-            hovermode="x unified",
-        )
-        fig.write_html(f"prices_html/price_{bicycle['reference']}.html")
+            fig.update_layout(
+                title=f"Evolucion del precio - {bicycle['name']}",
+                xaxis_title="Fecha",
+                yaxis_title="Precio (€)",
+                hovermode="x unified",
+            )
+            fig.write_html(f"prices_html/price_{bicycle['reference']}.html")
+            print(f"Prices graph: prices_html/price_{bicycle['reference']}.html")
 
 
-def prices_graph_matplotlib():
-    with open("bicycles_data_base.json", "r") as file:
+def prices_graph_matplotlib(reference):
+    with open("bicycles_db.json", "r") as file:
         json_file = json.load(file)
+    reference_exist = False
     for bicycle in json_file:
-        dates = sorted(bicycle["prices"].keys())
-        prices = [bicycle["prices"][date] for date in dates]
-        print(prices)
+        if bicycle["reference"] == reference:
+            reference_exist = True
+            dates = sorted(bicycle["prices"].keys())
+            prices = [bicycle["prices"][date] for date in dates]
 
-        plt.figure(figsize=(10, 5))
-        plt.plot(dates, prices, marker="o", linestyle="-", color="blue")
-        plt.title(f"Evolucion del precio - {bicycle['name']}")
-        plt.xlabel("Fecha")
-        plt.ylabel("Precio")
-        plt.savefig(f"prices_png/prices_{bicycle['reference']}.png")
+            plt.figure(figsize=(10, 5))
+            plt.plot(dates, prices, marker="o", linestyle="-", color="blue")
+            plt.title(f"Evolucion del precio - {bicycle['name']}")
+            plt.xlabel("Fecha")
+            plt.ylabel("Precio")
+            plt.savefig(f"prices_png/prices_{bicycle['reference']}.png")
+            print(f"You can see the prices graph of {bicycle['name']} here: prices_png/prices_{bicycle['reference']}.png")
+    print("Reference not exist") if not reference_exist else ""
 
+# Ejecutar cada dia para que busque bicicletas nuevas, añada los precios de hoy, envie las alertas al mail de los clientes de cambios de precio
+def exec_every_day():
+    search_new_bikes()
+    add_todays_price()
 
 system("clear")
 
@@ -356,4 +405,6 @@ bicycle = {
     "prices": {"2025-04-17": 12499.0},
 }
 # send_alert(bicycle)
-search_new_bikes()
+# search_new_bikes()
+# add_new_bike_to_json(28116)
+exe_app()
