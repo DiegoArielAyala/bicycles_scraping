@@ -45,7 +45,7 @@ bicycles_url = urljoin(url, bicycles_endpoint)
 
 # Pedir datos en consola para ejecutar las funciones que desee el cliente
 def exe_app():
-    search = input("Enter a bicycle or a reference:\n")
+    search = input("Search a bicycle or enter a reference (For example: Scott Spark or 30480):\n")
     try:
         int(search)
         prices_graph_matplotlib(search)
@@ -67,7 +67,64 @@ def exe_app():
                 print(bicycle_searched)
             reference = input("Enter the reference of the desired bicycle:\n")
         prices_graph_matplotlib(reference)
+    email_subscription = input("Do you want to subscribe to prices alerts? Y/N:\n")
+    if email_subscription.lower() == "y" or "yes":
+        print("email_subscription")
+        email = input("Enter your Gmail email:\n")
+        pattern = r"\b[\w.%+-]+@gmail.[\w{2,4}?]+\b"
+        while not re.search(pattern, email):
+            email = input("Enter a valid Gmail email:\n")
+        print(email)
+        correct_email = input("The email is correct? Y/N:\n")
+        while correct_email.lower() == "n" or "no":
+            email = input("Enter your Gmail email:\n")
+            print(email)
+            correct_email = input("The email is correct? Y/N:\n")
+        send_subscript_confirm(email, reference)
+    elif email_subscription.lower() == "n" or "no":
+        print("No email subscription")
+    else:
+        print("Invalid entry")
 
+# Recibir la confirmacion de la suscripcion al mail
+def send_subscript_confirm(email, reference):
+    with open("subscription_list.json", "r") as file:
+        file_json = json.load(file)
+        new_user = True
+        for user in file_json:
+            if user["email"] == email:
+                new_user = False
+                if reference not in user["reference"]:
+                    user["reference"].append(reference)
+            print(user)
+        if new_user:
+            file_json.append({
+                "email": email,
+                "reference": [reference]
+            })
+        print(file_json)
+        with open("subscription_list.json", "w") as file:
+            json.dump(file_json, file, indent=4, ensure_ascii="utf-8")
+            
+    print("Subscribed")
+    from_ = os.getenv("EMAIL")
+    password = os.getenv("PASSWORD")
+
+    mail = MIMEMultipart()
+    mail["From"] = from_
+    mail["To"] = email
+    mail["Subject"] = "Alerts subscription"
+    message = "You have been subscribed successfully."
+    mail.attach(MIMEText(message, "plain"))
+    print(mail)
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(from_, password)
+        server.send_message(mail)
+
+# Envia codigo de validacion de correo:
+def send_code_to_email(email):
+    pass
 
 
 # Hace un llamado requests.get por cada pagina de bicicletas y crea el archivo json.
@@ -221,12 +278,10 @@ def send_alert(bicycles, to=os.getenv("EMAIL")):
     mail["From"] = from_
     mail["To"] = to
     mail["Subject"] = "Biking Alert"
-    message = [
-        f"La {bicycle['name']} ha cambiado de precio!\n{bicycle['url']}\n\n"
-        for bicycle in bicycles
-    ]
+    message = ""
+    for bicycle in bicycles:
+        message = message + (f"La {bicycle['name']} ha cambiado de precio!\n{bicycle['url']}\n\n")
     mail.attach(MIMEText(message, "plain"))
-    print(mail)
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(from_, password)
@@ -404,7 +459,8 @@ bicycle = {
     "current_price": 12499.0,
     "prices": {"2025-04-17": 12499.0},
 }
-# send_alert(bicycle)
 # search_new_bikes()
 # add_new_bike_to_json(28116)
 exe_app()
+# send_subscript_confirm("prueba@gmail.com", 30480)
+
