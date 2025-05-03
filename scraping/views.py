@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from bs4 import BeautifulSoup
 import requests, re, os, dotenv
 from urllib.parse import urljoin
@@ -9,7 +10,8 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 
 dotenv.load_dotenv()
 
@@ -43,9 +45,24 @@ search_endpoint = "catalogsearch/result/?q={}"
 page_endpoint = "?p={}"
 bicycles_url = urljoin(url, bicycles_endpoint)
 
+
+def home(request):
+    return render(request, "home.html")
+
+
+def signup(request):
+    if request.method == "GET":
+        form = UserCreationForm()
+        print(form)
+        return render(request, "signup.html", {"form": form})
+    else:
+        print(request.POST)
+
 # Pedir datos en consola para ejecutar las funciones que desee el cliente
 def exe_app():
-    search = input("Search a bicycle or enter a reference (For example: Scott Spark or 30480):\n")
+    search = input(
+        "Search a bicycle or enter a reference (For example: Scott Spark or 30480):\n"
+    )
     try:
         int(search)
         prices_graph_matplotlib(search)
@@ -55,7 +72,9 @@ def exe_app():
             file_json = json.load(file)
             for bicycle in file_json:
                 if search.lower() in bicycle["name"].lower():
-                    bicycles_searched.append(f"{bicycle['name']} => Reference: {bicycle['reference']}")
+                    bicycles_searched.append(
+                        f"{bicycle['name']} => Reference: {bicycle['reference']}"
+                    )
         if len(bicycles_searched) == 0:
             print("There are no matches")
             exe_app()
@@ -86,6 +105,7 @@ def exe_app():
     else:
         print("Invalid entry")
 
+
 # Recibir la confirmacion de la suscripcion al mail
 def send_subscript_confirm(email, reference):
     with open("subscription_list.json", "r") as file:
@@ -98,14 +118,11 @@ def send_subscript_confirm(email, reference):
                     user["reference"].append(reference)
             print(user)
         if new_user:
-            file_json.append({
-                "email": email,
-                "reference": [reference]
-            })
+            file_json.append({"email": email, "reference": [reference]})
         print(file_json)
         with open("subscription_list.json", "w") as file:
             json.dump(file_json, file, indent=4, ensure_ascii="utf-8")
-            
+
     print("Subscribed")
     from_ = os.getenv("EMAIL")
     password = os.getenv("PASSWORD")
@@ -121,6 +138,7 @@ def send_subscript_confirm(email, reference):
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(from_, password)
         server.send_message(mail)
+
 
 # Envia codigo de validacion de correo:
 def send_code_to_email(email):
@@ -218,15 +236,18 @@ def add_todays_price():
                 # Agregar funcion para eliminar la referencia del json
                 continue
             else:
-                todays_price = (reference_soup.find_all("span", class_="price")[0]
-                        .text.replace("\xa0", "")
-                        .replace("€", "")
-                        .replace(".", "")
-                        .replace(",", "."))
-            
+                todays_price = (
+                    reference_soup.find_all("span", class_="price")[0]
+                    .text.replace("\xa0", "")
+                    .replace("€", "")
+                    .replace(".", "")
+                    .replace(",", ".")
+                )
+
             bicycle["prices"][today] = float(todays_price)
     with open("bicycles_db.json", "w") as file:
         json.dump(json_file, file, indent=4, ensure_ascii="utf-8")
+
 
 # Funcion para revisar si se ha cambiado el precio y en solo ese caso, agregarlo al json
 # Funcion en desuso
@@ -269,6 +290,7 @@ def review_prices_changes():
 
 """
 
+
 # Funcion para enviar alerta por mail de cambio de precio
 def send_alert(bicycles, to=os.getenv("EMAIL")):
     from_ = os.getenv("EMAIL")
@@ -280,7 +302,9 @@ def send_alert(bicycles, to=os.getenv("EMAIL")):
     mail["Subject"] = "Biking Alert"
     message = ""
     for bicycle in bicycles:
-        message = message + (f"La {bicycle['name']} ha cambiado de precio!\n{bicycle['url']}\n\n")
+        message = message + (
+            f"La {bicycle['name']} ha cambiado de precio!\n{bicycle['url']}\n\n"
+        )
     mail.attach(MIMEText(message, "plain"))
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
@@ -328,6 +352,7 @@ def search_new_bikes():
         except:
             print("An error occurred")
 
+
 def add_new_bike_to_json(reference):
     response = requests.get(urljoin(url, search_endpoint.format(reference))).text
     soup = BeautifulSoup(response, "html.parser")
@@ -342,7 +367,9 @@ def add_new_bike_to_json(reference):
         )
     print(bicycle_name)
     bicycle_price = float(get_todays_price(soup))
-    new_bicycle = Bicycle(bicycle_name, bicycle_price, bicycle_href, reference, bicycle_img)
+    new_bicycle = Bicycle(
+        bicycle_name, bicycle_price, bicycle_href, reference, bicycle_img
+    )
     with open("bicycles_db.json", "r") as file:
         file_json = json.load(file)
         file_json.append(new_bicycle.to_dict())
@@ -436,13 +463,17 @@ def prices_graph_matplotlib(reference):
             plt.xlabel("Fecha")
             plt.ylabel("Precio")
             plt.savefig(f"prices_png/prices_{bicycle['reference']}.png")
-            print(f"You can see the prices graph of {bicycle['name']} here: prices_png/prices_{bicycle['reference']}.png")
+            print(
+                f"You can see the prices graph of {bicycle['name']} here: prices_png/prices_{bicycle['reference']}.png"
+            )
     print("Reference not exist") if not reference_exist else ""
+
 
 # Ejecutar cada dia para que busque bicicletas nuevas, añada los precios de hoy, envie las alertas al mail de los clientes de cambios de precio
 def exec_every_day():
     search_new_bikes()
     add_todays_price()
+
 
 system("clear")
 
@@ -463,4 +494,4 @@ bicycle = {
 # add_new_bike_to_json(28116)
 # exe_app()
 # send_subscript_confirm("prueba@gmail.com", 30480)
-exec_every_day()
+# exec_every_day()
