@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from bs4 import BeautifulSoup
 import requests, re, os, dotenv
 from urllib.parse import urljoin
@@ -12,6 +12,9 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import login
+from django.db import IntegrityError
 
 dotenv.load_dotenv()
 
@@ -52,11 +55,25 @@ def home(request):
 
 def signup(request):
     if request.method == "GET":
-        form = UserCreationForm()
-        print(form)
-        return render(request, "signup.html", {"form": form})
+        return render(request, "signup.html", {"form": UserCreationForm()})
     else:
-        print(request.POST)
+        if request.POST["password1"] == request.POST["password2"]:
+            try:
+                user = User.objects.create_user(username=request.POST["username"], password=request.POST["password1"])
+                print(user)
+                user.save()
+                login(request, user)
+                return redirect("home")
+            except IntegrityError:
+                return render(request, "signup.html", {
+                    "form": UserCreationForm(),
+                    "error": "User already exists"
+                })
+        else:
+            return render(request, "signup.html", {
+                "form":UserCreationForm(),
+                "error": "Password not match"
+            })
 
 # Pedir datos en consola para ejecutar las funciones que desee el cliente
 def exe_app():

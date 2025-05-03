@@ -2,7 +2,9 @@
 
 {% block content %}
 <h1>Sign up</h1>
-<form action="">
+<form action="/signup/" method="POST">
+    {% csrf_token %}
+    {{error}}
     {{form}}
     <button>Sign Up</button>
 </form>
