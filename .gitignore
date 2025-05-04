@@ -1,3 +1,5 @@
 .env
 subscription_list.json
 venv
+__pycache__
+db.sqlite3

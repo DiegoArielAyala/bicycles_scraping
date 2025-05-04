@@ -5,7 +5,6 @@ from django.utils import timezone
 class Bicycle(models.Model):
     name=models.TextField(max_length=200)
     img=models.URLField(default="Image not available")
-    price=models.IntegerField()
     current_price=models.IntegerField()
     url=models.URLField()
     reference=models.IntegerField()

@@ -11,15 +11,17 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
+from .models import Bicycle, PriceHistory
+from .forms import BicycleForm, PriceHistoryForm
 
 dotenv.load_dotenv()
 
 
-class Bicycle:
+class Bicycle2:
     def __init__(self, name, price, url, reference, img="Image not available"):
         self.name = name
         self.img = img
@@ -74,6 +76,38 @@ def signup(request):
                 "form":UserCreationForm(),
                 "error": "Password not match"
             })
+
+
+def signin(request):
+    form = AuthenticationForm(request)
+    if request.method == "GET":
+        return render(request, "signin.html", {
+            "form": form
+        })
+    else:
+        try:
+            user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
+            login(request, user)
+            return redirect("home")
+        except:
+            return render(request, "signin.html", {
+                "form": form,
+                "error": "User or password incorrect."
+            })
+
+
+def signout(request):
+    logout(request)
+    return redirect("home")
+
+
+def create_bicycles(request):
+    bicycle = Bicycle()
+    return render(request, "create_bicycles.html")
+
+
+
+
 
 # Pedir datos en consola para ejecutar las funciones que desee el cliente
 def exe_app():
@@ -163,7 +197,7 @@ def send_code_to_email(email):
 
 
 # Hace un llamado requests.get por cada pagina de bicicletas y crea el archivo json.
-def get_requests():
+def create_json_file():
     usp_warn = False
     counter = 1
     while usp_warn == False:
@@ -199,7 +233,7 @@ def create_bicycles_list(bicycles):
                 .text
             )
         bicycles_list.append(
-            Bicycle(
+            Bicycle2(
                 bicycle_name,
                 float(bicycle_price),
                 bicycle_href,
@@ -384,7 +418,7 @@ def add_new_bike_to_json(reference):
         )
     print(bicycle_name)
     bicycle_price = float(get_todays_price(soup))
-    new_bicycle = Bicycle(
+    new_bicycle = Bicycle2(
         bicycle_name, bicycle_price, bicycle_href, reference, bicycle_img
     )
     with open("bicycles_db.json", "r") as file:
@@ -495,7 +529,6 @@ def exec_every_day():
 system("clear")
 
 # add_todays_price()
-# get_requests()
 # get_prices(name="addict")
 # alert_lower_price(34687, 1000.22)
 # review_prices_changes()

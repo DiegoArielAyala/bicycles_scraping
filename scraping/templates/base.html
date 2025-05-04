@@ -7,16 +7,32 @@
 </head>
 <body>
     <div>
+        {% if user.is_authenticated %}
+        <p>User: {{user.username}}</p>
+        {% endif %}
         <ul>
             <li>
                 <a href="/">Home</a>
             </li>
         </ul>
+        {% if user.is_authenticated %}
         <ul>
             <li>
-                <a href="/signup/">Sign up</a>
+                <a href="{% url 'signout' %}">Sign out</a>
             </li>
         </ul>
+        {% else %}
+        <ul>
+            <li>
+                <a href="{% url 'signup' %}">Sign up</a>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <a href="{% url 'signin' %}">Sign in</a>
+            </li>
+        </ul>
+        {% endif %}
     </div>
     {% block content %}
     {% endblock %}
