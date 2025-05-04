@@ -17,6 +17,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from .models import Bicycle, PriceHistory
 from .forms import BicycleForm, PriceHistoryForm
+from django.utils import timezone
 
 dotenv.load_dotenv()
 
@@ -59,41 +60,51 @@ def signup(request):
     if request.method == "GET":
         return render(request, "signup.html", {"form": UserCreationForm()})
     else:
+        print(request.POST)
         if request.POST["password1"] == request.POST["password2"]:
             try:
-                user = User.objects.create_user(username=request.POST["username"], password=request.POST["password1"])
+                user = User.objects.create_user(
+                    username=request.POST["username"],
+                    password=request.POST["password1"],
+                )
                 print(user)
                 user.save()
                 login(request, user)
                 return redirect("home")
             except IntegrityError:
-                return render(request, "signup.html", {
-                    "form": UserCreationForm(),
-                    "error": "User already exists"
-                })
+                return render(
+                    request,
+                    "signup.html",
+                    {"form": UserCreationForm(), "error": "User already exists"},
+                )
         else:
-            return render(request, "signup.html", {
-                "form":UserCreationForm(),
-                "error": "Password not match"
-            })
+            return render(
+                request,
+                "signup.html",
+                {"form": UserCreationForm(), "error": "Password not match"},
+            )
 
 
 def signin(request):
     form = AuthenticationForm(request)
+    print(request)
     if request.method == "GET":
-        return render(request, "signin.html", {
-            "form": form
-        })
+        return render(request, "signin.html", {"form": form})
     else:
         try:
-            user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
+            user = authenticate(
+                request,
+                username=request.POST["username"],
+                password=request.POST["password"],
+            )
             login(request, user)
             return redirect("home")
         except:
-            return render(request, "signin.html", {
-                "form": form,
-                "error": "User or password incorrect."
-            })
+            return render(
+                request,
+                "signin.html",
+                {"form": form, "error": "User or password incorrect."},
+            )
 
 
 def signout(request):
@@ -101,12 +112,62 @@ def signout(request):
     return redirect("home")
 
 
-def create_bicycles(request):
-    bicycle = Bicycle()
+def create_bicycles(bicycles):
+    print("Creando lista de bicicletas")
+    bicycles_list = []
+    for bicycle in bicycles:
+        bicycle_name = bicycle.find("strong", class_="product-item-name").text.strip()
+        bicycle_img = bicycle.find("img")["src"]
+        bicycle_href = bicycle.find("a")["href"]
+        bicycle_price = get_todays_price(bicycle)
+        response_href = requests.get(bicycle_href)
+        if response_href.status_code == 200:
+            bicycle_reference = (
+                BeautifulSoup(response_href.text, "html.parser")
+                .find("div", itemprop="sku")
+                .text
+            )
+            bicycle_form = BicycleForm(
+                {
+                    "name": bicycle_name,
+                    "img": bicycle_img,
+                    "current_price": bicycle_price,
+                    "url": bicycle_href,
+                    "reference": bicycle_reference,
+                }
+            )
+            print(f"bicycle_form: {bicycle_form}")
+            new_bicycle = bicycle_form.save()
+            price_history_form = PriceHistoryForm(
+                {"bicycle": new_bicycle.id, "price": bicycle_price}
+            )
+            print(f"price_history_form: {price_history_form}")
+            if price_history_form.is_valid():
+                price_history = price_history_form.save(commit=False)
+                price_history.date = timezone.now().date()
+                price_history.save()
+            else:
+                print(price_history_form.errors)
+
+def extract_bicycles_from_web(request):
+    usp_warn = False
+    counter = 1
+    while usp_warn == False:
+        print(f"Get request page {counter}")
+        response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
+        if (
+            "No podemos encontrar productos que coincida con la selección."
+            in response.text
+        ):
+            usp_warn = True
+        # Creamos la soup con BeautifulSoup
+        soup = BeautifulSoup(response.text, "html.parser")
+        # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
+        bicycles = soup.find_all("li", class_="item product product-item")
+        counter += 1
+        usp_warn = True  # SACAR ESTA LINEA PARA LA VERSION DEFINITIVA
+        create_bicycles(bicycles)
     return render(request, "create_bicycles.html")
-
-
-
 
 
 # Pedir datos en consola para ejecutar las funciones que desee el cliente

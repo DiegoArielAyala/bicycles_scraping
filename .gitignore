@@ -3,3 +3,6 @@ subscription_list.json
 venv
 __pycache__
 db.sqlite3
+bicycles.db.json
+__pycache__/
+*.pyc
