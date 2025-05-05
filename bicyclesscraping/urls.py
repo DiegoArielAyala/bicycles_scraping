@@ -26,4 +26,5 @@ urlpatterns = [
     path("signin/", views.signin, name="signin"),
     path("signout/", views.signout, name="signout"),
     path("create_bicycles/", views.extract_bicycles_from_web, name="create_bicycles"),
+    path("add_todays_price/", views.add_todays_price, name="add_todays_price"),
 ]

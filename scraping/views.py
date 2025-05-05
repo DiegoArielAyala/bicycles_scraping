@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from bs4 import BeautifulSoup
 import requests, re, os, dotenv
 from urllib.parse import urljoin
@@ -127,27 +127,35 @@ def create_bicycles(bicycles):
                 .find("div", itemprop="sku")
                 .text
             )
-            bicycle_form = BicycleForm(
-                {
-                    "name": bicycle_name,
-                    "img": bicycle_img,
-                    "current_price": bicycle_price,
-                    "url": bicycle_href,
-                    "reference": bicycle_reference,
-                }
-            )
-            print(f"bicycle_form: {bicycle_form}")
-            new_bicycle = bicycle_form.save()
-            price_history_form = PriceHistoryForm(
-                {"bicycle": new_bicycle.id, "price": bicycle_price}
-            )
-            print(f"price_history_form: {price_history_form}")
-            if price_history_form.is_valid():
-                price_history = price_history_form.save(commit=False)
-                price_history.date = timezone.now().date()
-                price_history.save()
-            else:
-                print(price_history_form.errors)
+            # Buscar en la db si existe esa referencia
+            try:
+                get_object_or_404(Bicycle, reference=bicycle_reference)
+                print(f"Referencia {bicycle_reference} ya existe en la base de datos")
+                continue
+            except:
+                print("Bicycle not exist")
+                bicycle_form = BicycleForm(
+                    {
+                        "name": bicycle_name,
+                        "img": bicycle_img,
+                        "current_price": bicycle_price,
+                        "url": bicycle_href,
+                        "reference": bicycle_reference,
+                    }
+                )
+                new_bicycle = bicycle_form.save()
+                print(f"\n\nnew_bicycle.id:\n {new_bicycle.id}")
+                print(f"\n\nnew_bicycle:\n {new_bicycle}")
+                try:
+                    price_history = PriceHistory(
+                        bicycle=new_bicycle,
+                        date=datetime.now().date(),
+                        price=bicycle_price,
+                    )
+                    price_history.save()
+                    print(f"\n\nprice_history:\n {price_history}")
+                except:
+                    print("Error creating price_history")
 
 def extract_bicycles_from_web(request):
     usp_warn = False
@@ -165,9 +173,58 @@ def extract_bicycles_from_web(request):
         # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
         bicycles = soup.find_all("li", class_="item product product-item")
         counter += 1
-        usp_warn = True  # SACAR ESTA LINEA PARA LA VERSION DEFINITIVA
-        create_bicycles(bicycles)
+        try:
+            create_bicycles(bicycles)
+        except ValueError:
+            return render(request, "home.html", {"error": "Bicycle saving completed"})
     return render(request, "create_bicycles.html")
+
+
+def add_todays_price(request):
+    today = str(datetime.date(datetime.now()))
+    bicycles_list = get_list_or_404(Bicycle)
+    for bicycle in bicycles_list:
+        print(bicycle.reference)
+    return render(request, "add_todays_price.html")
+
+    """
+    with open("bicycles_db.json", "r") as file:
+        json_file = json.load(file.buffer)
+    for bicycle in json_file:
+        response_search_reference = requests.get(
+            urljoin(url, search_endpoint.format(bicycle["reference"]))
+        )
+        print(bicycle["reference"])
+        if response_search_reference.status_code == 200:
+            reference_soup = BeautifulSoup(
+                response_search_reference.text, "html.parser"
+            )
+            if "La búsqueda no ha devuelto ningún resultado." in reference_soup.text:
+                print(f"Reference {bicycle['reference']} was deleted")
+                # Agregar funcion para eliminar la referencia del json
+                continue
+            else:
+                todays_price = (
+                    reference_soup.find_all("span", class_="price")[0]
+                    .text.replace("\xa0", "")
+                    .replace("€", "")
+                    .replace(".", "")
+                    .replace(",", ".")
+                )
+
+            bicycle["prices"][today] = float(todays_price)
+    with open("bicycles_db.json", "w") as file:
+        json.dump(json_file, file, indent=4, ensure_ascii="utf-8")
+
+    """
+
+
+
+
+
+
+
+
 
 
 # Pedir datos en consola para ejecutar las funciones que desee el cliente
@@ -330,7 +387,7 @@ def get_todays_price(bicycle):
 
 # Busca en el archivo json cada bicicleta por su referencia y le añade el precio de hoy
 # Funcion para ejecutar cada dia
-def add_todays_price():
+def add_todays_price2():
     today = str(datetime.date(datetime.now()))
     with open("bicycles_db.json", "r") as file:
         json_file = json.load(file.buffer)
