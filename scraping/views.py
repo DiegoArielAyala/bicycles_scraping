@@ -157,6 +157,7 @@ def create_bicycles(bicycles):
                 except:
                     print("Error creating price_history")
 
+
 def extract_bicycles_from_web(request):
     usp_warn = False
     counter = 1
@@ -184,23 +185,16 @@ def add_todays_price(request):
     today = str(datetime.date(datetime.now()))
     bicycles_list = get_list_or_404(Bicycle)
     for bicycle in bicycles_list:
-        print(bicycle.reference)
-    return render(request, "add_todays_price.html")
-
-    """
-    with open("bicycles_db.json", "r") as file:
-        json_file = json.load(file.buffer)
-    for bicycle in json_file:
+        print(bicycle.pk)
         response_search_reference = requests.get(
-            urljoin(url, search_endpoint.format(bicycle["reference"]))
+            urljoin(url, search_endpoint.format(bicycle.reference))
         )
-        print(bicycle["reference"])
         if response_search_reference.status_code == 200:
             reference_soup = BeautifulSoup(
                 response_search_reference.text, "html.parser"
             )
             if "La búsqueda no ha devuelto ningún resultado." in reference_soup.text:
-                print(f"Reference {bicycle['reference']} was deleted")
+                print(f"Reference {bicycle.reference} was deleted")
                 # Agregar funcion para eliminar la referencia del json
                 continue
             else:
@@ -211,20 +205,58 @@ def add_todays_price(request):
                     .replace(".", "")
                     .replace(",", ".")
                 )
-
-            bicycle["prices"][today] = float(todays_price)
-    with open("bicycles_db.json", "w") as file:
-        json.dump(json_file, file, indent=4, ensure_ascii="utf-8")
-
-    """
-
-
+                new_price_history = PriceHistory(
+                    bicycle=bicycle, date=datetime.now().date(), price=todays_price
+                )
+                new_price_history.save()
+                print(f"Todays price for {bicycle.reference} was saved")
+    return render(request, "add_todays_price.html")
 
 
+def search_bicycle(query):
+    try:
+        reference = int(query)
+        print("La busqueda es un int")
+        if len(query) == 5:
+            bicycle = Bicycle.objects.get(reference=reference)
+            print(bicycle)
+        else:
+            bicycles = Bicycle.objects.filter(name__icontains=query)
+            print(bicycles)
+    except:
+        print("La busqueda es un String")
+        bicycles = Bicycle.objects.filter(name__icontains=query)
+        print(bicycles)
 
 
+search_bicycle("Scott")
+search_bicycle("12345")
+search_bicycle("Look")
 
-
+"""
+if name == None and reference == None:
+    print("Se debe pasar un nombre o referencia")
+    return
+with open("bicycles_db.json", "r") as file:
+    file_json = json.load(file)
+    for bicycle in file_json:
+        if reference != None:
+            if bicycle["reference"] == str(reference):
+                for key in bicycle["prices"].keys():
+                    print(f'{bicycle["name"]}:')
+                    print(
+                        f'The day {key} the price was {bicycle["prices"][key]:.2f}€\n'
+                    )
+            else:
+                print("Bicycle not found")
+        else:
+            if name.lower() in bicycle["name"].lower():
+                for key in bicycle["prices"].keys():
+                    print(f'{bicycle["name"]}:')
+                    print(
+                        f'The day {key} the price was {bicycle["prices"][key]:.2f}€\n'
+                    )
+"""
 
 
 # Pedir datos en consola para ejecutar las funciones que desee el cliente
@@ -385,39 +417,6 @@ def get_todays_price(bicycle):
     ][0]
 
 
-# Busca en el archivo json cada bicicleta por su referencia y le añade el precio de hoy
-# Funcion para ejecutar cada dia
-def add_todays_price2():
-    today = str(datetime.date(datetime.now()))
-    with open("bicycles_db.json", "r") as file:
-        json_file = json.load(file.buffer)
-    for bicycle in json_file:
-        response_search_reference = requests.get(
-            urljoin(url, search_endpoint.format(bicycle["reference"]))
-        )
-        print(bicycle["reference"])
-        if response_search_reference.status_code == 200:
-            reference_soup = BeautifulSoup(
-                response_search_reference.text, "html.parser"
-            )
-            if "La búsqueda no ha devuelto ningún resultado." in reference_soup.text:
-                print(f"Reference {bicycle['reference']} was deleted")
-                # Agregar funcion para eliminar la referencia del json
-                continue
-            else:
-                todays_price = (
-                    reference_soup.find_all("span", class_="price")[0]
-                    .text.replace("\xa0", "")
-                    .replace("€", "")
-                    .replace(".", "")
-                    .replace(",", ".")
-                )
-
-            bicycle["prices"][today] = float(todays_price)
-    with open("bicycles_db.json", "w") as file:
-        json.dump(json_file, file, indent=4, ensure_ascii="utf-8")
-
-
 # Funcion para revisar si se ha cambiado el precio y en solo ese caso, agregarlo al json
 # Funcion en desuso
 """
@@ -565,7 +564,7 @@ def alert_lower_price(reference, today_price):
 
 
 # Funcion para mostrar en consola la evolucion de el precio de una bicicleta
-def get_prices(name=None, reference=None):
+def get_prices2(name=None, reference=None):
     if name == None and reference == None:
         print("Se debe pasar un nombre o referencia")
         return
