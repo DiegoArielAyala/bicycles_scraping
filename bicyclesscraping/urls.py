@@ -29,6 +29,7 @@ urlpatterns = [
     path("add_todays_price/", views.add_todays_price, name="add_todays_price"),
     path("search_bicycle/", views.search_bicycle, name="search_bicycle"),
     path(
-        "search_bicycle/<str:str>", views.search_bicycle, name="search_bicycle_filter"
+        "search_bicycle/<str:query>", views.search_bicycle, name="search_bicycle_filter"
     ),
+    path("deleted_bicycles/", views.review_deleted_bicycles, name="deleted_bicycles")
 ]

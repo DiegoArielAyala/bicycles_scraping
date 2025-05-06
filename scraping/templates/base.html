@@ -43,6 +43,16 @@
                 <a href="{% url 'add_todays_price' %}">Add todays price</a>
             </li>
         </ul>
+        <ul>
+            <li>
+                <a href="{% url 'search_bicycle' %}">Search bicycle</a>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <a href="{% url 'deleted_bicycles' %}">Review deleted bicycles</a>
+            </li>
+        </ul>
     </div>
     {% block content %}
     {% endblock %}

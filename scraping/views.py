@@ -213,25 +213,37 @@ def add_todays_price(request):
     return render(request, "add_todays_price.html")
 
 
-def search_bicycle(query):
-    try:
-        reference = int(query)
-        print("La busqueda es un int")
-        if len(query) == 5:
-            bicycle = Bicycle.objects.get(reference=reference)
-            print(bicycle)
-        else:
-            bicycles = Bicycle.objects.filter(name__icontains=query)
-            print(bicycles)
-    except:
-        print("La busqueda es un String")
-        bicycles = Bicycle.objects.filter(name__icontains=query)
-        print(bicycles)
+def search_bicycle(request, query=None):
+    if request.method == "GET":
+        return render(request, "search_bicycle.html")
+    else:
+        query = request.POST["query"]
+        print(f"query: {query}")
+        try:
+            reference = int(query)
+            print(f"La busqueda de {query} es un int")
+            if len(query) == 5:
+                print("Int de 5 digitos")
+                results = Bicycle.objects.get(reference=reference)
+                print(results)
+            else:
+                print("int de no 5 digitos")
+                results = Bicycle.objects.filter(name__icontains=query)
+                print(results)
+        except:
+            print(f"La busqueda de {query} es un String")
+            results = Bicycle.objects.filter(name__icontains=query)
+            print(results)
+        return render(request, "search_bicycle.html", {
+            "results": results
+        })
 
 
-search_bicycle("Scott")
-search_bicycle("12345")
-search_bicycle("Look")
+def review_deleted_bicycles(request):
+    bicycles = get_list_or_404(Bicycle)
+    print(bicycles)
+    return render(request, "deleted_bicycles.html")
+
 
 """
 if name == None and reference == None:
@@ -643,7 +655,7 @@ def exec_every_day():
     add_todays_price()
 
 
-system("clear")
+# system("clear")
 
 # add_todays_price()
 # get_prices(name="addict")

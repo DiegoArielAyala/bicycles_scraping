@@ -3,8 +3,17 @@
 {% block content %}
 <h1>Search Bicycle</h1>
 <form action="" method="POST">
+    {% csrf_token %}
     <label for="">Name or reference:</label>
-    <input type="text">
+    <input type="text" name="query">
     <button>Search</button>
+    {% for result in results %}
+    <div>
+        <h2>{{result.name}}</h2>
+        <img src="{{result.img}}" alt="">
+        <p>{{result.current_price}}</p>
+        <a href="{{result.url}}">{{result.url}}</a>
+    </div>
+    {% endfor %}
 </form>
 {% endblock %}
