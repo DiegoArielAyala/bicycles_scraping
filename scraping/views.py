@@ -182,7 +182,6 @@ def extract_bicycles_from_web(request):
 
 
 def add_todays_price(request):
-    today = str(datetime.date(datetime.now()))
     bicycles_list = get_list_or_404(Bicycle)
     for bicycle in bicycles_list:
         print(bicycle.pk)
@@ -195,8 +194,7 @@ def add_todays_price(request):
             )
             if "La búsqueda no ha devuelto ningún resultado." in reference_soup.text:
                 print(f"Reference {bicycle.reference} was deleted")
-                # Agregar funcion para eliminar la referencia del json
-                continue
+                bicycle.delete()
             else:
                 todays_price = (
                     reference_soup.find_all("span", class_="price")[0]
@@ -209,7 +207,10 @@ def add_todays_price(request):
                     bicycle=bicycle, date=datetime.now().date(), price=todays_price
                 )
                 new_price_history.save()
-                print(f"Todays price for {bicycle.reference} was saved")
+                if bicycle.current_price != todays_price:
+                    print(
+                        f"{bicycle.reference} changed price from {bicycle.current_price} to {todays_price}"
+                    )
     return render(request, "add_todays_price.html")
 
 
@@ -224,7 +225,7 @@ def search_bicycle(request, query=None):
             print(f"La busqueda de {query} es un int")
             if len(query) == 5:
                 print("Int de 5 digitos")
-                results = Bicycle.objects.get(reference=reference)
+                results = Bicycle.objects.filter(reference=reference)
                 print(results)
             else:
                 print("int de no 5 digitos")
@@ -234,15 +235,43 @@ def search_bicycle(request, query=None):
             print(f"La busqueda de {query} es un String")
             results = Bicycle.objects.filter(name__icontains=query)
             print(results)
-        return render(request, "search_bicycle.html", {
-            "results": results
-        })
+        return render(request, "search_bicycle.html", {"results": results})
 
 
-def review_deleted_bicycles(request):
-    bicycles = get_list_or_404(Bicycle)
-    print(bicycles)
-    return render(request, "deleted_bicycles.html")
+def get_price_history(request, reference):
+    bicycle = get_object_or_404(Bicycle, reference=reference)
+    price_history_list = get_list_or_404(PriceHistory, bicycle=bicycle.pk)
+
+    dates = sorted([price.date for price in price_history_list])
+    prices = []
+    for date in dates:
+        price_history = PriceHistory.objects.filter(bicycle=bicycle.pk, date=date)[0]
+        prices.append(price_history.price)
+    print(dates)
+    print(prices)
+    plt.figure(figsize=(10, 5))
+    plt.plot(dates, prices, linestyle="-", color="red")
+    plt.title(bicycle.name)
+    plt.xlabel("Date")
+    plt.ylabel("Price")
+    plt.savefig(f"prices_{bicycle.reference}.png")
+    print(f"prices_{bicycle.reference}.png")
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=dates, y=prices, mode="lines+markers", name="Precio"))
+
+    fig.update_layout(
+        title=f"{bicycle.name} price history",
+        xaxis_title="Date",
+        yaxis_title="Price (€)",
+        hovermode="x unified",
+    )
+    fig.write_html(f"price_{bicycle.reference}.html")
+    return render(request, f"price_{bicycle.reference}.html")
+
+
+# system("clear")
+# get_price_history(34687)
 
 
 """
@@ -625,28 +654,6 @@ def prices_graph_ploty(reference):
             )
             fig.write_html(f"prices_html/price_{bicycle['reference']}.html")
             print(f"Prices graph: prices_html/price_{bicycle['reference']}.html")
-
-
-def prices_graph_matplotlib(reference):
-    with open("bicycles_db.json", "r") as file:
-        json_file = json.load(file)
-    reference_exist = False
-    for bicycle in json_file:
-        if bicycle["reference"] == reference:
-            reference_exist = True
-            dates = sorted(bicycle["prices"].keys())
-            prices = [bicycle["prices"][date] for date in dates]
-
-            plt.figure(figsize=(10, 5))
-            plt.plot(dates, prices, marker="o", linestyle="-", color="blue")
-            plt.title(f"Evolucion del precio - {bicycle['name']}")
-            plt.xlabel("Fecha")
-            plt.ylabel("Precio")
-            plt.savefig(f"prices_png/prices_{bicycle['reference']}.png")
-            print(
-                f"You can see the prices graph of {bicycle['name']} here: prices_png/prices_{bicycle['reference']}.png"
-            )
-    print("Reference not exist") if not reference_exist else ""
 
 
 # Ejecutar cada dia para que busque bicicletas nuevas, añada los precios de hoy, envie las alertas al mail de los clientes de cambios de precio

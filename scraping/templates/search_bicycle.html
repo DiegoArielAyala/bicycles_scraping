@@ -7,13 +7,16 @@
     <label for="">Name or reference:</label>
     <input type="text" name="query">
     <button>Search</button>
-    {% for result in results %}
-    <div>
-        <h2>{{result.name}}</h2>
-        <img src="{{result.img}}" alt="">
-        <p>{{result.current_price}}</p>
-        <a href="{{result.url}}">{{result.url}}</a>
-    </div>
-    {% endfor %}
 </form>
+{% for result in results %}
+<div>
+    <h2>{{result.name}}</h2>
+    <img src="{{result.img}}" alt="">
+    <p>{{result.current_price}}</p>
+    <a href="{{result.url}}">{{result.url}}</a>
+    <a href="{% url 'get_price_history' result.reference %}">
+        <button>Price History</button>
+    </a>
+</div>
+{% endfor %}
 {% endblock %}

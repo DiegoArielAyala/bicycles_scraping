@@ -28,8 +28,7 @@ urlpatterns = [
     path("create_bicycles/", views.extract_bicycles_from_web, name="create_bicycles"),
     path("add_todays_price/", views.add_todays_price, name="add_todays_price"),
     path("search_bicycle/", views.search_bicycle, name="search_bicycle"),
-    path(
-        "search_bicycle/<str:query>", views.search_bicycle, name="search_bicycle_filter"
-    ),
-    path("deleted_bicycles/", views.review_deleted_bicycles, name="deleted_bicycles")
+    path("search_bicycle/<str:query>", views.search_bicycle, name="search_bicycle_filter"),
+    path("search_bicycle/<int:reference>", views.get_price_history, name="get_price_history"),
+    path("search_bicycle/", views.get_price_history, name="get_price_history"),
 ]
