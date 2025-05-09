@@ -16,7 +16,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from .models import Bicycle, PriceHistory
-from .forms import BicycleForm, PriceHistoryForm
+from .forms import BicycleForm, SubscriptionForm
 from django.utils import timezone
 
 dotenv.load_dotenv()
@@ -128,9 +128,10 @@ def create_bicycles(bicycles):
             )
             # Buscar en la db si existe esa referencia
             try:
-                get_object_or_404(Bicycle, reference=bicycle_reference)
+                bicycle_object = get_object_or_404(Bicycle, reference=bicycle_reference)
                 print(f"Referencia {bicycle_reference} ya existe en la base de datos")
-                continue
+                print(bicycle_object.reference)
+                add_todays_price(bicycle_object)
             except:
                 print("Bicycle not exist")
                 bicycle_form = BicycleForm(
@@ -180,37 +181,56 @@ def extract_bicycles_from_web(request):
     return render(request, "create_bicycles.html")
 
 
-def add_todays_price(request):
-    bicycles_list = get_list_or_404(Bicycle)
-    for bicycle in bicycles_list:
-        print(bicycle.pk)
-        response_search_reference = requests.get(
-            urljoin(url, search_endpoint.format(bicycle.reference))
-        )
-        if response_search_reference.status_code == 200:
-            reference_soup = BeautifulSoup(
-                response_search_reference.text, "html.parser"
+def add_todays_price(bicycle):
+    print(f"Adding todays price for {bicycle.reference}")
+    response_search_reference = requests.get(
+        urljoin(url, search_endpoint.format(bicycle.reference))
+    )
+    if response_search_reference.status_code == 200:
+        reference_soup = BeautifulSoup(response_search_reference.text, "html.parser")
+        if "La búsqueda no ha devuelto ningún resultado." in reference_soup.text:
+            print(f"Reference {bicycle.reference} was deleted")
+            bicycle.delete()
+        else:
+            todays_price = (
+                reference_soup.find_all("span", class_="price")[0]
+                .text.replace("\xa0", "")
+                .replace("€", "")
+                .replace(".", "")
+                .replace(",", ".")
             )
-            if "La búsqueda no ha devuelto ningún resultado." in reference_soup.text:
-                print(f"Reference {bicycle.reference} was deleted")
-                bicycle.delete()
-            else:
-                todays_price = (
-                    reference_soup.find_all("span", class_="price")[0]
-                    .text.replace("\xa0", "")
-                    .replace("€", "")
-                    .replace(".", "")
-                    .replace(",", ".")
+            new_price_history = PriceHistory(
+                bicycle=bicycle, date=datetime.now().date(), price=todays_price
+            )
+            new_price_history.save()
+            if bicycle.current_price != float(todays_price):
+                print(
+                    f"{bicycle.reference} changed price from {bicycle.current_price} to {todays_price}"
                 )
-                new_price_history = PriceHistory(
-                    bicycle=bicycle, date=datetime.now().date(), price=todays_price
-                )
-                new_price_history.save()
-                if bicycle.current_price != todays_price:
-                    print(
-                        f"{bicycle.reference} changed price from {bicycle.current_price} to {todays_price}"
-                    )
-    return render(request, "add_todays_price.html")
+
+
+def prueba():
+    bicycle = get_object_or_404(Bicycle, reference=34687)
+    print(type(bicycle.current_price))
+    response_search_reference = requests.get(
+        urljoin(url, search_endpoint.format(bicycle.reference))
+    )
+    if response_search_reference.status_code == 200:
+        reference_soup = BeautifulSoup(response_search_reference.text, "html.parser")
+        if "La búsqueda no ha devuelto ningún resultado." in reference_soup.text:
+            print(f"Reference {bicycle.reference} was deleted")
+            bicycle.delete()
+        else:
+            todays_price = (
+                reference_soup.find_all("span", class_="price")[0]
+                .text.replace("\xa0", "")
+                .replace("€", "")
+                .replace(".", "")
+                .replace(",", ".")
+            )
+            print(type(todays_price))
+            print(bicycle.current_price == float(todays_price))
+
 
 
 def search_bicycle(request, query=None):
@@ -248,10 +268,17 @@ def get_price_history(request, reference):
         hovermode="x unified",
     )
     graphic = fig.to_html()
-    
-    return render(request, "price_history.html", {
-        "graphic": graphic
-    } )
+
+    return render(request, "price_history.html", {"graphic": graphic})
+
+
+def subscription(request):
+    form = SubscriptionForm()
+    if request.method == "GET":
+        return render(request, "subscription.html", {
+            "form": form
+        })
+
 
 
 # system("clear")

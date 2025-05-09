@@ -19,3 +19,7 @@ class PriceHistory(models.Model):
 
     def __str__(self):
         return f"{self.date} : {self.price}"
+
+class Subscription(models.Model):
+    email=models.TextField(max_length=200)
+    bicycle=models.ForeignKey(Bicycle, on_delete=models.CASCADE, related_name="subscription")
