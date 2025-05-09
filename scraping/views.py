@@ -114,7 +114,6 @@ def signout(request):
 
 def create_bicycles(bicycles):
     print("Creando lista de bicicletas")
-    bicycles_list = []
     for bicycle in bicycles:
         bicycle_name = bicycle.find("strong", class_="product-item-name").text.strip()
         bicycle_img = bicycle.find("img")["src"]
@@ -219,22 +218,14 @@ def search_bicycle(request, query=None):
         return render(request, "search_bicycle.html")
     else:
         query = request.POST["query"]
-        print(f"query: {query}")
         try:
             reference = int(query)
-            print(f"La busqueda de {query} es un int")
             if len(query) == 5:
-                print("Int de 5 digitos")
                 results = Bicycle.objects.filter(reference=reference)
-                print(results)
             else:
-                print("int de no 5 digitos")
                 results = Bicycle.objects.filter(name__icontains=query)
-                print(results)
         except:
-            print(f"La busqueda de {query} es un String")
             results = Bicycle.objects.filter(name__icontains=query)
-            print(results)
         return render(request, "search_bicycle.html", {"results": results})
 
 
@@ -247,27 +238,20 @@ def get_price_history(request, reference):
     for date in dates:
         price_history = PriceHistory.objects.filter(bicycle=bicycle.pk, date=date)[0]
         prices.append(price_history.price)
-    print(dates)
-    print(prices)
-    plt.figure(figsize=(10, 5))
-    plt.plot(dates, prices, linestyle="-", color="red")
-    plt.title(bicycle.name)
-    plt.xlabel("Date")
-    plt.ylabel("Price")
-    plt.savefig(f"prices_{bicycle.reference}.png")
-    print(f"prices_{bicycle.reference}.png")
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=dates, y=prices, mode="lines+markers", name="Precio"))
-
     fig.update_layout(
         title=f"{bicycle.name} price history",
         xaxis_title="Date",
         yaxis_title="Price (€)",
         hovermode="x unified",
     )
-    fig.write_html(f"price_{bicycle.reference}.html")
-    return render(request, f"price_{bicycle.reference}.html")
+    graphic = fig.to_html()
+    
+    return render(request, "price_history.html", {
+        "graphic": graphic
+    } )
 
 
 # system("clear")

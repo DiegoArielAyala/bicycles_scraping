@@ -29,6 +29,5 @@ urlpatterns = [
     path("add_todays_price/", views.add_todays_price, name="add_todays_price"),
     path("search_bicycle/", views.search_bicycle, name="search_bicycle"),
     path("search_bicycle/<str:query>", views.search_bicycle, name="search_bicycle_filter"),
-    path("search_bicycle/<int:reference>", views.get_price_history, name="get_price_history"),
-    path("search_bicycle/", views.get_price_history, name="get_price_history"),
+    path("price_history/<int:reference>", views.get_price_history, name="price_history"),
 ]

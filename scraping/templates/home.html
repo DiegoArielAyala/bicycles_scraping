@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Bicycles Scraping</h1>
+    <h1>Bike Price Tracker</h1>
+
+    <div>
+        <h2>Search Bicycles</h2>
+        <form action="search_bicycle/" method="POST">
+        {% csrf_token %}
+        <label for="">Name or Reference:</label>
+        <input type="text" name="query" placeholder="Scott - 34687 - Team Race">
+        <button>Search</button>
+        </form> 
+    </div>
 {% endblock %}

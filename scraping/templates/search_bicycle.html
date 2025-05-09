@@ -3,19 +3,19 @@
 {% block content %}
 <h1>Search Bicycle</h1>
 <form action="" method="POST">
-    {% csrf_token %}
-    <label for="">Name or reference:</label>
-    <input type="text" name="query">
-    <button>Search</button>
-</form>
+        {% csrf_token %}
+        <label for="">Name or Reference:</label>
+        <input type="text" name="query" placeholder="Scott - 34687 - Team Race">
+        <button>Search</button>
+        </form>
 {% for result in results %}
 <div>
     <h2>{{result.name}}</h2>
     <img src="{{result.img}}" alt="">
-    <p>{{result.current_price}}</p>
+    <p>{{result.current_price|floatformat:2}} €</p>
     <a href="{{result.url}}">{{result.url}}</a>
-    <a href="{% url 'get_price_history' result.reference %}">
-        <button>Price History</button>
+    <a href="{% url 'price_history' result.reference %}" name="price_history">
+        <button type="button">Price History</button>
     </a>
 </div>
 {% endfor %}
