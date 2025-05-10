@@ -15,7 +15,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
-from .models import Bicycle, PriceHistory
+from .models import Bicycle, PriceHistory, Subscription
 from .forms import BicycleForm, SubscriptionForm
 from django.utils import timezone
 
@@ -278,7 +278,15 @@ def subscription(request):
         return render(request, "subscription.html", {
             "form": form
         })
-
+    else:
+        bicycle = get_object_or_404(Bicycle, reference=request.POST["reference"])
+        subscribe = Subscription(email=request.POST["email"], reference=request.POST["reference"], bicycle=bicycle)
+        print(subscribe)
+        subscribe.save()
+        return render(request, "subscription.html", {
+            "form": form,
+            "message": "Subscribed successfully!"
+        })
 
 
 # system("clear")

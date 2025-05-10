@@ -21,5 +21,9 @@ class PriceHistory(models.Model):
         return f"{self.date} : {self.price}"
 
 class Subscription(models.Model):
-    email=models.TextField(max_length=200)
+    email=models.EmailField(max_length=60)
+    reference=models.IntegerField(default=None)
     bicycle=models.ForeignKey(Bicycle, on_delete=models.CASCADE, related_name="subscription")
+
+    def __str__(self):
+        return self.email

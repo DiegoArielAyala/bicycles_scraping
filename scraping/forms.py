@@ -10,4 +10,4 @@ class BicycleForm(forms.ModelForm):
 class SubscriptionForm(forms.ModelForm):
     class Meta:
         model = Subscription
-        fields = ["email", "bicycle"]
+        fields = ["email", "reference"]
