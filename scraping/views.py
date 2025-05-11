@@ -8,7 +8,6 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
-import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -17,7 +16,6 @@ from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from .models import Bicycle, PriceHistory, Subscription
 from .forms import BicycleForm, SubscriptionForm
-from django.utils import timezone
 
 dotenv.load_dotenv()
 
@@ -159,26 +157,30 @@ def create_bicycles(bicycles):
 
 
 def extract_bicycles_from_web(request):
-    usp_warn = False
-    counter = 1
-    while usp_warn == False:
-        print(f"Get request page {counter}")
-        response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
-        if (
-            "No podemos encontrar productos que coincida con la selección."
-            in response.text
-        ):
-            usp_warn = True
-        # Creamos la soup con BeautifulSoup
-        soup = BeautifulSoup(response.text, "html.parser")
-        # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
-        bicycles = soup.find_all("li", class_="item product product-item")
-        counter += 1
-        try:
-            create_bicycles(bicycles)
-        except ValueError:
-            return render(request, "home.html", {"error": "Bicycle saving completed"})
-    return render(request, "create_bicycles.html")
+    if request.method == "GET":
+        return render(request, "create_bicycles.html")
+    else:
+        usp_warn = False
+        counter = 1
+        while usp_warn == False:
+            print(f"Get request page {counter}")
+            response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
+            if (
+                "No podemos encontrar productos que coincida con la selección."
+                in response.text
+            ):
+                usp_warn = True
+            # Creamos la soup con BeautifulSoup
+            soup = BeautifulSoup(response.text, "html.parser")
+            # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
+            bicycles = soup.find_all("li", class_="item product product-item")
+            counter += 1
+            try:
+                create_bicycles(bicycles)
+                return render(request, "home.html", {"message": "Bicycle saving completed"})
+            except ValueError:
+                return render(request, "home.html", {"error": "Bicycle saving completed"})
+        return render(request, "create_bicycles.html")
 
 
 def add_todays_price(bicycle):
@@ -275,96 +277,62 @@ def get_price_history(request, reference):
 def subscription(request):
     form = SubscriptionForm()
     if request.method == "GET":
-        return render(request, "subscription.html", {
-            "form": form
-        })
+        try:
+            reference = request.GET.get("reference")
+            form = SubscriptionForm(initial={"reference": reference})
+            return render(request, "subscription.html", {
+                "form": form
+            })
+        except:
+            return render(request, "subscription.html", {
+                "form": form
+            })
     else:
         bicycle = get_object_or_404(Bicycle, reference=request.POST["reference"])
         subscribe = Subscription(email=request.POST["email"], reference=request.POST["reference"], bicycle=bicycle)
-        print(subscribe)
-        subscribe.save()
-        return render(request, "subscription.html", {
-            "form": form,
-            "message": "Subscribed successfully!"
+        try:
+            subs_object = get_object_or_404(Subscription, email = request.POST["email"], reference=request.POST["reference"])
+            print(subs_object)
+            return render(request, "subscription.html", {
+                "form": form,
+                "message": "Subscription already exist"
+            })
+        except:
+            subscribe.save()
+            return render(request, "subscription.html", {
+                "form": form,
+                "message": "Subscribed successfully!"
+            })
+
+def unsubscription(request):
+    form = SubscriptionForm()
+    if request.method == "GET":
+        return render(request, "unsubscription.html", {
+            "form": form
         })
+    else:
+        subscription = get_object_or_404(Subscription, email=request.POST["email"], reference=request.POST["reference"])
+        # try:
+        subscription.delete()
+        return render(request, "unsubscription.html", {
+            "form": form,
+            "message": f"Unsubscribeb from {subscription.bicycle}"
+        })
+        """
+        except:
+            return render(request, "unsubscription.html", {
+                "form": form,
+                "message": f"This subscription does not exist"
+            })
+        """
+
 
 
 # system("clear")
 # get_price_history(34687)
 
 
-"""
-if name == None and reference == None:
-    print("Se debe pasar un nombre o referencia")
-    return
-with open("bicycles_db.json", "r") as file:
-    file_json = json.load(file)
-    for bicycle in file_json:
-        if reference != None:
-            if bicycle["reference"] == str(reference):
-                for key in bicycle["prices"].keys():
-                    print(f'{bicycle["name"]}:')
-                    print(
-                        f'The day {key} the price was {bicycle["prices"][key]:.2f}€\n'
-                    )
-            else:
-                print("Bicycle not found")
-        else:
-            if name.lower() in bicycle["name"].lower():
-                for key in bicycle["prices"].keys():
-                    print(f'{bicycle["name"]}:')
-                    print(
-                        f'The day {key} the price was {bicycle["prices"][key]:.2f}€\n'
-                    )
-"""
 
-
-# Pedir datos en consola para ejecutar las funciones que desee el cliente
-def exe_app():
-    search = input(
-        "Search a bicycle or enter a reference (For example: Scott Spark or 30480):\n"
-    )
-    try:
-        int(search)
-        prices_graph_matplotlib(search)
-    except:
-        bicycles_searched = []
-        with open("bicycles_db.json", "r") as file:
-            file_json = json.load(file)
-            for bicycle in file_json:
-                if search.lower() in bicycle["name"].lower():
-                    bicycles_searched.append(
-                        f"{bicycle['name']} => Reference: {bicycle['reference']}"
-                    )
-        if len(bicycles_searched) == 0:
-            print("There are no matches")
-            exe_app()
-        elif len(bicycles_searched) == 1:
-            pattern = r"Reference: (\d+)"
-            reference = re.search(pattern, bicycles_searched[0]).group(1)
-        else:
-            for bicycle_searched in sorted(bicycles_searched):
-                print(bicycle_searched)
-            reference = input("Enter the reference of the desired bicycle:\n")
-        prices_graph_matplotlib(reference)
-    email_subscription = input("Do you want to subscribe to prices alerts? Y/N:\n")
-    if email_subscription.lower() == "y" or "yes":
-        print("email_subscription")
-        email = input("Enter your Gmail email:\n")
-        pattern = r"\b[\w.%+-]+@gmail.[\w{2,4}?]+\b"
-        while not re.search(pattern, email):
-            email = input("Enter a valid Gmail email:\n")
-        print(email)
-        correct_email = input("The email is correct? Y/N:\n")
-        while correct_email.lower() == "n" or "no":
-            email = input("Enter your Gmail email:\n")
-            print(email)
-            correct_email = input("The email is correct? Y/N:\n")
-        send_subscript_confirm(email, reference)
-    elif email_subscription.lower() == "n" or "no":
-        print("No email subscription")
-    else:
-        print("Invalid entry")
 
 
 # Recibir la confirmacion de la suscripcion al mail
@@ -405,65 +373,6 @@ def send_subscript_confirm(email, reference):
 def send_code_to_email(email):
     pass
 
-
-# Hace un llamado requests.get por cada pagina de bicicletas y crea el archivo json.
-def create_json_file():
-    usp_warn = False
-    counter = 1
-    while usp_warn == False:
-        print(f"Get request page {counter}")
-        response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
-        if (
-            "No podemos encontrar productos que coincida con la selección."
-            in response.text
-        ):
-            usp_warn = True
-        # Creamos la soup con BeautifulSoup
-        soup = BeautifulSoup(response.text, "html.parser")
-        # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
-        bicycles = soup.find_all("li", class_="item product product-item")
-        counter += 1
-        bicycles_list = create_bicycles_list(bicycles)
-        create_json(bicycles_list)
-
-
-def create_bicycles_list(bicycles):
-    print("Creando lista de bicicletas")
-    bicycles_list = []
-    for bicycle in bicycles:
-        bicycle_name = bicycle.find("strong", class_="product-item-name").text.strip()
-        bicycle_img = bicycle.find("img")["src"]
-        bicycle_href = bicycle.find("a")["href"]
-        bicycle_price = get_todays_price(bicycle)
-        response_href = requests.get(bicycle_href)
-        if response_href.status_code == 200:
-            bicycle_reference = (
-                BeautifulSoup(response_href.text, "html.parser")
-                .find("div", itemprop="sku")
-                .text
-            )
-        bicycles_list.append(
-            Bicycle2(
-                bicycle_name,
-                float(bicycle_price),
-                bicycle_href,
-                bicycle_reference,
-                bicycle_img,
-            )
-        )
-    print(f"Cantidad de bicicletas en la lista: {len(bicycles_list)}")
-    return bicycles_list
-
-
-# Recibe una lista de objetos Bicycle y crea un archivo json donde guardar toda la informacion de las bicicletas
-def create_json(bicycles_list):
-    with open("bicycles_db.json", "w", encoding="utf-8") as file:
-        json.dump(
-            [bicycle.to_dict() for bicycle in bicycles_list],
-            file,
-            ensure_ascii=False,
-            indent=4,
-        )
 
 
 # Recibe la soup de una bicicleta y retorna su precio actual

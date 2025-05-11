@@ -26,9 +26,9 @@ urlpatterns = [
     path("signin/", views.signin, name="signin"),
     path("signout/", views.signout, name="signout"),
     path("create_bicycles/", views.extract_bicycles_from_web, name="create_bicycles"),
-    path("add_todays_price/", views.add_todays_price, name="add_todays_price"),
     path("search_bicycle/", views.search_bicycle, name="search_bicycle"),
     path("search_bicycle/<str:query>", views.search_bicycle, name="search_bicycle_filter"),
     path("price_history/<int:reference>", views.get_price_history, name="price_history"),
-    path("subscription", views.subscription, name="subscription"),
+    path("subscription/", views.subscription, name="subscription"),
+    path("unsubscription/", views.unsubscription, name="unsubscription"),
 ]

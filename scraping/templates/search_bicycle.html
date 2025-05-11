@@ -17,6 +17,9 @@
     <a href="{% url 'price_history' result.reference %}" name="price_history">
         <button type="button">Price History</button>
     </a>
+    <a href="/subscription/?reference={{ result.reference }}">
+        <button type="button">Subscribe to price alerts</button>
+    </a>
 </div>
 {% endfor %}
 {% endblock %}

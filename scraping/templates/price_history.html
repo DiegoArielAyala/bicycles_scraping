@@ -1,8 +1,15 @@
 {% extends "base.html"%}
 
 {% block content %}
-<h1>Get Price History</h1>
-<div>
-    {{graphic|safe}}
-</div>
+<main class="container">
+    <div class="row">
+        <div class="col-md-10 offset-md-1 w-100">
+            <h1 class="display-4 text-center">Get Price History</h1>
+            <div>
+                {{graphic|safe}}
+            </div>
+
+        </div>
+    </div>
+</main>
 {% endblock %}

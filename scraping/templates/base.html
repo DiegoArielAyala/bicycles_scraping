@@ -4,61 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bike Price Tracker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <div>
-        {% if user.is_authenticated %}
-        <p>User: {{user.username}}</p>
-        {% endif %}
-        <ul>
-            <li>
-                <a href="/">Home</a>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <a href="{% url 'search_bicycle' %}">Search bicycles</a>
-            </li>
-        </ul>
-        {% if user.is_authenticated %}
-        <ul>
-            <li>
-                <a href="{% url 'signout' %}">Sign out</a>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <a href="{% url 'subscription' %}">Subscribe</a>
-            </li>
-        </ul>
-        {% else %}
-        <ul>
-            <li>
-                <a href="{% url 'signup' %}">Sign up</a>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <a href="{% url 'signin' %}">Sign in</a>
-            </li>
-        </ul>
-        {% endif %}
-        {% if user.username == "diegoayala" %}
-        <strong>Admin functions</strong>
-        <ul>
-            <li>
-                <a href="{% url 'create_bicycles' %}">Create bicycles</a>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <a href="{% url 'add_todays_price' %}">Add todays price</a>
-            </li>
-        </ul>
-        {% endif %}
-        
-    </div>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Bike Price Tracker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'search_bicycle' %}">Search bicycles</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signout' %}">Sign out</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'subscription' %}">Subscribe</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'unsubscription' %}">Unsubscribe</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signup' %}">Sign up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signin' %}">Sign in</a>
+                        </li>
+                    {% endif %}
+                    {% if user.username == "diegoayala" %}
+                        <span class="navbar-text"><strong>Admin functions:</strong></span>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'create_bicycles' %}">Create bicycles</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                {% if user.is_authenticated %}
+                    <span class="navbar-text ms-auto">User: {{user.username}}</span>
+                {% endif %}
+            </div> 
+        </div>
+    </nav>
     {% block content %}
     {% endblock %}
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 </html>
