@@ -264,10 +264,21 @@ def get_price_history(request, reference):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=dates, y=prices, mode="lines+markers", name="Precio"))
     fig.update_layout(
-        title=f"{bicycle.name} price history",
+        title={
+            "text": f"{bicycle.name} price history",
+            "x":0.5,
+            "xanchor": "center",
+            "font": {"size": 24, "family": "system-ui"}
+        },
         xaxis_title="Date",
         yaxis_title="Price (€)",
         hovermode="x unified",
+        font=dict(
+            family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+            size=16,
+            color= "#212529",
+        ),
+        margin=dict(t=100, b=40, l=40, r=20),
     )
     graphic = fig.to_html()
 
