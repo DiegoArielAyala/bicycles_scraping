@@ -2,37 +2,42 @@
 
 {% block content %}
 <main class="container py-3">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card card-body mt-5">
-                <h2 class="display-4 text-center text-accent ">Search Bicycle</h2>
-                <p class="text-secondary fs-5">Find a bicycle by name or reference</p>
-                <form class="mt-5" action="" method="POST">
-                        {% csrf_token %}
-                        <label class="display-6 fs-4" for="">Name or Reference:</label>
-                        <input class="w-50" type="text" name="query" placeholder="Scott - 34687 - Team Race">
-                        <div class="text-center py-3">
-                            <button class="btn btn-primary">Search</button>
-                        </div>
-                        </form>
-                {% for result in results %}
-                <div>
-                    <h2>{{result.name}}</h2>
-                    <img src="{{result.img}}" alt="">
-                    <p>{{result.current_price|floatformat:2}} €</p>
-                    <a href="{{result.url}}">{{result.url}}</a>
-                    <a href="{% url 'price_history' result.reference %}" name="price_history">
-                        <button type="button">Price History</button>
-                    </a>
-                    <a href="/subscription/?reference={{ result.reference }}">
-                        <button type="button">Subscribe to price alerts</button>
-                    </a>
-                </div>
-                {% endfor %}
+    <section class="card shadow-lg rounded-4 border-0 p-4 bg-dark text-light">
+        <div class="text-center mb-3">
+            <h2 class="display-4 mb-3 text-accent fw-bold">Search Bicycle</h2>
+            <p class="text-secondary fs-5">Find a bicycle by name or reference</p>
+        </div>
+
+        <form class="d-flex flex-column align-items-center gap-3" action="" method="POST">
+            {% csrf_token %}
+            <label class="text-secondary fs-4" for="">Name or Reference:</label>
+            <input class="form-control w-75 text-center fs-5 py-2 bg-dark border-accent text-light placeholder-light" type="text" name="query" placeholder="Scott - 34687 - Team Race">
+            <div class="text-center py-3">
+                <button class="btn btn-accent btn-lg px-5 shadow-sm">Search</button>
+            </div>
+        </form>
+    </section>
+    {% for result in results %}
+    <section class="card shadow-lg rounded-4 border-0 p-4 bg-dark text-light my-3">
+        <h2 class="text-accent fs-3 text-center">{{result.name}}</h2>
+        <div class="d-flex">
+            <img src="{{result.img}}" alt="">
+            <div>
+                <p>{{result.current_price|floatformat:2}} €</p>
+                <a href="{{result.url}}">{{result.url}}</a>
+                <a href="{% url 'price_history' result.reference %}" name="price_history">
+                    <button type="button">Price History</button>
+                </a>
+                <a href="/subscription/?reference={{ result.reference }}">
+                    <button type="button">Subscribe to price alerts</button>
+                </a>
 
             </div>
-
         </div>
-    </div>
+
+    </section>
+    {% endfor %}
+
+
 </main>
 {% endblock %}
