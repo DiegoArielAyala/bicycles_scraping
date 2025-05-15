@@ -17,20 +17,26 @@
             </div>
         </form>
     </section>
+
     {% for result in results %}
     <section class="card shadow-lg rounded-4 border-0 p-4 bg-dark text-light my-3">
-        <h2 class="text-accent fs-3 text-center">{{result.name}}</h2>
-        <div class="d-flex">
-            <img src="{{result.img}}" alt="">
-            <div>
-                <p>{{result.current_price|floatformat:2}} €</p>
-                <a href="{{result.url}}">{{result.url}}</a>
-                <a href="{% url 'price_history' result.reference %}" name="price_history">
-                    <button type="button">Price History</button>
-                </a>
-                <a href="/subscription/?reference={{ result.reference }}">
-                    <button type="button">Subscribe to price alerts</button>
-                </a>
+        <h2 class="text-accent fs-3 text-center mb-3">{{result.name}}</h2>
+        <div class="row align-items-center g-4 ">
+            <div class="col-md-4 text-center offset-md-1">
+                <img class="img-fluid rounded-2 shadow-sm" src="{{result.img}}" alt="">
+            </div>
+            <div class="col-md-7 d-flex flex-column justify-content-center gap-3 ">
+                <p class="fs-4 text-price fw-bold">{{result.current_price|floatformat:2}} € </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{result.url}}" class="btn btn-outline-light px-4">Visit site
+                    </a>
+                    <a href="{% url 'price_history' result.reference %}" name="price_history" class="btn btn-outline-light px-4">Price History
+
+                    </a>
+                    <a href="/subscription/?reference={{ result.reference }}" class="btn btn-outline-light px-4">Subscribe to price alerts
+                    </a>
+
+                </div>
 
             </div>
         </div>

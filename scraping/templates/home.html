@@ -12,6 +12,7 @@
 
     <form class="d-flex flex-column align-items-center gap-3" action="search_bicycle/" method="POST">
       {% csrf_token %}
+      <label class="text-secondary fs-4" for="">Name or Reference:</label>
       <input
         type="text"
         name="query"
@@ -25,6 +26,7 @@
 
     <hr class="my-4 border-secondary" />
 
+    {% if not user.is_authenticated %}
     <div class="text-center">
       <p class="mb-3 fs-5 text-secondary">Don't have an account?</p>
       <div class="d-flex justify-content-center gap-3">
@@ -32,6 +34,7 @@
         <a href="/signup" class="btn btn-light px-4 py-2">Sign Up</a>
       </div>
     </div>
+    {% endif %}
   </section>
 </main>
 

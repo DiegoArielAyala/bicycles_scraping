@@ -127,7 +127,6 @@ def create_bicycles(bicycles):
             # Buscar en la db si existe esa referencia
             try:
                 bicycle_object = get_object_or_404(Bicycle, reference=bicycle_reference)
-                print(f"Referencia {bicycle_reference} ya existe en la base de datos")
                 print(bicycle_object.reference)
                 add_todays_price(bicycle_object)
             except:
@@ -143,7 +142,6 @@ def create_bicycles(bicycles):
                 )
                 new_bicycle = bicycle_form.save()
                 print(f"\n\nnew_bicycle.id:\n {new_bicycle.id}")
-                print(f"\n\nnew_bicycle:\n {new_bicycle}")
                 try:
                     price_history = PriceHistory(
                         bicycle=new_bicycle,
@@ -151,7 +149,6 @@ def create_bicycles(bicycles):
                         price=bicycle_price,
                     )
                     price_history.save()
-                    print(f"\n\nprice_history:\n {price_history}")
                 except:
                     print("Error creating price_history")
 
@@ -177,9 +174,8 @@ def extract_bicycles_from_web(request):
             counter += 1
             try:
                 create_bicycles(bicycles)
-                return render(request, "home.html", {"message": "Bicycle saving completed"})
             except ValueError:
-                return render(request, "home.html", {"error": "Bicycle saving completed"})
+                return render(request, "home.html", {"message": "Bicycle saving completed"})
         return render(request, "create_bicycles.html")
 
 
@@ -206,6 +202,8 @@ def add_todays_price(bicycle):
             )
             new_price_history.save()
             if bicycle.current_price != float(todays_price):
+                bicycle.current_price = float(todays_price)
+                bicycle.save()
                 print(
                     f"{bicycle.reference} changed price from {bicycle.current_price} to {todays_price}"
                 )

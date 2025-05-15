@@ -31,6 +31,10 @@ body {
     opacity: 0.7;
   }
 
+  .text-price {
+    color: #e0e0e0;
+  }
+
   input[type="text"].bg-dark {
     background-color: #212529 !important;
     color: #f8f9fa;
