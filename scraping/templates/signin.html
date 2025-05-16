@@ -1,11 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Sign in</h1>
-{{error}}
-<form action="" method="POST">
-    {% csrf_token %}
-    {{form}}
-    <button>Sign in</button>
-</form>
+<main class="container py-3">
+    <section class="card shadow-lg rounded-4 border-0 p-4 bg-dark text-light">
+        <div class="text-center mb-3">
+            <h2 class="display-4 mb-3 text-accent fw-bold">Sign in</h2>
+            
+
+            <form class="d-flex flex-column alig-item-center gap-3" action="" method="POST">
+                {% csrf_token %}
+
+                <div class="d-flex text-center mt-3 mb-3 w-100 justify-content-center">
+                    <label class="text-end w-25 text-secondary fs-4 my-auto me-3" for="id_username">Username:</label>
+                    <input class=" my-auto form-control w-50 fs-5 py-2 bg-dark border-accent text-light placeholder-light" type="text" name="username" id="id_username" autofocus placeholder=""  required  >
+                </div>
+
+                <div class="d-flex text-center mb-3 w-100 justify-content-center">
+                    <label class="text-end w-25 text-secondary fs-4 my-auto me-3" for="id_password">Password:</label>
+                    <input class=" my-auto form-control w-50  fs-5 py-2 bg-dark border-accent text-light placeholder-light" type="password" name="password" id="id_password" placeholder="" required  >
+                </div>
+
+                <div class="text-secondary fs-5">
+                    {{error}}
+                </div>
+
+                <div class="text-center py-3">
+                    <button class="btn btn-accent btn-lg px-5 shadow-sm">Sign in</button>
+                </div>
+            </form>
+
+            <hr class="my-3 border-secondary">
+
+            {% if not user.is_authenticated %}
+            <div class="text-center">
+                <p class="mb-3 fs-5 text-secondary">Don't have account?</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="/signin" class="btn btn-outline-light px-4 py-2">Sign In</a>
+                    <a href="/signup" class="btn btn-light px-4 py-2">Sign Up</a>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+
+    </section>
+</main>
 {% endblock %}

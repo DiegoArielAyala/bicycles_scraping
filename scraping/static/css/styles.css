@@ -41,10 +41,10 @@ body {
     border: 2px solid rgba(42, 185, 201, 0.4)
   }
 
-  input[type="text"].bg-dark:focus,
-  input[type="text"].bg-dark:not(:placeholder-shown) {
-    background-color: #212529 !important;
-    color: #f8f9fa;
-    border-color: rgb(42, 185, 201);
-    box-shadow: 0 0 0 0.2rem rgba(42, 185, 201, 0.25);
-  }
+  input.bg-dark:focus,
+  input.bg-dark:not(:placeholder-shown) {
+  background-color: #212529 !important;
+  color: #f8f9fa;
+  border-color: rgb(42, 185, 201);
+  box-shadow: 0 0 0 0.2rem rgba(42, 185, 201, 0.25);
+}

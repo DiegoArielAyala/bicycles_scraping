@@ -104,7 +104,7 @@ def signin(request):
                 {"form": form, "error": "User or password incorrect."},
             )
 
-
+@login_required
 def signout(request):
     logout(request)
     return redirect("home")
@@ -282,7 +282,7 @@ def get_price_history(request, reference):
 
     return render(request, "price_history.html", {"graphic": graphic})
 
-
+@login_required
 def subscription(request):
     form = SubscriptionForm()
     if request.method == "GET":
@@ -313,6 +313,7 @@ def subscription(request):
                 "message": "Subscribed successfully!"
             })
 
+@login_required
 def unsubscription(request):
     form = SubscriptionForm()
     if request.method == "GET":
