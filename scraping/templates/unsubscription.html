@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Unsubscription</h1>
+<main class="container py-3">
+    <section class="card border-0 rounded-4 shadow-lg bg-dark text-light p-4">
+        <div class="text-center mb-3">
+            <h2 class="display-4 mb-3 text-accent fw-bold">Unsubscription</h2>
+
+        </div>
+    </section>
+
+</main>
 <form action="" method="POST">
     {% csrf_token %}
     {{form}}
