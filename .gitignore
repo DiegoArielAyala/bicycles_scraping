@@ -8,3 +8,4 @@ __pycache__/
 *.pyc
 readme.md
 graphics
+bicycles_scraping.py
