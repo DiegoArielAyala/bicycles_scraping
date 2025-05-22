@@ -18,6 +18,7 @@ from .utils import create_bicycles
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+import threading
 
 dotenv.load_dotenv()
 
@@ -94,36 +95,35 @@ def scraping(request):
 
 @csrf_exempt
 def extract_bicycles_from_web(request):
+    print("Ejecutando extract_bicycles_from_web")
     if request.method != "POST":
         return JsonResponse({"error": "Only POST method"}, status=405)
     
     token = request.GET.get("token") or request.POST.get("token")
     if token != settings.CRON_SECRET_TOKEN:
-        print(token)
-        print(settings.CRON_SECRET_TOKEN)
         return JsonResponse({"error": "Not authorized"}, status=403)
-
-    usp_warn = False
-    counter = 1
-    while not usp_warn:
-        print(f"Get request page {counter}")
-        response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
-        if (
-            "No podemos encontrar productos que coincida con la selección."
-            in response.text
-        ):
-            usp_warn = True
-            break
-        # Creamos la soup con BeautifulSoup
-        soup = BeautifulSoup(response.text, "html.parser")
-        # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
-        bicycles = soup.find_all("li", class_="item product product-item")
-        counter += 1
-        try:
+    print("Comprobacion metodo POST y token correcto")
+    
+    def run_scraper():
+        usp_warn = False
+        counter = 1
+        while not usp_warn:
+            print(f"Get request page {counter}")
+            response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
+            if (
+                "No podemos encontrar productos que coincida con la selección."
+                in response.text
+            ):
+                usp_warn = True
+                break
+            # Creamos la soup con BeautifulSoup
+            soup = BeautifulSoup(response.text, "html.parser")
+            # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
+            bicycles = soup.find_all("li", class_="item product product-item")
+            counter += 1
             create_bicycles(bicycles)
-        except ValueError:
-            return render(request, "home.html", {"message": "Bicycle saving completed"})
-    return render(request, "create_bicycles.html")
+    threading.Thread(target=run_scraper).start()
+    return JsonResponse({"message": "Scraping started in background"})
 
 def extract_bicycles_from_web2(request):
     if request.method == "GET":
