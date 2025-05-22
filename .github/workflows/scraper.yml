@@ -1,0 +1,15 @@
+name: Exec Scraper Daily
+
+on:
+  schedule:
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send POST to server
+        run: |
+          curl -X POST "https://bicycles-scraping.onrender.com/create_bicycles/?token=${{ secrets.SCRAPER_TOKEN }}"
