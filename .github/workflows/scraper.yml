@@ -12,4 +12,4 @@ jobs:
     steps:
       - name: Send POST to server
         run: |
-          curl -X POST "https://bicycles-scraping.onrender.com/create_bicycles/?token=${{ secrets.SCRAPER_TOKEN }}"
+          curl -X POST "https://bicycles-scraping.onrender.com/extract_bicycles/?token=${{ secrets.SCRAPER_TOKEN }}"
