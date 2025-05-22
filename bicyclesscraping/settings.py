@@ -153,8 +153,4 @@ LOGIN_URL = "/signin"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-CELERY_BROKER_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
-
 CRON_SECRET_TOKEN = os.environ.get("CRON_SECRET_TOKEN")

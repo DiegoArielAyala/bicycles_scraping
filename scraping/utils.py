@@ -27,7 +27,6 @@ def create_bicycles(bicycles):
             # Buscar en la db si existe esa referencia
             try:
                 bicycle_object = get_object_or_404(Bicycle, reference=bicycle_reference)
-                print(bicycle_object.reference)
                 add_todays_price(bicycle_object)
             except:
                 print("Bicycle not exist")

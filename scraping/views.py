@@ -6,7 +6,6 @@ import json
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from datetime import datetime
 import plotly.graph_objects as go
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -15,7 +14,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from .models import Bicycle, PriceHistory, Subscription
 from .forms import SubscriptionForm
-from .task import create_bicycles_task
+from .utils import create_bicycles
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -121,7 +120,7 @@ def extract_bicycles_from_web(request):
         bicycles = soup.find_all("li", class_="item product product-item")
         counter += 1
         try:
-            create_bicycles_task.delay(bicycles)
+            create_bicycles(bicycles)
         except ValueError:
             return render(request, "home.html", {"message": "Bicycle saving completed"})
     return render(request, "create_bicycles.html")
@@ -147,7 +146,7 @@ def extract_bicycles_from_web2(request):
             bicycles = soup.find_all("li", class_="item product product-item")
             counter += 1
             try:
-                create_bicycles_task.delay(bicycles)
+                create_bicycles(bicycles)
             except ValueError:
                 return render(request, "home.html", {"message": "Bicycle saving completed"})
         return render(request, "create_bicycles.html")
