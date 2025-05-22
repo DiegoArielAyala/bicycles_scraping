@@ -93,6 +93,27 @@ def scraping(request):
         "cron_token": settings.CRON_SECRET_TOKEN
     })
 
+def run_scraper():
+    usp_warn = False
+    counter = 1
+    while not usp_warn:
+        print(f"Get request page {counter}")
+        response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
+        if (
+            "No podemos encontrar productos que coincida con la selección."
+            in response.text
+        ):
+            usp_warn = True
+            break
+        # Creamos la soup con BeautifulSoup
+        soup = BeautifulSoup(response.text, "html.parser")
+        # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
+        bicycles = soup.find_all("li", class_="item product product-item")
+        counter += 1
+        create_bicycles(bicycles)
+    print("Scraping finished.")
+
+
 @csrf_exempt
 def extract_bicycles_from_web(request):
     print("Ejecutando extract_bicycles_from_web")
@@ -102,26 +123,8 @@ def extract_bicycles_from_web(request):
     token = request.GET.get("token") or request.POST.get("token")
     if token != settings.CRON_SECRET_TOKEN:
         return JsonResponse({"error": "Not authorized"}, status=403)
-    print("Comprobacion metodo POST y token correcto")
     
-    def run_scraper():
-        usp_warn = False
-        counter = 1
-        while not usp_warn:
-            print(f"Get request page {counter}")
-            response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
-            if (
-                "No podemos encontrar productos que coincida con la selección."
-                in response.text
-            ):
-                usp_warn = True
-                break
-            # Creamos la soup con BeautifulSoup
-            soup = BeautifulSoup(response.text, "html.parser")
-            # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
-            bicycles = soup.find_all("li", class_="item product product-item")
-            counter += 1
-            create_bicycles(bicycles)
+    print("Comprobacion metodo POST y token correcto")
     threading.Thread(target=run_scraper).start()
     return JsonResponse({"message": "Scraping started in background"})
 
