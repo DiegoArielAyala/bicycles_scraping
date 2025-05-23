@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send POST to server
+      - name: Run scraper by pages
         run: |
-          curl -X POST "https://bicycles-scraping.onrender.com/extract_bicycles/?token=${{ secrets.SCRAPER_TOKEN }}"
+          for i in {1...30...10}; do
+            END=$((i+9))
+            curl -X POST "https://bicycles-scraping.onrender.com/extract_bicycles/?token=${{ secrets.SCRAPER_TOKEN }}&start_page=$i&last_page=$END"
+            sleep 
+          done

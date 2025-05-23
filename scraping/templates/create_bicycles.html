@@ -17,6 +17,15 @@
             <div class="text-secondary fs-5">
                 {{message}}
             </div>
+            { if messages }
+                <div class="text-secondary fs-5">
+                    {% for message in messages %}
+                        <div>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif }
         </div>
 
     </section>

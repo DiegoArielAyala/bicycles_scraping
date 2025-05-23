@@ -19,6 +19,7 @@ from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import threading
+from django.contrib import messages
 
 dotenv.load_dotenv()
 
@@ -93,10 +94,10 @@ def scraping(request):
         "cron_token": settings.CRON_SECRET_TOKEN
     })
 
-def run_scraper():
+def run_scraper(start_page, last_page):
     usp_warn = False
-    counter = 1
-    while not usp_warn:
+    counter = start_page
+    while not usp_warn and counter <= last_page:
         print(f"Get request page {counter}")
         response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
         if (
@@ -115,7 +116,7 @@ def run_scraper():
 
 
 @csrf_exempt
-def extract_bicycles_from_web(request):
+def extract_bicycles_from_web(request, start_page=1, last_page=30):
     print("Ejecutando extract_bicycles_from_web")
     if request.method != "POST":
         return JsonResponse({"error": "Only POST method"}, status=405)
@@ -125,34 +126,13 @@ def extract_bicycles_from_web(request):
         return JsonResponse({"error": "Not authorized"}, status=403)
     
     print("Comprobacion metodo POST y token correcto")
-    threading.Thread(target=run_scraper).start()
-    return JsonResponse({"message": "Scraping started in background"})
+    threading.Thread(target=run_scraper, args=(start_page, last_page)).start()
 
-def extract_bicycles_from_web2(request):
-    if request.method == "GET":
-        return render(request, "create_bicycles.html")
-    else:
-        usp_warn = False
-        counter = 1
-        while not usp_warn:
-            print(f"Get request page {counter}")
-            response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
-            if (
-                "No podemos encontrar productos que coincida con la selección."
-                in response.text
-            ):
-                usp_warn = True
-                break
-            # Creamos la soup con BeautifulSoup
-            soup = BeautifulSoup(response.text, "html.parser")
-            # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
-            bicycles = soup.find_all("li", class_="item product product-item")
-            counter += 1
-            try:
-                create_bicycles(bicycles)
-            except ValueError:
-                return render(request, "home.html", {"message": "Bicycle saving completed"})
-        return render(request, "create_bicycles.html")
+    if "text/html" in request.headers.get("Accept", ""):
+        messages.success(request, "Scraping started in background")
+        return redirect("create_bicycles")
+    
+    return JsonResponse({"message": "Scraping started in background"})
 
 
 
@@ -185,19 +165,33 @@ def get_price_history(request, reference):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=dates, y=prices, mode="lines+markers", name="Precio"))
     fig.update_layout(
+        plot_bgcolor="#212529",
+        paper_bgcolor="#212529",
         title={
-            "text": f"{bicycle.name} price history",
+            "text": f"{bicycle.name}",
             "x":0.5,
             "xanchor": "center",
             "font": {"size": 24, "family": "system-ui"}
         },
-        xaxis_title="Date",
-        yaxis_title="Price (€)",
+        xaxis=dict(
+            title=dict(text="Date", font=dict(color="#f8f9fa")),
+            color="#f8f9fa",
+            gridcolor="#343a40",
+            linecolor="#f8f9fa",
+            tickfont=dict(color="#f8f9fa"),
+        ),
+        yaxis=dict(
+            title=dict(text="Price (€)", font=dict(color="#f8f9fa")),
+            color="#f8f9fa",
+            gridcolor="#343a40",
+            linecolor="#f8f9fa",
+            tickfont=dict(color="#f8f9fa"),
+        ),
         hovermode="x unified",
         font=dict(
             family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
             size=16,
-            color= "#212529",
+            color= "#f8f9fa",
         ),
         margin=dict(t=100, b=40, l=40, r=20),
     )
