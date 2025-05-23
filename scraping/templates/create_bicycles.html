@@ -8,16 +8,26 @@
             
             <form action="{% url 'extract_bicycles' %}" method="POST" class="d-flex flex-column align-items-center gap-3">
                 {% csrf_token %}
+                <input type="hidden" name="token" value="{{ cron_token }}">
+                
+                <div class="text-center d-flex mt-3 mb-3 w-100 justify-content-center">
+                    <label class="text-end text-secondary fs-4 my-auto me-3 w-25" for="id_start_page">Start page</label>
+                    <input class="form-control w-50 border-accent bg-dark my-auto text-light placeholder-light" type="number" name="start_page" id="id_start_page">
+                </div>
+                
+                <div class="text-center d-flex mt-3 mb-3 w-100 justify-content-center">
+                    <label class="text-end text-secondary fs-4 my-auto me-3 w-25" for="id_last_page">Last page</label>
+                    <input class="form-control w-50 border-accent bg-dark my-auto text-light placeholder-light" type="number" name="last_page" id="id_last_page">
+                </div>
+                
                 <div class="text-center py-3">
-                    <input type="hidden" name="token" value="{{ cron_token }}">
                     <button class="btn btn-accent btn-lg px-4 shadow-sm">Start</button>
-
                 </div>
             </form>
             <div class="text-secondary fs-5">
                 {{message}}
             </div>
-            { if messages }
+            {% if messages %}
                 <div class="text-secondary fs-5">
                     {% for message in messages %}
                         <div>
@@ -25,7 +35,7 @@
                         </div>
                     {% endfor %}
                 </div>
-            {% endif }
+            {% endif %}
         </div>
 
     </section>

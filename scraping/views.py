@@ -96,7 +96,7 @@ def scraping(request):
 
 def run_scraper(start_page, last_page):
     usp_warn = False
-    counter = start_page
+    counter = int(start_page)
     while not usp_warn and counter <= last_page:
         print(f"Get request page {counter}")
         response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
@@ -125,7 +125,14 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
     if token != settings.CRON_SECRET_TOKEN:
         return JsonResponse({"error": "Not authorized"}, status=403)
     
+    start_page = request.GET.get("start_page") or request.POST.get(start_page) or start_page
+    last_page = request.GET.get("last_page") or request.POST.get(last_page) or last_page
+
+    start_page = int(start_page)
+    last_page = int(last_page)
+    
     print("Comprobacion metodo POST y token correcto")
+    print(f"Scraping from page {start_page} to {last_page}")
     threading.Thread(target=run_scraper, args=(start_page, last_page)).start()
 
     if "text/html" in request.headers.get("Accept", ""):
