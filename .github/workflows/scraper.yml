@@ -12,8 +12,9 @@ jobs:
     steps:
       - name: Run scraper by pages
         run: |
-          for i in {1...30...10}; do
+          for i in {1..30..10}; do
             END=$((i+9))
+            echo "Scraping pages $i to $END"
             curl -X POST "https://bicycles-scraping.onrender.com/extract_bicycles/?token=${{ secrets.SCRAPER_TOKEN }}&start_page=$i&last_page=$END"
             sleep 180
           done
