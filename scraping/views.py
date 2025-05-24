@@ -213,7 +213,8 @@ def subscription(request):
             reference = request.GET.get("reference")
             form = SubscriptionForm(initial={"reference": reference})
             return render(request, "subscription.html", {
-                "form": form
+                "form": form,
+                "reference": reference
             })
         except:
             return render(request, "subscription.html", {
