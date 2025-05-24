@@ -2,7 +2,7 @@ import requests
 from .views import urljoin
 from bs4 import BeautifulSoup
 from .forms import BicycleForm
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from datetime import datetime
 from .models import Bicycle, PriceHistory
 
@@ -24,6 +24,7 @@ def create_bicycles(bicycles):
                 .find("div", itemprop="sku")
                 .text
             )
+            clean_duplicates(bicycle_reference)
             # Buscar en la db si existe esa referencia
             try:
                 bicycle_object = get_object_or_404(Bicycle, reference=bicycle_reference)
@@ -50,6 +51,14 @@ def create_bicycles(bicycles):
                     price_history.save()
                 except:
                     print("Error creating price_history")
+
+
+def clean_duplicates(reference):
+    bicycles = list(Bicycle.objects.filter(reference=reference).order_by("id"))
+    if len(bicycles) > 1:
+        for bicycle in bicycles[1:]:
+            print(f"Delete {bicycle} from DB")
+            bicycle.delete()
 
 
 def add_todays_price(bicycle):

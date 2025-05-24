@@ -111,6 +111,7 @@ def run_scraper(start_page, last_page):
         # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
         bicycles = soup.find_all("li", class_="item product product-item")
         counter += 1
+        
         create_bicycles(bicycles)
     print("Scraping finished.")
 
@@ -159,7 +160,7 @@ def search_bicycle(request, query=None):
 
 
 def get_price_history(request, reference):
-    bicycle = get_object_or_404(Bicycle, reference=reference)
+    bicycle = get_list_or_404(Bicycle, reference=reference)[0]
     price_history_list = get_list_or_404(PriceHistory, bicycle=bicycle.pk)
 
     dates = sorted([price.date for price in price_history_list])
