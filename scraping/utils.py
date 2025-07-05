@@ -28,6 +28,7 @@ def create_bicycles(bicycles):
             # Buscar en la db si existe esa referencia
             try:
                 bicycle_object = get_object_or_404(Bicycle, reference=bicycle_reference)
+                print(bicycle_object)
                 add_todays_price(bicycle_object)
             except:
                 print("Bicycle not exist")
@@ -43,19 +44,20 @@ def create_bicycles(bicycles):
                 if bicycle_form.is_valid():
                     new_bicycle = bicycle_form.save()
                     print(f"Saved bike for: {new_bicycle.id}")
-                else:
-                    print("Invalid form.",bicycle_form.errors)
 
-                print(f"\n\nnew_bicycle.id:\n {new_bicycle.id}")
-                try:
-                    price_history = PriceHistory(
-                        bicycle=new_bicycle,
-                        date=datetime.now().date(),
-                        price=bicycle_price,
-                    )
-                    price_history.save()
-                except Exception as e:
-                    print("Error creating price_history", e)
+                    try:
+                        price_history = PriceHistory(
+                            bicycle=new_bicycle,
+                            date=datetime.now().date(),
+                            price=bicycle_price,
+                        )
+                        price_history.save()
+                        print(f"PriceHistory saved for {new_bicycle.reference}")
+                    except Exception as e:
+                        print("Error creating price_history:", e)
+
+                else:
+                    print("Invalid form:", bicycle_form.errors)
 
 
 def clean_duplicates(reference):
@@ -64,6 +66,8 @@ def clean_duplicates(reference):
         for bicycle in bicycles[1:]:
             print(f"Delete {bicycle} from DB")
             bicycle.delete()
+    else:
+        print("No duplicates found for reference:", reference)
 
 
 def add_todays_price(bicycle):
