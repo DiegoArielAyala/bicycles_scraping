@@ -14,12 +14,16 @@ from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from .models import Bicycle, PriceHistory, Subscription
 from .forms import SubscriptionForm
-from .utils import create_bicycles, headers
+from .utils import create_bicycles
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import threading
 from django.contrib import messages
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+import os
 
 dotenv.load_dotenv()
 
@@ -95,25 +99,35 @@ def scraping(request):
     })
 
 def run_scraper(start_page, last_page):
-    usp_warn = False
+    options = Options()
+    options.binary_location = os.environ.get("CHROME_BIN", "/usr/bin/google-chrome")
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+
+    service = Service(os.environ.get("CHROMEDRIVER_PATH", "/usr/bin/chromedriver"))
+    driver = webdriver.Chrome(service=service, options=options)
+
+    print(driver)
+    print(service)
+
+    #usp_warn = False
     counter = int(start_page)
-    while not usp_warn and counter <= last_page:
-        print(f"Get request page {counter}")
-        response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)), headers=headers)
-        print(response.status_code)
-        if (
-            "No podemos encontrar productos que coincida con la selección."
-            in response.text
-        ):
-            usp_warn = True
+    while counter <= last_page:
+        url = f"https://www.bikingpoint.es/es/bicicletas.html?p={counter}"
+        driver.get(url)
+
+        soup = BeautifulSoup(driver.page_source, "html.parser")
+
+        if "No podemos encontrar productos que coincida con la selección." in soup.text:
             break
-        # Creamos la soup con BeautifulSoup
-        soup = BeautifulSoup(response.text, "html.parser")
-        # Obtener el contenedor de cada bicicleta, crear cada Bycicle y guardar en una lista
+
         bicycles = soup.find_all("li", class_="item product product-item")
-        counter += 1
-        
+        print(bicycles)
         create_bicycles(bicycles)
+
+        counter += 1
+    driver.quit()
     print("Scraping finished.")
 
 
