@@ -148,6 +148,9 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
     last_page = int(last_page)
     
     print(f"Scraping from page {start_page} to {last_page}")
+    print("CHROMEDRIVER_PATH:", os.environ.get("CHROMEDRIVER_PATH"))
+    print("CHROME_BIN:", os.environ.get("CHROME_BIN"))
+    print("¿Existe CHROMEDRIVER_PATH?", os.path.exists(os.environ.get("CHROMEDRIVER_PATH", "/usr/bin/chromedriver")))
     threading.Thread(target=run_scraper, args=(start_page, last_page)).start()
 
     if "text/html" in request.headers.get("Accept", ""):

@@ -21,6 +21,9 @@ RUN wget https://storage.googleapis.com/chrome-for-testing-public/138.0.7204.92/
     chmod +x /usr/bin/chromedriver && \
     rm -rf chromedriver-linux64*
 
+RUN echo "Verificando ChromeDriver..." && ls -l /usr/bin/chromedriver && which google-chrome
+
+
 # Variables de entorno para Selenium
 ENV CHROME_BIN=/usr/bin/google-chrome
 ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
