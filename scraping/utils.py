@@ -2,7 +2,7 @@ import requests
 from .views import urljoin
 from bs4 import BeautifulSoup
 from .forms import BicycleForm
-from django.shortcuts import get_object_or_404, get_list_or_404
+from django.shortcuts import get_object_or_404
 from datetime import datetime
 from .models import Bicycle, PriceHistory
 
@@ -40,7 +40,12 @@ def create_bicycles(bicycles):
                         "reference": bicycle_reference,
                     }
                 )
-                new_bicycle = bicycle_form.save()
+                if bicycle_form.is_valid():
+                    new_bicycle = bicycle_form.save()
+                    print(f"Saved bike for: {new_bicycle.id}")
+                else:
+                    print("Invalid form.",bicycle_form.errors)
+
                 print(f"\n\nnew_bicycle.id:\n {new_bicycle.id}")
                 try:
                     price_history = PriceHistory(
@@ -49,8 +54,8 @@ def create_bicycles(bicycles):
                         price=bicycle_price,
                     )
                     price_history.save()
-                except:
-                    print("Error creating price_history")
+                except Exception as e:
+                    print("Error creating price_history", e)
 
 
 def clean_duplicates(reference):

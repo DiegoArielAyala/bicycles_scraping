@@ -1,5 +1,5 @@
 from django import forms
-from .models import Bicycle, PriceHistory, Subscription
+from .models import Bicycle, Subscription
 
 class BicycleForm(forms.ModelForm):
     class Meta:
