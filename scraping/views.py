@@ -105,7 +105,7 @@ def run_scraper(start_page, last_page):
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
 
-    service = Service(os.environ.get("CHROMEDRIVER_PATH", "/usr/bin/chromedriver"))
+    service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH", "/usr/bin/chromedriver"))
     driver = webdriver.Chrome(service=service, options=options)
 
     print(driver)

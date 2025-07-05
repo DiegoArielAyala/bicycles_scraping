@@ -39,3 +39,6 @@ EXPOSE 8000
 
 # Comando de inicio
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+RUN ls -l /usr/bin/chromedriver
+
