@@ -100,6 +100,7 @@ def run_scraper(start_page, last_page):
     while not usp_warn and counter <= last_page:
         print(f"Get request page {counter}")
         response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)), headers=headers)
+        print(response.status_code)
         if (
             "No podemos encontrar productos que coincida con la selección."
             in response.text
