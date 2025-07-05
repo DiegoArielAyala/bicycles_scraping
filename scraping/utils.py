@@ -12,12 +12,15 @@ search_endpoint = "catalogsearch/result/?q={}"
 
 def create_bicycles(bicycles):
     print("Creando lista de bicicletas")
+    print(bicycles)
     for bicycle in bicycles:
+        print(bicycle)
         bicycle_name = bicycle.find("strong", class_="product-item-name").text.strip()
         bicycle_img = bicycle.find("img")["src"]
         bicycle_href = bicycle.find("a")["href"]
         bicycle_price = get_todays_price(bicycle)
         response_href = requests.get(bicycle_href)
+        print(response_href.status_code)
         if response_href.status_code == 200:
             bicycle_reference = (
                 BeautifulSoup(response_href.text, "html.parser")
