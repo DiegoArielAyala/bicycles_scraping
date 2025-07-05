@@ -14,7 +14,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from .models import Bicycle, PriceHistory, Subscription
 from .forms import SubscriptionForm
-from .utils import create_bicycles
+from .utils import create_bicycles, headers
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -99,9 +99,7 @@ def run_scraper(start_page, last_page):
     counter = int(start_page)
     while not usp_warn and counter <= last_page:
         print(f"Get request page {counter}")
-        print(urljoin(bicycles_url, page_endpoint.format(counter)))
-        response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)))
-        print(response.status_code)
+        response = requests.get(urljoin(bicycles_url, page_endpoint.format(counter)), headers=headers)
         if (
             "No podemos encontrar productos que coincida con la selección."
             in response.text

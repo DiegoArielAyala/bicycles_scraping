@@ -8,19 +8,23 @@ from .models import Bicycle, PriceHistory
 
 url = "https://www.bikingpoint.es/es/"
 search_endpoint = "catalogsearch/result/?q={}"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+    "Accept-Language": "es-ES,es;q=0.9,en;q=0.8",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Connection": "keep-alive",
+}
 
 
 def create_bicycles(bicycles):
     print("Creando lista de bicicletas")
     print(bicycles)
     for bicycle in bicycles:
-        print(bicycle)
         bicycle_name = bicycle.find("strong", class_="product-item-name").text.strip()
         bicycle_img = bicycle.find("img")["src"]
         bicycle_href = bicycle.find("a")["href"]
         bicycle_price = get_todays_price(bicycle)
-        response_href = requests.get(bicycle_href)
-        print(response_href.status_code)
+        response_href = requests.get(bicycle_href, headers=headers)
         if response_href.status_code == 200:
             bicycle_reference = (
                 BeautifulSoup(response_href.text, "html.parser")
@@ -31,7 +35,6 @@ def create_bicycles(bicycles):
             # Buscar en la db si existe esa referencia
             try:
                 bicycle_object = get_object_or_404(Bicycle, reference=bicycle_reference)
-                print(bicycle_object)
                 add_todays_price(bicycle_object)
             except:
                 print("Bicycle not exist")
@@ -47,7 +50,6 @@ def create_bicycles(bicycles):
                 if bicycle_form.is_valid():
                     new_bicycle = bicycle_form.save()
                     print(f"Saved bike for: {new_bicycle.id}")
-
                     try:
                         price_history = PriceHistory(
                             bicycle=new_bicycle,
