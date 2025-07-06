@@ -42,6 +42,9 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Instala los navegadores necesarios para Playwright
+RUN playwright install --with-deps
+
 COPY . .
 
 # Instalar navegadores de Playwright
