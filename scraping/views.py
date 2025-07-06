@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from bs4 import BeautifulSoup
-import requests, os, dotenv
+import os, dotenv
 from urllib.parse import urljoin
 import json
 import smtplib
@@ -20,10 +20,6 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import threading
 from django.contrib import messages
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-import os
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
