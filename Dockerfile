@@ -40,6 +40,9 @@ RUN playwright install chromium
 # Copiar el resto del código
 COPY . .
 
+# Ejecutar collectstatic en build time
+RUN python manage.py collectstatic --noinput
+
 # Exponer el puerto para Django
 EXPOSE 8000
 
