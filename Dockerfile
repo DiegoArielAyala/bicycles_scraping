@@ -1,7 +1,7 @@
 # Imagen base
 FROM python:3.11-slim
 
-# Instalar dependencias del sistema para Chromium y Playwright
+# Instalar dependencias del sistema para Playwright/Chromium
 RUN apt-get update && apt-get install -y \
     curl \
     libgbm1 \
@@ -27,31 +27,21 @@ RUN apt-get update && apt-get install -y \
     libappindicator3-1 \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-# Instalar Google Chrome estable
-RUN curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o chrome.deb && \
-    apt install ./chrome.deb -y && \
-    rm chrome.deb
-
-# Variables de entorno para Playwright y Chrome
-ENV CHROME_BIN=/usr/bin/google-chrome
-
 # Crear directorio de la app
 WORKDIR /app
 
-# Copiar requirements y código
+# Copiar requirements e instalar dependencias Python
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Instala los navegadores necesarios para Playwright
-RUN playwright install --with-deps
+# Instalar navegadores de Playwright
+RUN playwright install chromium --with-deps
 
+# Copiar el resto del código
 COPY . .
 
-# Instalar navegadores de Playwright
-RUN python -m playwright install --with-deps
-
-# Exponer puerto para Django
+# Exponer el puerto para Django
 EXPOSE 8000
 
-# Comando para correr Django
+# Comando para correr el servidor de Django
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
