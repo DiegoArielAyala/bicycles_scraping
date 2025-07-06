@@ -24,6 +24,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import os
+from bs4 import BeautifulSoup
+from playwright.sync_api import sync_playwright
 
 dotenv.load_dotenv()
 
@@ -99,36 +101,33 @@ def scraping(request):
     })
 
 def run_scraper(start_page, last_page):
-    options = Options()
-    options.binary_location = os.environ.get("CHROME_BIN", "/usr/bin/google-chrome")
-    options.add_argument("--headless")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
+    print("Ejecutando extract_bicycles_from_web con Playwright")
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"])
+        page = browser.new_page()
+        counter = int(start_page)
 
-    service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH", "/usr/bin/chromedriver"))
-    driver = webdriver.Chrome(service=service, options=options)
+        while counter <= last_page:
+            url = f"https://www.bikingpoint.es/es/bicicletas.html?p={counter}"
+            page.goto(url)
 
-    print(driver)
-    print(service)
+            html = page.content()
+            soup = BeautifulSoup(html, "html.parser")
 
-    #usp_warn = False
-    counter = int(start_page)
-    while counter <= last_page:
-        url = f"https://www.bikingpoint.es/es/bicicletas.html?p={counter}"
-        driver.get(url)
+            if "No podemos encontrar productos que coincida con la selección." in soup.text:
+                print("No hay más productos, finalizando.")
+                break
 
-        soup = BeautifulSoup(driver.page_source, "html.parser")
+            bicycles = soup.find_all("li", class_="item product product-item")
+            print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
+            
+            # Llama a tu función que procesa las bicicletas
+            create_bicycles(bicycles)
 
-        if "No podemos encontrar productos que coincida con la selección." in soup.text:
-            break
+            counter += 1
 
-        bicycles = soup.find_all("li", class_="item product product-item")
-        print(bicycles)
-        create_bicycles(bicycles)
-
-        counter += 1
-    driver.quit()
-    print("Scraping finished.")
+        browser.close()
+    print("Scraping terminado.")
 
 
 @csrf_exempt
@@ -146,11 +145,7 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
 
     start_page = int(start_page)
     last_page = int(last_page)
-    
-    print(f"Scraping from page {start_page} to {last_page}")
-    print("CHROMEDRIVER_PATH:", os.environ.get("CHROMEDRIVER_PATH"))
-    print("CHROME_BIN:", os.environ.get("CHROME_BIN"))
-    print("¿Existe CHROMEDRIVER_PATH?", os.path.exists(os.environ.get("CHROMEDRIVER_PATH", "/usr/bin/chromedriver")))
+
     threading.Thread(target=run_scraper, args=(start_page, last_page)).start()
 
     if "text/html" in request.headers.get("Accept", ""):
