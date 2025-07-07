@@ -41,7 +41,7 @@ RUN playwright install chromium
 COPY . .
 
 # Ejecutar collectstatic en build time
-RUN python manage.py collectstatic --noinput
+RUN DJANGO_SETTINGS_MODULE=bicyclesscraping.settings DEBUG=False python manage.py collectstatic --noinput
 
 # Exponer el puerto para Django
 EXPOSE 8000
