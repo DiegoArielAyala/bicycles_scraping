@@ -40,8 +40,12 @@ RUN playwright install chromium
 # Copiar el resto del código
 COPY . .
 
+# Definir variables de entorno necesarias para producción
+ENV DJANGO_SETTINGS_MODULE=bicyclesscraping.settings
+ENV PYTHONUNBUFFERED=1
+
 # Ejecutar collectstatic en build time
-RUN DJANGO_SETTINGS_MODULE=bicyclesscraping.settings DEBUG=False python manage.py collectstatic --noinput
+RUN python manage.py collectstatic --noinput
 
 # Exponer el puerto para Django
 EXPOSE 8000
