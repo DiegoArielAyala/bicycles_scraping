@@ -159,3 +159,5 @@ CRON_SECRET_TOKEN = os.environ.get("CRON_SECRET_TOKEN")
 SESSION_COOKIE_AGE = 3600
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+CSFR_TRUSTED_ORIGINS = ["https://bicycles-scraping-docker.onrender.com"]
