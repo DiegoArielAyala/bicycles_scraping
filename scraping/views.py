@@ -22,6 +22,8 @@ import threading
 from django.contrib import messages
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
+from playwright_stealth.stealth import Stealth
+
 
 dotenv.load_dotenv()
 
@@ -86,44 +88,17 @@ def signin(request):
                 {"form": form, "error": "User or password incorrect."},
             )
 
+
 @login_required
 def signout(request):
     logout(request)
     return redirect("home")
 
+
 def scraping(request):
-    return render(request, "create_bicycles.html", {
-        "cron_token": settings.CRON_SECRET_TOKEN
-    })
-
-def run_scraper(start_page, last_page):
-    print("Ejecutando extract_bicycles_from_web con Playwright")
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"])
-        page = browser.new_page()
-        counter = int(start_page)
-
-        while counter <= last_page:
-            url = f"https://www.bikingpoint.es/es/bicicletas.html?p={counter}"
-            page.goto(url)
-
-            html = page.content()
-            soup = BeautifulSoup(html, "html.parser")
-
-            if "No podemos encontrar productos que coincida con la selección." in soup.text:
-                print("No hay más productos, finalizando.")
-                break
-
-            bicycles = soup.find_all("li", class_="item product product-item")
-            print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
-            
-            # Llama a tu función que procesa las bicicletas
-            create_bicycles(bicycles)
-
-            counter += 1
-
-        browser.close()
-    print("Scraping terminado.")
+    return render(
+        request, "create_bicycles.html", {"cron_token": settings.CRON_SECRET_TOKEN}
+    )
 
 
 @csrf_exempt
@@ -131,13 +106,17 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
     print("Ejecutando extract_bicycles_from_web")
     if request.method != "POST":
         return JsonResponse({"error": "Only POST method"}, status=405)
-    
+
     token = request.GET.get("token") or request.POST.get("token")
     if token != settings.CRON_SECRET_TOKEN:
         return JsonResponse({"error": "Not authorized"}, status=403)
-    
-    start_page = request.GET.get("start_page") or request.POST.get("start_page") or start_page
-    last_page = request.GET.get("last_page") or request.POST.get("last_page") or last_page
+
+    start_page = (
+        request.GET.get("start_page") or request.POST.get("start_page") or start_page
+    )
+    last_page = (
+        request.GET.get("last_page") or request.POST.get("last_page") or last_page
+    )
 
     start_page = int(start_page)
     last_page = int(last_page)
@@ -147,9 +126,48 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
     if "text/html" in request.headers.get("Accept", ""):
         messages.success(request, "Scraping started in background")
         return redirect("create_bicycles")
-    
+
     return JsonResponse({"message": "Scraping started in background"})
 
+
+def run_scraper(start_page, last_page):
+    with sync_playwright() as p:
+        browser = p.chromium.launch(
+            headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"]
+        )
+        page = browser.new_page(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/15.0.0.0 Safari/537.36")
+        stealth_instance = Stealth()
+        stealth_instance.apply_stealth_sync(page)
+        counter = int(start_page)
+
+        while counter <= last_page:
+            url = f"https://www.bikingpoint.es/es/bicicletas.html?p={counter}"
+            print("url: ", url)
+            try:
+                page.goto(url, wait_until="domcontentloaded")
+                
+                html = page.content()
+                soup = BeautifulSoup(html, "html.parser")
+
+                if (
+                    "No podemos encontrar productos que coincida con la selección."
+                    in soup.text
+                ):
+                    print("No hay más productos, finalizando.")
+                    break
+
+                bicycles = soup.find_all("li", class_="item product product-item")
+                print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
+
+                create_bicycles(bicycles, page)
+
+                counter += 1
+            except Exception as e:
+                print(f"Error en la página {counter}: {e}")
+                break
+
+        browser.close()
+    print("Scraping terminado.")
 
 
 def search_bicycle(request, query=None):
@@ -185,9 +203,9 @@ def get_price_history(request, reference):
         paper_bgcolor="#212529",
         title={
             "text": f"{bicycle.name}",
-            "x":0.5,
+            "x": 0.5,
             "xanchor": "center",
-            "font": {"size": 24, "family": "system-ui"}
+            "font": {"size": 24, "family": "system-ui"},
         },
         xaxis=dict(
             title=dict(text="Date", font=dict(color="#f8f9fa")),
@@ -207,13 +225,14 @@ def get_price_history(request, reference):
         font=dict(
             family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
             size=16,
-            color= "#f8f9fa",
+            color="#f8f9fa",
         ),
         margin=dict(t=100, b=40, l=40, r=20),
     )
     graphic = fig.to_html()
 
     return render(request, "price_history.html", {"graphic": graphic})
+
 
 @login_required
 def subscription(request):
@@ -222,46 +241,57 @@ def subscription(request):
         try:
             reference = request.GET.get("reference")
             form = SubscriptionForm(initial={"reference": reference})
-            return render(request, "subscription.html", {
-                "form": form,
-                "reference": reference
-            })
+            return render(
+                request, "subscription.html", {"form": form, "reference": reference}
+            )
         except:
-            return render(request, "subscription.html", {
-                "form": form
-            })
+            return render(request, "subscription.html", {"form": form})
     else:
         bicycle = get_object_or_404(Bicycle, reference=request.POST["reference"])
-        subscribe = Subscription(email=request.POST["email"], reference=request.POST["reference"], bicycle=bicycle)
+        subscribe = Subscription(
+            email=request.POST["email"],
+            reference=request.POST["reference"],
+            bicycle=bicycle,
+        )
         try:
-            subs_object = get_object_or_404(Subscription, email = request.POST["email"], reference=request.POST["reference"])
+            subs_object = get_object_or_404(
+                Subscription,
+                email=request.POST["email"],
+                reference=request.POST["reference"],
+            )
             print(subs_object)
-            return render(request, "subscription.html", {
-                "form": form,
-                "message": "Subscription already exist"
-            })
+            return render(
+                request,
+                "subscription.html",
+                {"form": form, "message": "Subscription already exist"},
+            )
         except:
             subscribe.save()
-            return render(request, "subscription.html", {
-                "form": form,
-                "message": "Subscribed successfully!"
-            })
+            return render(
+                request,
+                "subscription.html",
+                {"form": form, "message": "Subscribed successfully!"},
+            )
+
 
 @login_required
 def unsubscription(request):
     form = SubscriptionForm()
     if request.method == "GET":
-        return render(request, "unsubscription.html", {
-            "form": form
-        })
+        return render(request, "unsubscription.html", {"form": form})
     else:
-        subscription = get_object_or_404(Subscription, email=request.POST["email"], reference=request.POST["reference"])
+        subscription = get_object_or_404(
+            Subscription,
+            email=request.POST["email"],
+            reference=request.POST["reference"],
+        )
         # try:
         subscription.delete()
-        return render(request, "unsubscription.html", {
-            "form": form,
-            "message": f"Unsubscribeb from {subscription.bicycle}"
-        })
+        return render(
+            request,
+            "unsubscription.html",
+            {"form": form, "message": f"Unsubscribeb from {subscription.bicycle}"},
+        )
         """
         except:
             return render(request, "unsubscription.html", {
@@ -271,12 +301,8 @@ def unsubscription(request):
         """
 
 
-
 # system("clear")
 # get_price_history(34687)
-
-
-
 
 
 # Recibir la confirmacion de la suscripcion al mail
@@ -318,11 +344,6 @@ def send_code_to_email(email):
     pass
 
 
-
-
-
-
-
 # Funcion para enviar alerta por mail de cambio de precio
 def send_alert(bicycles, to=os.getenv("EMAIL")):
     from_ = os.getenv("EMAIL")
@@ -356,4 +377,3 @@ def alert_lower_price(reference, today_price):
                 print(
                     f"La {bicycle['name']} (referencia {bicycle['reference']}) ha bajado de precio!!"
                 )
-

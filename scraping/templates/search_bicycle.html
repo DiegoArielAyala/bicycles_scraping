@@ -16,6 +16,12 @@
                 <button class="btn btn-accent btn-lg px-5 shadow-sm">Search</button>
             </div>
         </form>
+
+        {% if not results %}
+            <div class="text-secondary fs-5 text-center mt-3">
+                We couldn't find any bicycles matching your search.
+            </div>
+        {% endif %}
     </section>
 
     {% for result in results %}
@@ -38,12 +44,9 @@
                     </a>
                     <a href="/subscription/?reference={{ result.reference }}" class="btn btn-outline-light px-4">Subscribe to price alerts
                     </a>
-
                 </div>
-
             </div>
         </div>
-
     </section>
     {% endfor %}
 

@@ -23,28 +23,30 @@ headers = {
 }
 
 
-def create_bicycles(bicycles):
+def create_bicycles(bicycles, page):
     print("Creando lista de bicicletas")
-    print(bicycles)
     for bicycle in bicycles:
-        print(bicycle)
         bicycle_name = bicycle.find("strong", class_="product-item-name").text.strip()
         bicycle_img = bicycle.find("img")["src"]
         bicycle_href = bicycle.find("a")["href"]
         bicycle_price = get_todays_price(bicycle)
-        response_href = requests.get(bicycle_href, headers=headers)
-        print(response_href.status_code)
-        if response_href.status_code == 200:
+        response = page.goto(bicycle_href, wait_until="domcontentloaded")
+        # response_href = requests.get(bicycle_href, headers=headers)
+        #if response_href.status_code == 200:
+        print("response status: ", response.status)
+        if response.status == 200:
+            html = page.content()
             bicycle_reference = (
-                BeautifulSoup(response_href.text, "html.parser")
+                BeautifulSoup(html, "html.parser")
                 .find("div", itemprop="sku")
                 .text
             )
+            print("bicycle_reference", bicycle_reference)
             clean_duplicates(bicycle_reference)
             # Buscar en la db si existe esa referencia
             try:
                 bicycle_object = get_object_or_404(Bicycle, reference=bicycle_reference)
-                print(bicycle_object)
+                print("bicycle_object: ", bicycle_object)
                 add_todays_price(bicycle_object)
             except:
                 print("Bicycle not exist")
@@ -77,14 +79,18 @@ def create_bicycles(bicycles):
 
 
 def clean_duplicates(reference):
-    bicycles = list(Bicycle.objects.filter(reference=reference).order_by("id"))
-    if len(bicycles) > 1:
-        for bicycle in bicycles[1:]:
-            print(f"Delete {bicycle} from DB")
-            bicycle.delete()
-    else:
-        print("No duplicates found for reference:", reference)
-
+    print("Cleaning duplicates")
+    try:
+        bicycles = list(Bicycle.objects.filter(reference=reference).order_by("id"))
+        print("bicycles: ", bicycles)
+        if len(bicycles) > 1:
+            for bicycle in bicycles[1:]:
+                print(f"Delete {bicycle} from DB")
+                bicycle.delete()
+        else:
+            print("No duplicates found for reference:", reference)
+    except Exception as e:
+        print("Error al buscar bicicletas en Bicycle.objects: ", e)
 
 def add_todays_price(bicycle):
     print(f"Adding todays price for {bicycle.reference}")

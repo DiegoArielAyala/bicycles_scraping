@@ -12,7 +12,8 @@ body {
     color: #fff;
   }
 
-  .btn-accent:hover {
+  .btn-accent:hover,
+  .btn-accent:focus-visible {
     background-color: rgb(32, 160, 170);
     border-color: rgb(32, 160, 170);
   }
