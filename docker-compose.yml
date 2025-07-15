@@ -1,0 +1,44 @@
+services:
+  web:
+    build: .
+    container_name: bike_tracker_web
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - db
+    env_file:
+      - .env
+  
+  redis:
+    image: redis:latest
+    container_name: redis_bike_tacker
+    ports:
+      - "6379:6379"
+  
+  celery:
+    build: .
+    container_name: celery_bike_tracker
+    command: celery -A bicyclesscraping worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - web
+  
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD} 
+    ports:
+      - "5433:5432"
+    volumes:
+      - bikeprice_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  bikeprice_postgres_data:

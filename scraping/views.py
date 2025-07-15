@@ -18,11 +18,12 @@ from .utils import create_bicycles
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-import threading
 from django.contrib import messages
 from bs4 import BeautifulSoup
-from playwright.sync_api import sync_playwright
+from playwright.async_api import async_playwright
 from playwright_stealth.stealth import Stealth
+from .task import run_scraper_task
+import asyncio, random
 
 
 dotenv.load_dotenv()
@@ -32,6 +33,18 @@ bicycles_endpoint = "bicicletas.html"
 search_endpoint = "catalogsearch/result/?q={}"
 page_endpoint = "?p={}"
 bicycles_url = urljoin(url, bicycles_endpoint)
+
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.199 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.183",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 12_6_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.198 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:112.0) Gecko/20100101 Firefox/112.0",
+    "Mozilla/5.0 (Linux; Android 11; SM-A715F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Mobile Safari/537.36",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPad; CPU OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1"
+]
 
 
 def home(request):
@@ -121,7 +134,7 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
     start_page = int(start_page)
     last_page = int(last_page)
 
-    threading.Thread(target=run_scraper, args=(start_page, last_page)).start()
+    run_scraper_task.delay(start_page, last_page)
 
     if "text/html" in request.headers.get("Accept", ""):
         messages.success(request, "Scraping started in background")
@@ -130,24 +143,28 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
     return JsonResponse({"message": "Scraping started in background"})
 
 
-def run_scraper(start_page, last_page):
-    with sync_playwright() as p:
-        browser = p.chromium.launch(
+async def run_scraper(start_page, last_page):
+    print("run_scraper function start")
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(
             headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"]
         )
-        page = browser.new_page(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/15.0.0.0 Safari/537.36")
-        stealth_instance = Stealth()
-        stealth_instance.apply_stealth_sync(page)
         counter = int(start_page)
 
         while counter <= last_page:
             url = f"https://www.bikingpoint.es/es/bicicletas.html?p={counter}"
-            print("url: ", url)
+            print(f"url: {url}")
             try:
-                page.goto(url, wait_until="domcontentloaded")
+                list_page = await browser.new_page(user_agent=random.choice(USER_AGENTS))
                 
-                html = page.content()
+                stealth = Stealth()
+                await stealth.apply_stealth_async(list_page)
+                await asyncio.sleep(random.uniform(3, 6))
+                await list_page.goto(url, wait_until="domcontentloaded")
+                
+                html = await list_page.content()
                 soup = BeautifulSoup(html, "html.parser")
+                print(soup)
 
                 if (
                     "No podemos encontrar productos que coincida con la selección."
@@ -159,14 +176,14 @@ def run_scraper(start_page, last_page):
                 bicycles = soup.find_all("li", class_="item product product-item")
                 print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
 
-                create_bicycles(bicycles, page)
+                await create_bicycles(bicycles, USER_AGENTS)
 
                 counter += 1
             except Exception as e:
                 print(f"Error en la página {counter}: {e}")
                 break
 
-        browser.close()
+        await browser.close()
     print("Scraping terminado.")
 
 

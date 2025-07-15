@@ -5,6 +5,10 @@ from .forms import BicycleForm
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 from .models import Bicycle, PriceHistory
+from asgiref.sync import sync_to_async
+import asyncio, random
+from playwright.async_api import async_playwright
+from playwright_stealth.stealth import Stealth
 
 url = "https://www.bikingpoint.es/es/"
 search_endpoint = "catalogsearch/result/?q={}"
@@ -23,76 +27,87 @@ headers = {
 }
 
 
-def create_bicycles(bicycles, page):
+async def create_bicycles(bicycles, USER_AGENTS):
     print("Creando lista de bicicletas")
     for bicycle in bicycles:
         bicycle_name = bicycle.find("strong", class_="product-item-name").text.strip()
         bicycle_img = bicycle.find("img")["src"]
         bicycle_href = bicycle.find("a")["href"]
         bicycle_price = get_todays_price(bicycle)
-        response = page.goto(bicycle_href, wait_until="domcontentloaded")
-        # response_href = requests.get(bicycle_href, headers=headers)
-        #if response_href.status_code == 200:
-        print("response status: ", response.status)
-        if response.status == 200:
-            html = page.content()
-            bicycle_reference = (
-                BeautifulSoup(html, "html.parser")
-                .find("div", itemprop="sku")
-                .text
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(
+                headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"]
             )
-            print("bicycle_reference", bicycle_reference)
-            clean_duplicates(bicycle_reference)
-            # Buscar en la db si existe esa referencia
+            detail_page = await browser.new_page(user_agent=random.choice(USER_AGENTS))
+            stealth = Stealth()
+            await stealth.apply_stealth_async(detail_page)
             try:
-                bicycle_object = get_object_or_404(Bicycle, reference=bicycle_reference)
-                print("bicycle_object: ", bicycle_object)
-                add_todays_price(bicycle_object)
-            except:
-                print("Bicycle not exist")
-                bicycle_form = BicycleForm(
-                    {
-                        "name": bicycle_name,
-                        "img": bicycle_img,
-                        "current_price": bicycle_price,
-                        "url": bicycle_href,
-                        "reference": bicycle_reference,
-                    }
-                )
-                if bicycle_form.is_valid():
-                    new_bicycle = bicycle_form.save()
-                    print(f"Saved bike for: {new_bicycle.id}")
 
+                await asyncio.sleep(random.uniform(3, 6))
+                response = await detail_page.goto(bicycle_href, wait_until="domcontentloaded")
+                print(f"response status: {response.status}")
+                if response.status == 200:
+                    html = await detail_page.content()
+                    bicycle_reference = (
+                        BeautifulSoup(html, "html.parser")
+                        .find("div", itemprop="sku")
+                        .text
+                    )
+                    print(f"bicycle_reference: {bicycle_reference}" )
+                    await clean_duplicates(bicycle_reference)
+                    # Buscar en la db si existe esa referencia
                     try:
-                        price_history = PriceHistory(
-                            bicycle=new_bicycle,
-                            date=datetime.now().date(),
-                            price=bicycle_price,
+                        bicycle_object = await sync_to_async(lambda: get_object_or_404(Bicycle, reference=bicycle_reference))()
+                        await add_todays_price(bicycle_object)
+                    except:
+                        print("Bicycle not exist")
+                        bicycle_form = BicycleForm(
+                            {
+                                "name": bicycle_name,
+                                "img": bicycle_img,
+                                "current_price": bicycle_price,
+                                "url": bicycle_href,
+                                "reference": bicycle_reference,
+                            }
                         )
-                        price_history.save()
-                        print(f"PriceHistory saved for {new_bicycle.reference}")
-                    except Exception as e:
-                        print("Error creating price_history:", e)
+                        is_valid = await sync_to_async(bicycle_form.is_valid)()
+                        if is_valid:
+                            new_bicycle = await sync_to_async(bicycle_form.save)()
+                            print(f"Saved bike for: {new_bicycle.id}")
 
-                else:
-                    print("Invalid form:", bicycle_form.errors)
+                            try:
+                                price_history = PriceHistory(
+                                    bicycle=new_bicycle,
+                                    date=datetime.now().date(),
+                                    price=bicycle_price,
+                                )
+                                await sync_to_async(price_history.save)()
+                                print(f"PriceHistory saved for {new_bicycle.reference}")
+                            except Exception as e:
+                                print("Error creating price_history:", e)
+
+                        else:
+                            print("Invalid form:", bicycle_form.errors)
+            except Exception as e:
+                print("Error during get reference", e)
 
 
-def clean_duplicates(reference):
+async def clean_duplicates(reference):
     print("Cleaning duplicates")
     try:
-        bicycles = list(Bicycle.objects.filter(reference=reference).order_by("id"))
-        print("bicycles: ", bicycles)
+        bicycles = await sync_to_async(lambda: list(
+            Bicycle.objects.filter(reference=reference).order_by("id")
+        ))()
         if len(bicycles) > 1:
             for bicycle in bicycles[1:]:
                 print(f"Delete {bicycle} from DB")
-                bicycle.delete()
+                await sync_to_async(bicycle.delete)()
         else:
-            print("No duplicates found for reference:", reference)
+            print(f"No duplicates found for reference: {reference}")
     except Exception as e:
         print("Error al buscar bicicletas en Bicycle.objects: ", e)
 
-def add_todays_price(bicycle):
+async def add_todays_price(bicycle):
     print(f"Adding todays price for {bicycle.reference}")
     response_search_reference = requests.get(
         urljoin(url, search_endpoint.format(bicycle.reference))
@@ -101,7 +116,7 @@ def add_todays_price(bicycle):
         reference_soup = BeautifulSoup(response_search_reference.text, "html.parser")
         if "La búsqueda no ha devuelto ningún resultado." in reference_soup.text:
             print(f"Reference {bicycle.reference} was deleted")
-            bicycle.delete()
+            await sync_to_async(bicycle.delete)()
         else:
             todays_price = (
                 reference_soup.find_all("span", class_="price")[0]
@@ -113,10 +128,10 @@ def add_todays_price(bicycle):
             new_price_history = PriceHistory(
                 bicycle=bicycle, date=datetime.now().date(), price=todays_price
             )
-            new_price_history.save()
+            await sync_to_async(new_price_history.save)()
             if bicycle.current_price != float(todays_price):
                 bicycle.current_price = float(todays_price)
-                bicycle.save()
+                await sync_to_async(bicycle.save)()
                 print(
                     f"{bicycle.reference} changed price from {bicycle.current_price} to {todays_price}"
                 )
