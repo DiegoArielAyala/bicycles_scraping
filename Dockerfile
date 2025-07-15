@@ -45,9 +45,11 @@ COPY . .
 ENV DJANGO_SETTINGS_MODULE=bicyclesscraping.settings
 ENV PYTHONUNBUFFERED=1
 
+RUN python manage.py collectstatic --noinput
+
 # Exponer puerto
 EXPOSE 8000
 
 # Comando principal
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "bicyclesscraping.wsgi:application", "--build", "0.0.0.0:8000"]
 
