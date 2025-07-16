@@ -4,6 +4,7 @@ FROM python:3.11-slim
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
+    supervisor \
     fonts-liberation \
     libatk-bridge2.0-0 \
     libatk1.0-0 \
@@ -50,6 +51,7 @@ RUN python manage.py collectstatic --noinput
 # Exponer puerto
 EXPOSE 8000
 
-# Comando principal
-CMD ["gunicorn", "bicyclesscraping.wsgi:application", "--bind", "0.0.0.0:8000"]
+COPY supervisord.conf /app/supervisord.conf
 
+# Comando principal
+CMD ["supervisor", "-c", "/app/supervisord.conf"]

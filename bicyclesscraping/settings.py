@@ -168,6 +168,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://bicycles-scraping-docker.onrender.com",
 ]
 
-CELERY_BROKER_URL = "redis://redis:6379/0"
+CELERY_BROKER_URL = os.getenv("REDIS_URL")
+CELERY_RESULT_BACKEND = os.getenv("REDIS_URL")
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TAST_SERIALIZER = "json"
