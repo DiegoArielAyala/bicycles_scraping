@@ -54,4 +54,4 @@ EXPOSE 8000
 COPY supervisord.conf /app/supervisord.conf
 
 # Comando principal
-CMD ["supervisor", "-c", "/app/supervisord.conf"]
+CMD ["supervisord", "-c", "/app/supervisord.conf"]
