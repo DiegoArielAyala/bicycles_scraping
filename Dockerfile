@@ -28,6 +28,8 @@ RUN apt-get update && apt-get install -y \
     libappindicator3-1 \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
+RUN useradd -m appuser
+
 # Directorio de trabajo
 WORKDIR /app
 
@@ -42,11 +44,15 @@ RUN playwright install --with-deps
 # Copiar código de la app
 COPY . .
 
+RUN chown -R appuser:appuser /app
+
 # Variables de entorno
 ENV DJANGO_SETTINGS_MODULE=bicyclesscraping.settings
 ENV PYTHONUNBUFFERED=1
 
 RUN python manage.py collectstatic --noinput
+
+USER appuser
 
 # Exponer puerto
 EXPOSE 8000
