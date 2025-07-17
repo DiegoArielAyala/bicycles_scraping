@@ -1,15 +1,19 @@
-from django.contrib.auth import get_user_model
-from django.core.management import BaseCommand
+import django
 import os
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bicyclesscraping.settings")
+django.setup()
+
+from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-if not User.objects.filter(username="admin").exists():
-    User.objects.create_superuser(
-        username="admin",
-        email=os.getenv("HOTMAIL"),
-        password=os.getenv("DB_PASSWORD")
-    )
-    print("Superuser creado")
+username = os.environ.get("DJANGO_SUPERUSER_USERNAME", "admin")
+email = os.environ.get("DJANGO_SUPERUSER_EMAIL", os.getenv("HOTMAIL"))
+password = os.environ.get("DJANGO_SUPERUSER_PASSWORD", os.getenv("SU_PASSWORD"))
+
+if not User.objects.filter(username=username).exists():
+    print(f"Creating superuser {username}")
+    User.objects.create_superuser(username=username, email=email, password=password)
 else:
-    print("Superuser ya existe")
+    print(f"Superuser {username} already exists")

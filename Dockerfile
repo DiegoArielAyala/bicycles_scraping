@@ -47,7 +47,6 @@ ENV DJANGO_SETTINGS_MODULE=bicyclesscraping.settings
 ENV PYTHONUNBUFFERED=1
 
 RUN python manage.py collectstatic --noinput
-RUN python create_superuser.py
 
 # Exponer puerto
 EXPOSE 8000
