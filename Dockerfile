@@ -39,7 +39,9 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Instalar Chromium + dependencias internas
-RUN playwright install --with-deps
+USER appuser
+RUN playwright install
+USER root
 
 # Copiar código de la app
 COPY . .
