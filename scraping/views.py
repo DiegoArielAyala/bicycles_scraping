@@ -164,7 +164,6 @@ async def run_scraper(start_page, last_page):
                 
                 html = await list_page.content()
                 soup = BeautifulSoup(html, "html.parser")
-                print(soup)
 
                 if (
                     "No podemos encontrar productos que coincida con la selección."

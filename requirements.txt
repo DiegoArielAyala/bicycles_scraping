@@ -45,3 +45,4 @@ playwright-stealth==2.0.0
 celery==5.5.3
 redis==6.2.0
 supervisor==4.2.5
+django-extensions>=3.2,<4.0
