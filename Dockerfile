@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-# Instalar dependencias necesarias para navegador
+# Instalar solo las dependencias necesarias para ejecutar Chromium con Playwright
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
@@ -28,38 +28,41 @@ RUN apt-get update && apt-get install -y \
     libappindicator3-1 \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
+# Crear usuario sin privilegios
 RUN useradd -m appuser
 
 # Directorio de trabajo
 WORKDIR /app
 
-# Copiar dependencias
+# Copiar dependencias e instalar Python requirements
 COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# Instalar Chromium + dependencias internas
+# Instalar solo los navegadores, SIN dependencias del sistema (que ya pusimos antes)
 USER appuser
-RUN playwright install
+RUN playwright install chromium
+
+# Volver a root para copiar archivos y ajustar permisos
 USER root
-
-# Copiar código de la app
 COPY . .
-
 RUN chown -R appuser:appuser /app
 
 # Variables de entorno
 ENV DJANGO_SETTINGS_MODULE=bicyclesscraping.settings
 ENV PYTHONUNBUFFERED=1
 
+# Recolectar estáticos
 RUN python manage.py collectstatic --noinput
 
+# Usuario final
 USER appuser
 
-# Exponer puerto
+# Puerto de exposición
 EXPOSE 8000
 
+# Supervisord config
 COPY supervisord.conf /app/supervisord.conf
 
-# Comando principal
+# Comando final
 CMD ["supervisord", "-c", "/app/supervisord.conf"]
+

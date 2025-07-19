@@ -9,12 +9,31 @@ jobs:
   run-scraper:
     runs-on: ubuntu-latest
 
+    env:
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DJANGO_SETTINGS_MODULE: bicyclesscraping.settings
+      SECRET_KEY: dummy  # Necesario si tu Django lo requiere
+
     steps:
-      - name: Run scraper by pages
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
         run: |
-          for i in {1..30..2}; do
-            END=$((i+1))
-            echo "Scraping pages $i to $END"
-            curl -X POST "https://bicycles-scraping.onrender.com/extract_bicycles/?token=${{ secrets.SCRAPER_TOKEN }}&start_page=$i&last_page=$END"
-            sleep 180
-          done
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run migrations
+        run: python manage.py migrate
+
+      - name: Run scraper
+        run: python run_scraper.py
