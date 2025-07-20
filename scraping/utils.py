@@ -108,33 +108,50 @@ async def clean_duplicates(reference):
         print("Error al buscar bicicletas en Bicycle.objects: ", e)
 
 async def add_todays_price(bicycle):
-    print(f"Adding todays price for {bicycle.reference}")
+    print(f"Adding today's price for {bicycle.reference}")
+    
     response_search_reference = requests.get(
         urljoin(url, search_endpoint.format(bicycle.reference))
     )
+    
     if response_search_reference.status_code == 200:
         reference_soup = BeautifulSoup(response_search_reference.text, "html.parser")
+        
         if "La búsqueda no ha devuelto ningún resultado." in reference_soup.text:
             print(f"Reference {bicycle.reference} was deleted")
             await sync_to_async(bicycle.delete)()
         else:
-            todays_price = (
-                reference_soup.find_all("span", class_="price")[0]
-                .text.replace("\xa0", "")
-                .replace("€", "")
-                .replace(".", "")
-                .replace(",", ".")
-            )
-            new_price_history = PriceHistory(
-                bicycle=bicycle, date=datetime.now().date(), price=todays_price
-            )
-            await sync_to_async(new_price_history.save)()
-            if bicycle.current_price != float(todays_price):
-                bicycle.current_price = float(todays_price)
-                await sync_to_async(bicycle.save)()
-                print(
-                    f"{bicycle.reference} changed price from {bicycle.current_price} to {todays_price}"
+            try:
+                # Extraer y limpiar el precio
+                todays_price = (
+                    reference_soup.find_all("span", class_="price")[0]
+                    .text.replace("\xa0", "")
+                    .replace("€", "")
+                    .replace(".", "")
+                    .replace(",", ".")
                 )
+                todays_price_float = float(todays_price)
+
+                # Crear y guardar PriceHistory
+                new_price_history = PriceHistory(
+                    bicycle=bicycle,
+                    date=datetime.now().date(),
+                    price=todays_price_float
+                )
+                await sync_to_async(new_price_history.save)()
+                print(f"Saved today's price for {bicycle.reference}: {todays_price_float} €")
+
+                # Actualizar current_price si cambió
+                if bicycle.current_price != todays_price_float:
+                    old_price = bicycle.current_price
+                    bicycle.current_price = todays_price_float
+                    await sync_to_async(bicycle.save)()
+                    print(f"{bicycle.reference} price changed from {old_price} to {todays_price_float}")
+                else:
+                    print(f"{bicycle.reference} price did not change")
+                    
+            except Exception as e:
+                print(f"Failed to save price for {bicycle.reference}: {e}")
             
 
 # Recibe la soup de una bicicleta y retorna su precio actual
