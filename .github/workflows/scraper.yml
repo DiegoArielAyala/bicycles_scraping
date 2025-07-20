@@ -31,6 +31,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          
+      - name: Install Playwright browsers
+        run: playwright install --with-deps
 
       - name: Debug env variables (host, port, name)
         run: |
@@ -42,7 +45,7 @@ jobs:
 
       - name: Optional - Check DB connectivity
         run: |
-          apt-get update && apt-get install -y postgresql-client
+          sudo apt-get update && apt-get install -y postgresql-client
           PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -c '\dt'
         continue-on-error: true
         # Esto lista tablas; si no puede conectar, sabés que el problema es la conexión
