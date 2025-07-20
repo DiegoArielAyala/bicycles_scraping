@@ -83,7 +83,7 @@ WSGI_APPLICATION = "bicyclesscraping.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if "RENDER" in os.getenv:
+if os.getenv("RENDER"):
     DATABASES = {
         "default": dj_database_url.config(
             default=os.getenv("DATABASE_URL")
