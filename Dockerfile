@@ -60,9 +60,6 @@ USER appuser
 # Puerto de exposición
 EXPOSE 8000
 
-# Supervisord config
-COPY supervisord.conf /app/supervisord.conf
-
 # Comando final
-CMD ["supervisord", "-c", "/app/supervisord.conf"]
+CMD ["gunicorn", "bicyclesscraping.wsgi:application", "--bind", "0.0.0.0:8000"]
 

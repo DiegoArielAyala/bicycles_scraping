@@ -168,15 +168,3 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 CSRF_TRUSTED_ORIGINS = [
     "https://bicycles-scraping-docker.onrender.com",
 ]
-
-CELERY_BROKER_URL = os.getenv("REDIS_URL")
-CELERY_RESULT_BACKEND = os.getenv("REDIS_URL")
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TAST_SERIALIZER = "json"
-CELERY_BROKER_USE_SSL = {
-    "ssl_cert_reqs": ssl.CERT_NONE
-}
-
-CELERY_REDIS_BACKEND_USE_SSL = {
-    "ssl_cert_reqs": ssl.CERT_NONE
-}
