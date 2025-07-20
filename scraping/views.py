@@ -22,7 +22,6 @@ from django.contrib import messages
 from bs4 import BeautifulSoup
 from playwright.async_api import async_playwright
 from playwright_stealth.stealth import Stealth
-from .task import run_scraper_task
 import asyncio, random
 
 
@@ -134,7 +133,7 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
     start_page = int(start_page)
     last_page = int(last_page)
 
-    run_scraper_task.delay(start_page, last_page)
+    asyncio.create_task(run_scraper(start_page, last_page))
 
     if "text/html" in request.headers.get("Accept", ""):
         messages.success(request, "Scraping started in background")
@@ -317,10 +316,6 @@ def unsubscription(request):
         """
 
 
-# system("clear")
-# get_price_history(34687)
-
-
 # Recibir la confirmacion de la suscripcion al mail
 def send_subscript_confirm(email, reference):
     with open("subscription_list.json", "r") as file:
@@ -358,7 +353,6 @@ def send_subscript_confirm(email, reference):
 # Envia codigo de validacion de correo:
 def send_code_to_email(email):
     pass
-
 
 # Funcion para enviar alerta por mail de cambio de precio
 def send_alert(bicycles, to=os.getenv("EMAIL")):
