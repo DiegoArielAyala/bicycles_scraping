@@ -119,10 +119,11 @@ async def add_todays_price(bicycle, USER_AGENTS):
             stealth = Stealth()
             await stealth.apply_stealth_async(bicycle_page)
             await asyncio.sleep(random.uniform(3, 6))
-            response_search_reference = await bicycle_page.goto(urljoin(url, search_endpoint.format(bicycle.reference)))
+            response = await bicycle_page.goto(urljoin(url, search_endpoint.format(bicycle.reference)), wait_until="domcontentloaded")
 
-            if response_search_reference.status_code == 200:
-                reference_soup = BeautifulSoup(response_search_reference.text, "html.parser")
+            if response.status == 200:
+                html = await bicycle_page.content()
+                reference_soup = BeautifulSoup(html, "html.parser")
                 if "La búsqueda no ha devuelto ningún resultado." in reference_soup.text:
                     print(f"Reference {bicycle.reference} was deleted")
                     await sync_to_async(bicycle.delete)()
