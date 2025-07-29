@@ -33,6 +33,24 @@ search_endpoint = "catalogsearch/result/?q={}"
 page_endpoint = "?p={}"
 bicycles_url = urljoin(url, bicycles_endpoint)
 
+# Urls Scapa
+url_scapa = "https://www.biciescapa.com/es/"
+bicycles_endpoint_scapa = "bicicletas/?en-stock={}"
+
+urls = {
+    "scapa": {
+        "url": "https://www.biciescapa.com/es/",
+        "bicycles_endpoint": "bicicletas/",
+        "page_endpoint": "?en-stock={}"
+    },
+    "biking_point": {
+        "url": "https://www.bikingpoint.es/es/",
+        "bicycles_endpoint": "bicicletas.html",
+        "search_endpoint": "catalogsearch/result/?q={}",
+        "page_endpoint": "?p={}"
+    }
+}
+
 USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.199 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.183",
