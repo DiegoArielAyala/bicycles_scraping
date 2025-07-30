@@ -23,6 +23,7 @@ from bs4 import BeautifulSoup
 from playwright.async_api import async_playwright
 from playwright_stealth.stealth import Stealth
 import asyncio, random
+import re
 
 
 dotenv.load_dotenv()
@@ -39,15 +40,11 @@ bicycles_endpoint_scapa = "bicicletas/?en-stock={}"
 
 urls = {
     "scapa": {
-        "url": "https://www.biciescapa.com/es/",
-        "bicycles_endpoint": "bicicletas/",
-        "page_endpoint": "?en-stock={}"
+        "bicycles_endpoint": "https://www.biciescapa.com/es/bicicletas/?en-stock=1&page={}",
     },
     "biking_point": {
-        "url": "https://www.bikingpoint.es/es/",
-        "bicycles_endpoint": "bicicletas.html",
-        "search_endpoint": "catalogsearch/result/?q={}",
-        "page_endpoint": "?p={}"
+        "bicycles_endpoint": "https://www.bikingpoint.es/es/bicicletas.html/?p={}",
+        "search_endpoint": "https://www.bikingpoint.es/es/catalogsearch/result/?q={}",
     }
 }
 
@@ -160,7 +157,7 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
     return JsonResponse({"message": "Scraping started in background"})
 
 
-async def run_scraper(start_page, last_page):
+async def run_scraper(start_page, last_page, web=None):
     print("run_scraper function start")
     async with async_playwright() as p:
         browser = await p.chromium.launch(
@@ -169,7 +166,8 @@ async def run_scraper(start_page, last_page):
         counter = int(start_page)
 
         while counter <= last_page:
-            url = f"https://www.bikingpoint.es/es/bicicletas.html?p={counter}"
+
+            url = (urls[web]["bicycles_endpoint"]).format(counter)
             print(f"url: {url}")
             try:
                 list_page = await browser.new_page(user_agent=random.choice(USER_AGENTS))
@@ -182,19 +180,33 @@ async def run_scraper(start_page, last_page):
                 html = await list_page.content()
                 soup = BeautifulSoup(html, "html.parser")
 
-                if (
-                    "No podemos encontrar productos que coincida con la selección."
-                    in soup.text
-                ):
-                    print("No hay más productos, finalizando.")
-                    break
-
-                bicycles = soup.find_all("li", class_="item product product-item")
-                print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
-
-                await create_bicycles(bicycles, USER_AGENTS)
-
+                if web == "biking_point":
+                    if (
+                        "No podemos encontrar productos que coincida con la selección."
+                        in soup.text
+                    ):
+                        print("No hay más productos, finalizando.")
+                        break
+                    else:
+                        bicycles = soup.find_all("li", class_="item product product-item")
+                        print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
+                
+                if web == "scapa":
+                    bicycles = soup.find_all("article", class_="product-miniature js-product-miniature mb-3")
+                    
+                await create_bicycles(bicycles, USER_AGENTS, web)
+                
                 counter += 1
+
+                if web == "scapa":
+                    search_number = (re.search(r"Mostrando \d+-(\d+)", soup.text)).group(1)
+                    number_bicycles = (re.search(r"de (\d+) producto", soup.text)).group(1)
+                    print(search_number)
+                    print(number_bicycles)
+                    if (number_bicycles == search_number):
+                        print("No hay más productos, finalizando.")
+                        break
+
             except Exception as e:
                 print(f"Error en la página {counter}: {e}")
                 break

@@ -27,13 +27,22 @@ headers = {
 }
 
 
-async def create_bicycles(bicycles, USER_AGENTS):
+async def create_bicycles(bicycles, USER_AGENTS, web):
     print("Creando lista de bicicletas")
     for bicycle in bicycles:
-        bicycle_name = bicycle.find("strong", class_="product-item-name").text.strip()
         bicycle_img = bicycle.find("img")["src"]
         bicycle_href = bicycle.find("a")["href"]
-        bicycle_price = get_todays_price(bicycle)
+        if web == "biking_point":
+            bicycle_name = bicycle.find("strong", class_="product-item-name").text.strip()
+            bicycle_price = get_todays_price(bicycle, web)
+        elif web == "scapa":
+            bicycle_name = bicycle.find("h3", class_="h3 product-title").text.strip()
+            bicycle_price = get_todays_price(bicycle, web)
+        print(f"Name: {bicycle_name}")
+        print(f"Img: {bicycle_img}")
+        print(f"Href: {bicycle_href}")
+        print(f"Price: {bicycle_price}")
+        break
         async with async_playwright() as p:
             browser = await p.chromium.launch(
                 headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"]
@@ -150,11 +159,21 @@ async def add_todays_price(bicycle, USER_AGENTS):
 
 
 # Recibe la soup de una bicicleta y retorna su precio actual
-def get_todays_price(bicycle):
-    return [
-        price.text.replace("\xa0", "")
-        .replace("€", "")
-        .replace(".", "")
-        .replace(",", ".")
-        for price in bicycle.find_all("span", class_="price")
-    ][0]
+def get_todays_price(bicycle, web):
+    if web == "biking_point":
+        return [
+            price.text.replace("\xa0", "")
+            .replace("€", "")
+            .replace(".", "")
+            .replace(",", ".")
+            for price in bicycle.find_all("span", class_="price")
+        ][0]
+    elif web == "scapa":
+        return [
+            price.text.replace("\xa0", "")
+            .replace("€", "")
+            .replace(".", "")
+            .replace(",", ".")
+            for price in bicycle.find_all("span", class_="price current-price-discount")
+        ][0]
+        
