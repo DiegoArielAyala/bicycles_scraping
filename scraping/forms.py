@@ -4,7 +4,7 @@ from .models import Bicycle, Subscription
 class BicycleForm(forms.ModelForm):
     class Meta:
         model = Bicycle
-        fields = ["name", "img", "current_price", "url", "reference"]
+        fields = ["name", "img", "current_price", "url", "reference", "web"]
 
 
 class SubscriptionForm(forms.ModelForm):

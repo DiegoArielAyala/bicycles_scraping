@@ -1,0 +1,56 @@
+name: Exec Scraper Escapa
+
+on:
+    schedule:
+        - cron: '0 10 * * *'
+    workflow_dispatch:
+
+jobs:
+    run-scraper:
+        runs-on: ubuntu-latest
+    
+        env:
+            DB_NAME: ${{ secrets.DB_NAME }}
+            DB_USER: ${{ secrets.DB_USER }}
+            DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+            DB_HOST: ${{ secrets.DB_HOST }}
+            DB_PORT: ${{ secrets.DB_PORT }}
+            DJANGO_SETTINGS_MODULE: bicyclesscraping.settings
+            SECRET_KEY: dummy
+
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                python-version: '3.11'
+
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                pip install -r requirements.txt
+            
+            - name: Install Playwright browsers
+              run: playwright install --with-deps
+
+            - name: Debug env variables
+              run: |
+                echo "DEBUG: DB_HOST = $DB_HOST"
+                echo "DEBUG: DB_PORT = $DB_PORT"
+                echo "DEBUG: DB_NAME = $DB_NAME"
+                echo "DEBUG: DB_USER = $DB_USER"
+
+            - name: Optional - Check DB connectivity
+              run: |
+                sudo apt-get update && apt-get install -y postgresql-client
+                PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -c '\dt'
+              continue-on-error: true
+
+            - name: Run migrations
+              run: python manage.py migrate
+
+            - name: Run scraper
+              run: python run_scraper.py --start 1 --end 25 --web escapa
+

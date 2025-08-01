@@ -8,6 +8,7 @@ class Bicycle(models.Model):
     current_price=models.FloatField()
     url=models.URLField()
     reference=models.IntegerField()
+    web=models.TextField(max_length=20)
 
     def __str__(self):
         return self.name

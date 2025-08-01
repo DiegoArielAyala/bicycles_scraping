@@ -24,6 +24,7 @@ from playwright.async_api import async_playwright
 from playwright_stealth.stealth import Stealth
 import asyncio, random
 import re
+from asgiref.sync import sync_to_async
 
 
 dotenv.load_dotenv()
@@ -34,12 +35,12 @@ search_endpoint = "catalogsearch/result/?q={}"
 page_endpoint = "?p={}"
 bicycles_url = urljoin(url, bicycles_endpoint)
 
-# Urls Scapa
-url_scapa = "https://www.biciescapa.com/es/"
-bicycles_endpoint_scapa = "bicicletas/?en-stock={}"
+# Urls Escapa
+url_escapa = "https://www.biciescapa.com/es/"
+bicycles_endpoint_escapa = "bicicletas/?en-stock={}"
 
 urls = {
-    "scapa": {
+    "escapa": {
         "bicycles_endpoint": "https://www.biciescapa.com/es/bicicletas/?en-stock=1&page={}",
     },
     "biking_point": {
@@ -165,6 +166,10 @@ async def run_scraper(start_page, last_page, web=None):
         )
         counter = int(start_page)
 
+        bicycles_reference = await sync_to_async(
+            lambda: list(Bicycle.objects.filter(web=web).values_list("reference", flat=True,))
+            )()
+
         while counter <= last_page:
 
             url = (urls[web]["bicycles_endpoint"]).format(counter)
@@ -191,14 +196,17 @@ async def run_scraper(start_page, last_page, web=None):
                         bicycles = soup.find_all("li", class_="item product product-item")
                         print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
                 
-                if web == "scapa":
+                if web == "escapa":
                     bicycles = soup.find_all("article", class_="product-miniature js-product-miniature mb-3")
-                    
-                await create_bicycles(bicycles, USER_AGENTS, web)
+                
+                # print(f"Bicycles: {bicycles}")
+                
+                bicycles_reference = await create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference)
+                print(f"bicycles_reference: {bicycles_reference}")
                 
                 counter += 1
 
-                if web == "scapa":
+                if web == "escapa":
                     search_number = (re.search(r"Mostrando \d+-(\d+)", soup.text)).group(1)
                     number_bicycles = (re.search(r"de (\d+) producto", soup.text)).group(1)
                     print(search_number)
