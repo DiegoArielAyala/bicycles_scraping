@@ -78,7 +78,7 @@ async def create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference):
             await clean_duplicates(bicycle_reference)
 
         try:
-            # Buscar en la db si existe esa referencia
+            # Buscar en la DB si existe esa referencia
             try:
                 bicycle_object = await sync_to_async(lambda: get_object_or_404(Bicycle, reference=bicycle_reference))()
                 #await add_todays_price(bicycle_object, USER_AGENTS, web)
@@ -93,12 +93,14 @@ async def create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference):
                 #if bicycle_object.current_price != float(bicycle_price):
                 #    bicycle_object.current_price = float(bicycle_price)
                 
+                # Update Current Price if it changed
                 if round(bicycle_object.current_price, 2) != round(float(bicycle_price), 2):
                     bicycle_object.current_price = float(bicycle_price)
                     await sync_to_async(bicycle_object.save)()
                     print(
                         f"{bicycle_object.reference} changed price from {bicycle_object.current_price} to {bicycle_price}"
                     )
+            # Create new Bicycle if it not exist yet
             except:
                 print("Bicycle not exist")
                 bicycle_form = BicycleForm(

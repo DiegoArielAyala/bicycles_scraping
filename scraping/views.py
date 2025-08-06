@@ -42,6 +42,7 @@ bicycles_endpoint_escapa = "bicicletas/?en-stock={}"
 urls = {
     "escapa": {
         "bicycles_endpoint": "https://www.biciescapa.com/es/bicicletas/?en-stock=1&page={}",
+        "web": "https://www.biciescapa.com/es/"
     },
     "biking_point": {
         "bicycles_endpoint": "https://www.bikingpoint.es/es/bicicletas.html/?p={}",
@@ -201,8 +202,12 @@ async def run_scraper(start_page, last_page, web=None):
                 
                 # print(f"Bicycles: {bicycles}")
                 
+                # Call to create_bicycles and retur an arrays with referencies that not exist yet
                 bicycles_reference = await create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference)
                 print(f"bicycles_reference: {bicycles_reference}")
+
+                # Delete bicycles that no longer exists
+                delete_bicycles(bicycles_reference)
                 
                 counter += 1
 
@@ -221,6 +226,60 @@ async def run_scraper(start_page, last_page, web=None):
 
         await browser.close()
     print("Scraping terminado.")
+
+
+async def delete_bicycles(bicycles_reference):
+    print("Deleting bicycles")
+    for reference in bicycles_reference:
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(
+                headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"]
+            )
+            try:
+                page = await browser.new_page(user_agent=random.choice(USER_AGENTS))
+                stealth = Stealth()
+                await stealth.apply_stealth_async(page)
+                await asyncio.sleep(random.uniform(3, 6))
+                bicycle = await sync_to_async(lambda: get_object_or_404(Bicycle, reference=reference))()
+
+                # Search reference on the corresponding page
+                bicycle_exist = True
+                if bicycle.web == "biking_point":
+                    url = urls["biking_point"]["search_endpoint"]
+                    await page.goto(url.format(reference))
+                    content = await page.content()
+                    if "La búsqueda no ha devuelto ningún resultado." in content:
+                        bicycle_exist = False
+
+                elif bicycle.web == "escapa":
+                    url = urls["escapa"]["web"]
+                    await page.goto(url)
+                    try:
+                        await page.click("button#onetrust-accept-btn-handler", timeout=3000)
+                    except:
+                        pass
+
+                    await page.fill("input[name='s']", str(reference))
+                    await asyncio.sleep(random.uniform(3, 6))
+                    await page.wait_for_selector("div.dfd-card-flag", timeout=5000)
+
+                    content = await page.content()
+                    soup = BeautifulSoup(content, "html.parser")
+                    div = soup.find("div", class_="dfd-card-flag", attrs={"data-availability":"out-of-stock"})
+                    
+                    if div.text.strip() == "Agotado" or "Prueba de nuevo con otra búsqueda…" in soup.text:
+                        bicycle_exist = False
+
+                # If bicycle not exist, delete it
+                if not bicycle_exist:
+                    await sync_to_async(bicycle.delete)()
+                    print(f"Reference {reference} was deleted from web {bicycle.web}")
+
+            except Exception as e:
+                print("Error during delete bicycle: ", e)
+            
+            finally:
+                await browser.close()
 
 
 def search_bicycle(request, query=None):
