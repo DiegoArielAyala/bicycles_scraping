@@ -60,7 +60,10 @@ async def create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference):
                             .text
                         )
                         print(f"bicycle_reference: {bicycle_reference}" )
-                        bicycles_reference.remove(int(bicycle_reference))
+                        try:
+                            bicycles_reference.remove(int(bicycle_reference))
+                        except ValueError:
+                            print(f"Reference {bicycle_reference} not in bicycles_reference")
                         await clean_duplicates(bicycle_reference)
                 except Exception as e:
                     print("Error during get reference", e)
@@ -74,7 +77,10 @@ async def create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference):
             print(f"bicycle_price: {bicycle_price}")
             bicycle_reference = bicycle["data-id-product"]
             print(f"bicycle_reference: {bicycle_reference}\n")
-            bicycles_reference.remove(int(bicycle_reference))
+            try:
+                bicycles_reference.remove(int(bicycle_reference))
+            except ValueError:
+                print(f"Reference {bicycle_reference} not in bicycles_reference")
             await clean_duplicates(bicycle_reference)
 
         try:

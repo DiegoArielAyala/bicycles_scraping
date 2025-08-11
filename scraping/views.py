@@ -159,7 +159,7 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
     return JsonResponse({"message": "Scraping started in background"})
 
 
-async def run_scraper(start_page, last_page, web=None):
+async def run_scraper(start_page, last_page, web=None, delete=False):
     print("run_scraper function start")
     async with async_playwright() as p:
         browser = await p.chromium.launch(
@@ -206,8 +206,7 @@ async def run_scraper(start_page, last_page, web=None):
                 bicycles_reference = await create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference)
                 print(f"bicycles_reference: {bicycles_reference}")
 
-                # Delete bicycles that no longer exists
-                delete_bicycles(bicycles_reference)
+                
                 
                 counter += 1
 
@@ -223,6 +222,11 @@ async def run_scraper(start_page, last_page, web=None):
             except Exception as e:
                 print(f"Error en la página {counter}: {e}")
                 break
+        
+        # Delete bicycles that no longer exists
+        if delete:
+            await delete_bicycles(bicycles_reference)
+
 
         await browser.close()
     print("Scraping terminado.")
@@ -265,10 +269,13 @@ async def delete_bicycles(bicycles_reference):
 
                     content = await page.content()
                     soup = BeautifulSoup(content, "html.parser")
-                    div = soup.find("div", class_="dfd-card-flag", attrs={"data-availability":"out-of-stock"})
+                    try:
+                        div = soup.find("div", class_="dfd-card-flag", attrs={"data-availability":"out-of-stock"})
                     
-                    if div.text.strip() == "Agotado" or "Prueba de nuevo con otra búsqueda…" in soup.text:
-                        bicycle_exist = False
+                        if div.text.strip() == "Agotado" or "Prueba de nuevo con otra búsqueda…" in soup.text:
+                            bicycle_exist = False
+                    except Exception as e:
+                        print(f"Error finding bicycle in Escapa: {e}")
 
                 # If bicycle not exist, delete it
                 if not bicycle_exist:

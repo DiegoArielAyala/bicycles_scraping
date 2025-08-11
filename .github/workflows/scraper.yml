@@ -49,4 +49,4 @@ jobs:
         run: python manage.py migrate
 
       - name: Run scraper
-        run: python run_scraper.py --start 1 --end 25
+        run: python run_scraper.py --start 1 --end 25 --web biking_point --delete True
