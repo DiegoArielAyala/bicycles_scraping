@@ -166,4 +166,5 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 CSRF_TRUSTED_ORIGINS = [
     "https://bicycles-scraping-docker.onrender.com",
+    "https://bicycles-scraping-staging.onrender.com",
 ]
