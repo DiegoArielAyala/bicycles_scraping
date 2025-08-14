@@ -1,6 +1,9 @@
 name: Exec Scraper Escapa
 
 on:
+    push:
+      branches:
+        - develop
     schedule:
         - cron: '0 10 * * *'
     workflow_dispatch:
