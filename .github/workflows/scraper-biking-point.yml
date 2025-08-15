@@ -9,8 +9,8 @@ on:
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-    environment: production
+    if: github.ref == 'refs/heads/develop'
+    environment: staging
     env:
       DJANGO_SETTINGS_MODULE: bicyclesscraping.settings
       SECRET_KEY: dummy
@@ -34,15 +34,15 @@ jobs:
 
       - name: Debug env variables (host, port, name)
         run: |
-          echo "DEBUG: DB_HOST = $DB_HOST"
-          echo "DEBUG: DB_PORT = $DB_PORT"
-          echo "DEBUG: DB_NAME = $DB_NAME"
-          echo "DEBUG: DB_USER = $DB_USER"
+          echo "DEBUG: DB_HOST_STAGING = $DB_HOST_STAGING"
+          echo "DEBUG: DB_PORT_STAGING = $DB_PORT_STAGING"
+          echo "DEBUG: DB_NAME_STAGING = $DB_NAME_STAGING"
+          echo "DEBUG: DB_USER_STAGING = $DB_USER_STAGING"
 
       - name: Optional - Check DB connectivity
         run: |
           sudo apt-get update && apt-get install -y postgresql-client
-          PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -c '\dt'
+          PGPASSWORD="$DB_PASSWORD_STAGING" psql -h "$DB_HOST_STAGING" -p "$DB_PORT_STAGING" -U "$DB_USER_STAGING" -d "$DB_NAME_STAGING" -c '\dt'
         continue-on-error: true
         # Esto lista tablas; si no puede conectar, sabés que el problema es la conexión
 
