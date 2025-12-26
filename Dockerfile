@@ -1,23 +1,17 @@
 FROM mcr.microsoft.com/playwright/python:latest
 
-# Crear usuario sin privilegios
-RUN useradd -m appuser
-
 # Directorio de trabajo
 WORKDIR /app
 
 # Copiar dependencias e instalar Python requirements
 COPY requirements.txt .
-RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
-
-# Instalar solo los navegadores, SIN dependencias del sistema (que ya pusimos antes)
-USER appuser
-RUN playwright install chromium
+RUN pip install --upgrade pip setuptools wheel && \ 
+    pip install --no-cache-dir -r requirements.txt
 
 # Volver a root para copiar archivos y ajustar permisos
 USER root
 COPY . .
-RUN chown -R appuser:appuser /app
+RUN chown -R pwuser:pwuser /app
 
 # Variables de entorno
 ENV DJANGO_SETTINGS_MODULE=bicyclesscraping.settings
@@ -27,7 +21,7 @@ ENV PYTHONUNBUFFERED=1
 RUN python manage.py collectstatic --noinput
 
 # Usuario final
-USER appuser
+USER pwuser
 
 # Puerto de exposición
 EXPOSE 8000
