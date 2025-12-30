@@ -14,7 +14,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 import dj_database_url
-import ssl
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -82,10 +81,12 @@ WSGI_APPLICATION = "bicyclesscraping.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if os.getenv("RENDER"):
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
     DATABASES = {
         "default": dj_database_url.config(
-            default=os.getenv("DATABASE_URL")
+            default=DATABASE_URL
         )
     }
 else:
