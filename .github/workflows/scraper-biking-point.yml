@@ -36,10 +36,10 @@ jobs:
 
       - name: Debug env variables (host, port, name)
         run: |
-          echo "DEBUG: DB_HOST_STAGING = $DB_HOST_STAGING"
-          echo "DEBUG: DB_PORT_STAGING = $DB_PORT_STAGING"
-          echo "DEBUG: DB_NAME_STAGING = $DB_NAME_STAGING"
-          echo "DEBUG: DB_USER_STAGING = $DB_USER_STAGING"
+          echo "DEBUG: DB_HOST_STAGING = ${{ secrets.DB_HOST_STAGING }}"
+          echo "DEBUG: DB_PORT_STAGING = ${{ secrets.DB_PORT_STAGING }}"
+          echo "DEBUG: DB_NAME_STAGING = ${{ secrets.DB_NAME_STAGING }}"
+          echo "DEBUG: DB_USER_STAGING = ${{ secrets.DB_USER_STAGING }} "
 
       - name: Optional - Check DB connectivity
         run: |

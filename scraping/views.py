@@ -491,3 +491,4 @@ def alert_lower_price(reference, today_price):
                 print(
                     f"La {bicycle['name']} (referencia {bicycle['reference']}) ha bajado de precio!!"
                 )
+
