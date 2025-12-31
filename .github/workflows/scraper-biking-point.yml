@@ -36,6 +36,8 @@ jobs:
 
       - name: Debug env variables (host, port, name)
         run: |
+          echo "secrets: ${{ secrets}}"
+          echo "secrets: ${{ toJson(secrets)}}"
           echo "DEBUG: DB_HOST_STAGING = ${{ secrets.DB_HOST_STAGING }}"
           echo "DEBUG: DB_PORT_STAGING = ${{ secrets.DB_PORT_STAGING }}"
           echo "DEBUG: DB_NAME_STAGING = ${{ secrets.DB_NAME_STAGING }}"
