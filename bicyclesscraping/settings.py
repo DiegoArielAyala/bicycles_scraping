@@ -82,6 +82,7 @@ WSGI_APPLICATION = "bicyclesscraping.wsgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASE_URL = os.getenv("DATABASE_URL")
+DB_HOST_STAGING = os.getenv("DB_HOST_STAGING")
 
 if DATABASE_URL:
     DATABASES = {
@@ -89,15 +90,26 @@ if DATABASE_URL:
             default=DATABASE_URL
         )
     }
+elif DB_HOST_STAGING:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DB_NAME_STAGING"),
+            "HOST": os.getenv("DB_HOST_STAGING"),
+            "PORT": os.getenv("DB_PORT_STAGING"),
+            "USER": os.getenv("DB_USER_STAGING"),
+            "PASSWORD": os.getenv("DB_PASSWORD_STAGING")
+        }
+    }
 else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("DB_NAME", "DB_NAME_STAGING", "postgres"),
-            "USER": os.getenv("DB_USER", "DB_USER_STAGING", "postgres"),
-            "PASSWORD": os.getenv("DB_PASSWORD", "DB_PASSWORD_STAGING", "postgres"),
-            "HOST": os.getenv("DB_HOST", "DB_HOST_STAGING", "localhost"),
-            "PORT": os.getenv("DB_PORT", "DB_PORT_STAGING", "5432"),
+            "NAME": os.getenv("DB_NAME", "postgres"),
+            "USER": os.getenv("DB_USER", "postgres"),
+            "PASSWORD": os.getenv("DB_PASSWORD", "postgres"),
+            "HOST": os.getenv("DB_HOST", "localhost"),
+            "PORT": os.getenv("DB_PORT", "5432"),
         }
     }
 
