@@ -16,6 +16,12 @@ jobs:
     env:
       DJANGO_SETTINGS_MODULE: bicyclesscraping.settings
       SECRET_KEY: dummy
+      DB_HOST_STAGING: ${{ secrets.DB_HOST_STAGING }}
+      DB_USER_STAGING: ${{ secrets.DB_USER_STAGING }}
+      DB_NAME_STAGING: ${{ secrets.DB_NAME_STAGING }}
+      DB_PASSWORD_STAGING: ${{ secrets.DB_PASSWORD_STAGING }}
+      DB_PORT_STAGING: ${{ secrets.DB_PORT_STAGING }}
+      
 
     steps:
       - name: Checkout repo
