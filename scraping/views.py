@@ -196,15 +196,16 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                     else:
                         bicycles = soup.find_all("li", class_="item product product-item")
                         print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
+                        print(f"soup.text: {soup.text}")
                 
                 if web == "escapa":
                     bicycles = soup.find_all("article", class_="product-miniature js-product-miniature mb-3")
                 
                 # print(f"Bicycles: {bicycles}")
                 
-                # Call to create_bicycles and retur an arrays with referencies that not exist yet
-                bicycles_reference = await create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference)
-                print(f"bicycles_reference: {bicycles_reference}")
+                # Call to create_bicycles and return an arrays with referencies that not exist yet in the DB
+                new_bicycle_references = await create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference)
+                print(f"new_bicycle_references: {new_bicycle_references}")
 
                 
                 
