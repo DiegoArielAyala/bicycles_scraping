@@ -167,7 +167,9 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
         )
         counter = int(start_page)
 
-        bicycles_reference = await sync_to_async(
+        print(f"web: {web} => No tiene que ser None")
+        # Array with all bicycles references in the DB for the current web
+        bicycle_references_saved_in_db = await sync_to_async(
             lambda: list(Bicycle.objects.filter(web=web).values_list("reference", flat=True,))
             )()
 
@@ -194,20 +196,18 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                         print("No hay más productos, finalizando.")
                         break
                     else:
+                        print(f"soup text: {soup.text.strip()[:100]}")
                         await asyncio.sleep(random.uniform(3, 6))
                         bicycles = soup.find_all("li", class_="item product product-item")
+                        print(f"soup text: {soup.text.strip()[:100]}")
                         print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
                 
                 if web == "escapa":
                     bicycles = soup.find_all("article", class_="product-miniature js-product-miniature mb-3")
-                
-                # print(f"Bicycles: {bicycles}")
-                
+                                
                 # Call to create_bicycles and return an arrays with referencies that not exist yet in the DB
-                new_bicycle_references = await create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference)
-                print(f"new_bicycle_references: {new_bicycle_references}")
-
-                
+                references_to_delete = await create_bicycles(bicycles, USER_AGENTS, web, bicycle_references_saved_in_db)
+                print(f"new_bicycle_references: {references_to_delete}")
                 
                 counter += 1
 
@@ -226,7 +226,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
         
         # Delete bicycles that no longer exists
         if delete:
-            await delete_bicycles(bicycles_reference)
+            await delete_bicycles(references_to_delete)
 
 
         await browser.close()
