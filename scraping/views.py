@@ -194,9 +194,9 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                         print("No hay más productos, finalizando.")
                         break
                     else:
+                        await asyncio.sleep(random.uniform(3, 6))
                         bicycles = soup.find_all("li", class_="item product product-item")
                         print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
-                        print(f"soup.text: {soup.text}")
                 
                 if web == "escapa":
                     bicycles = soup.find_all("article", class_="product-miniature js-product-miniature mb-3")
