@@ -183,7 +183,8 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                 stealth = Stealth()
                 await stealth.apply_stealth_async(list_page)
                 await asyncio.sleep(random.uniform(3, 6))
-                await list_page.goto(url, wait_until="domcontentloaded")
+                await list_page.goto(url, wait_until="networkidle")
+                await list_page.wait_for_function("() => !document.body.innerText.includes('Verifying you are human')", timeout=60000)
                 
                 html = await list_page.content()
                 soup = BeautifulSoup(html, "html.parser")
@@ -196,10 +197,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                         print("No hay más productos, finalizando.")
                         break
                     else:
-                        print(f"soup text: {soup.text.strip()[:100]}")
-                        await asyncio.sleep(random.uniform(10, 20))
                         bicycles = soup.find_all("li", class_="item product product-item")
-                        print(f"soup text: {soup.text.strip()[:100]}")
                         print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
                 
                 if web == "escapa":
