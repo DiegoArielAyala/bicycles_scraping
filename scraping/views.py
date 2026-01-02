@@ -168,7 +168,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
         counter = int(start_page)
 
         # Array with all bicycles references in the DB for the current web
-        bicycle_references_saved_in_db = await sync_to_async(
+        bicycle_references = await sync_to_async(
             lambda: list(Bicycle.objects.filter(web=web).values_list("reference", flat=True,))
             )()
 
@@ -182,9 +182,15 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                 stealth = Stealth()
                 await stealth.apply_stealth_async(list_page)
                 await asyncio.sleep(random.uniform(3, 6))
-                await list_page.goto(url, wait_until="networkidle", timeout=80000)
-                await list_page.wait_for_function("() => !document.body.innerText.includes('Verifying you are human')", timeout=60000)
-                
+                await list_page.goto(url, wait_until="domcontentloaded")
+                html = await list_page.content()
+                soup = BeautifulSoup(html, "html.parser")
+                print(f"soup: {soup.text[:200]}")
+                try:
+                    await list_page.wait_for_function("() => !document.body.innerText.includes('Verifying you are human')", timeout=60000)
+                except e:
+                    print(f"Error cloudflare challenge no se resolvio: {e}")
+
                 html = await list_page.content()
                 soup = BeautifulSoup(html, "html.parser")
 
@@ -203,8 +209,8 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                     bicycles = soup.find_all("article", class_="product-miniature js-product-miniature mb-3")
                                 
                 # Call to create_bicycles and return an arrays with referencies that not exist yet in the DB
-                references_to_delete = await create_bicycles(bicycles, USER_AGENTS, web, bicycle_references_saved_in_db)
-                print(f"new_bicycle_references: {references_to_delete}")
+                bicycle_references = await create_bicycles(bicycles, USER_AGENTS, web, bicycle_references)
+                print(f"new_bicycle_references: {bicycle_references}")
                 
                 counter += 1
 
@@ -223,7 +229,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
         
         # Delete bicycles that no longer exists
         if delete:
-            await delete_bicycles(references_to_delete)
+            await delete_bicycles(bicycle_references)
 
 
         await browser.close()
