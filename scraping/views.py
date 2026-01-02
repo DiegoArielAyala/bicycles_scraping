@@ -197,7 +197,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                         break
                     else:
                         print(f"soup text: {soup.text.strip()[:100]}")
-                        await asyncio.sleep(random.uniform(3, 6))
+                        await asyncio.sleep(random.uniform(10, 20))
                         bicycles = soup.find_all("li", class_="item product product-item")
                         print(f"soup text: {soup.text.strip()[:100]}")
                         print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
