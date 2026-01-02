@@ -167,7 +167,6 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
         )
         counter = int(start_page)
 
-        print(f"web: {web} => No tiene que ser None")
         # Array with all bicycles references in the DB for the current web
         bicycle_references_saved_in_db = await sync_to_async(
             lambda: list(Bicycle.objects.filter(web=web).values_list("reference", flat=True,))
@@ -183,7 +182,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                 stealth = Stealth()
                 await stealth.apply_stealth_async(list_page)
                 await asyncio.sleep(random.uniform(3, 6))
-                await list_page.goto(url, wait_until="networkidle")
+                await list_page.goto(url, wait_until="networkidle", timeout=80000)
                 await list_page.wait_for_function("() => !document.body.innerText.includes('Verifying you are human')", timeout=60000)
                 
                 html = await list_page.content()
