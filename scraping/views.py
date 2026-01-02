@@ -188,8 +188,8 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                 print(f"soup: {soup.text[:200]}")
                 try:
                     await list_page.wait_for_function("() => !document.body.innerText.includes('Verifying you are human')", timeout=60000)
-                except e:
-                    print(f"Error cloudflare challenge no se resolvio: {e}")
+                except:
+                    print(f"Error cloudflare challenge no se resolvio")
 
                 html = await list_page.content()
                 soup = BeautifulSoup(html, "html.parser")
