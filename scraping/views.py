@@ -187,7 +187,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                 soup = BeautifulSoup(html, "html.parser")
                 print(f"soup: {soup.text[:200]}")
                 try:
-                    await list_page.wait_for_function("() => !document.body.innerText.includes('Verifying you are human')", timeout=60000)
+                    await list_page.wait_for_function("() => !document.body.innerText.includes('Verifying you are human')", timeout=180000)
                 except:
                     print(f"Error cloudflare challenge no se resolvio")
 
@@ -210,7 +210,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                                 
                 # Call to create_bicycles and return an arrays with referencies that not exist yet in the DB
                 bicycle_references = await create_bicycles(bicycles, USER_AGENTS, web, bicycle_references)
-                print(f"new_bicycle_references: {bicycle_references}")
+                print(f"bicycle_references: {bicycle_references}")
                 
                 counter += 1
 
