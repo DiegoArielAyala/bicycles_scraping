@@ -300,7 +300,7 @@ def search_bicycle(request, query=None):
         try:
             reference = int(query)
             if len(query) == 5:
-                results = Bicycle.objects.filter(reference=reference)
+                results = Bicycle.objects.get(reference=reference)
             else:
                 results = Bicycle.objects.filter(name__icontains=query)
         except:
