@@ -185,7 +185,6 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                 await list_page.goto(url, wait_until="domcontentloaded")
                 html = await list_page.content()
                 soup = BeautifulSoup(html, "html.parser")
-                print(f"soup: {soup.text[:200]}")
                 try:
                     await list_page.wait_for_function("() => !document.body.innerText.includes('Verifying you are human')", timeout=180000)
                 except:
@@ -203,7 +202,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                         break
                     else:
                         bicycles = soup.find_all("li", class_="item product product-item")
-                        print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
+                        print(f"Página {counter}: Encontradas {len(bicycles)} bicicletas")
                 
                 if web == "escapa":
                     bicycles = soup.find_all("article", class_="product-miniature js-product-miniature mb-3")

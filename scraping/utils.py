@@ -26,12 +26,11 @@ headers = {
 
 
 async def create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference):
-    print("Creando lista de bicicletas")
+    print(f"create_bicycles started for {web} with {len(bicycles)} bicycles finded on the page")
     bicycle_index = 1
     
-    print(f"bicycles_reference: {bicycles_reference}")
+    print(f"Bicycle references saved in DB: {bicycles_reference}")
     for bicycle in bicycles:
-        print(f"\n\nLongitud bicycles: {len(bicycles)}")
         print(f"Bicycle_index: {bicycle_index}")
         bicycle_index+=1
         bicycle_href = bicycle.find("a")["href"]
@@ -51,7 +50,7 @@ async def create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference):
                 try:
                     await asyncio.sleep(random.uniform(3, 6))
                     response = await detail_page.goto(bicycle_href, wait_until="domcontentloaded")
-                    print(f"response status: {response.status}")
+                    print(f"Response status: {response.status}")
                     if response.status == 200:
                         html = await detail_page.content()
                         bicycle_reference = (
@@ -87,7 +86,6 @@ async def create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference):
             # Buscar en la DB si existe esa referencia
             try:
                 bicycle_object = await sync_to_async(lambda: get_object_or_404(Bicycle, reference=bicycle_reference))()
-                #await add_todays_price(bicycle_object, USER_AGENTS, web)
 
                 # add_todays_price:
                 new_price_history = PriceHistory(
@@ -95,10 +93,7 @@ async def create_bicycles(bicycles, USER_AGENTS, web, bicycles_reference):
                 )
                 await sync_to_async(new_price_history.save)()
                 print(f"New price history saved: {new_price_history}")
-                
-                #if bicycle_object.current_price != float(bicycle_price):
-                #    bicycle_object.current_price = float(bicycle_price)
-                
+                                
                 # Update Current Price if it changed
                 if round(bicycle_object.current_price, 2) != round(float(bicycle_price), 2):
                     bicycle_object.current_price = float(bicycle_price)

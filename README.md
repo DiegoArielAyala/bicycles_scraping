@@ -4,6 +4,8 @@ It allows to sign up and log in.
 Is is deployed on Render.
 
 
-
+DATABASE:
+ - LOCAL/STAGING: postgresql://postgres:[YOUR-PASSWORD]@db.nglagnnnpqqgjnvbxczb.supabase.co:5432/postgres
+ - PRODUCTION: 
 
             
