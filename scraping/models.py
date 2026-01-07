@@ -10,6 +10,9 @@ class Bicycle(models.Model):
     reference=models.IntegerField()
     web=models.TextField(max_length=20)
 
+    class Meta:
+        app_label="scraping"
+
     def __str__(self):
         return self.name
 
@@ -18,6 +21,9 @@ class PriceHistory(models.Model):
     date=models.DateField(default=timezone.now)
     price=models.FloatField()
 
+    class Meta:
+        app_label="scraping"
+
     def __str__(self):
         return f"{self.date} : {self.price}"
 
@@ -25,6 +31,9 @@ class Subscription(models.Model):
     email=models.EmailField(max_length=60)
     reference=models.IntegerField(default=None)
     bicycle=models.ForeignKey(Bicycle, on_delete=models.CASCADE, related_name="subscription")
+
+    class Meta:
+        app_label="scraping"
 
     def __str__(self):
         return self.email

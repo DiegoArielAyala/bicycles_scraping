@@ -291,7 +291,7 @@ async def delete_bicycles(bicycles_reference):
             finally:
                 await browser.close()
 
-
+"""
 def search_bicycle(request, query=None):
     if request.method == "GET":
         return render(request, "search_bicycle.html")
@@ -306,6 +306,31 @@ def search_bicycle(request, query=None):
         except:
             results = Bicycle.objects.filter(name__icontains=query)
         return render(request, "search_bicycle.html", {"results": results})
+"""
+def search_bicycle(request):
+    results = []
+
+    if request.method == "POST":
+        query = request.POST.get("query", "").strip()
+
+        if query:
+            try:
+                # Si la query es numérica de 5 dígitos, intentamos buscar por referencia exacta
+                reference = int(query)
+                if len(query) == 5:
+                    try:
+                        results = [Bicycle.objects.get(reference=reference)]
+                    except ObjectDoesNotExist:
+                        results = []
+                else:
+                    # Si no tiene 5 dígitos, buscamos por nombre
+                    results = list(Bicycle.objects.filter(name__icontains=query)[:50])
+            except ValueError:
+                # Si no es número, buscamos por nombre
+                results = list(Bicycle.objects.filter(name__icontains=query)[:50])
+        # Si query vacía → results queda vacío
+
+    return render(request, "search_bicycle.html", {"results": results})
 
 
 def get_price_history(request, reference):
