@@ -25,6 +25,7 @@ from playwright_stealth.stealth import Stealth
 import asyncio, random
 import re
 from asgiref.sync import sync_to_async
+from django.core.exceptions import ObjectDoesNotExist
 
 
 dotenv.load_dotenv()
