@@ -310,26 +310,25 @@ def search_bicycle(request, query=None):
 """
 def search_bicycle(request):
     results = []
+    max_results = 50  # límite para no sobrecargar workers
 
     if request.method == "POST":
         query = request.POST.get("query", "").strip()
 
         if query:
             try:
-                # Si la query es numérica de 5 dígitos, intentamos buscar por referencia exacta
                 reference = int(query)
                 if len(query) == 5:
+                    # usamos try-except para capturar que no exista
                     try:
                         results = [Bicycle.objects.get(reference=reference)]
                     except ObjectDoesNotExist:
                         results = []
                 else:
-                    # Si no tiene 5 dígitos, buscamos por nombre
-                    results = list(Bicycle.objects.filter(name__icontains=query)[:50])
+                    # filtramos y limitamos resultados
+                    results = list(Bicycle.objects.filter(name__icontains=query)[:max_results])
             except ValueError:
-                # Si no es número, buscamos por nombre
-                results = list(Bicycle.objects.filter(name__icontains=query)[:50])
-        # Si query vacía → results queda vacío
+                results = list(Bicycle.objects.filter(name__icontains=query)[:max_results])
 
     return render(request, "search_bicycle.html", {"results": results})
 
