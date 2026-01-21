@@ -14,7 +14,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 import dj_database_url
-import ssl
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", default="django-insecure-re0x0cu-w06c8-1pv1mo&6^-5cca@y6r1t+w8wm=j*fmpl%gt9") 
+SECRET_KEY = os.environ.get("SECRET_KEY") 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = "RENDER" not in os.environ
@@ -82,11 +81,25 @@ WSGI_APPLICATION = "bicyclesscraping.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if os.getenv("RENDER"):
+DATABASE_URL = os.getenv("DATABASE_URL")
+DB_HOST_STAGING = os.getenv("DB_HOST_STAGING")
+
+if DATABASE_URL:
     DATABASES = {
         "default": dj_database_url.config(
-            default=os.getenv("DATABASE_URL")
+            default=DATABASE_URL
         )
+    }
+elif DB_HOST_STAGING:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DB_NAME_STAGING"),
+            "HOST": os.getenv("DB_HOST_STAGING"),
+            "PORT": os.getenv("DB_PORT_STAGING"),
+            "USER": os.getenv("DB_USER_STAGING"),
+            "PASSWORD": os.getenv("DB_PASSWORD_STAGING")
+        }
     }
 else:
     DATABASES = {
@@ -95,7 +108,7 @@ else:
             "NAME": os.getenv("DB_NAME", "postgres"),
             "USER": os.getenv("DB_USER", "postgres"),
             "PASSWORD": os.getenv("DB_PASSWORD", "postgres"),
-            "HOST": os.getenv("DB_HOST", "db"),
+            "HOST": os.getenv("DB_HOST", "localhost"),
             "PORT": os.getenv("DB_PORT", "5432"),
         }
     }
@@ -166,4 +179,5 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 CSRF_TRUSTED_ORIGINS = [
     "https://bicycles-scraping-docker.onrender.com",
+    "https://bicycles-scraping-staging.onrender.com",
 ]

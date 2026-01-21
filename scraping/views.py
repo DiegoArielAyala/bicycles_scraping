@@ -23,6 +23,9 @@ from bs4 import BeautifulSoup
 from playwright.async_api import async_playwright
 from playwright_stealth.stealth import Stealth
 import asyncio, random
+import re
+from asgiref.sync import sync_to_async
+from django.core.exceptions import ObjectDoesNotExist
 
 
 dotenv.load_dotenv()
@@ -33,21 +36,18 @@ search_endpoint = "catalogsearch/result/?q={}"
 page_endpoint = "?p={}"
 bicycles_url = urljoin(url, bicycles_endpoint)
 
-# Urls Scapa
-url_scapa = "https://www.biciescapa.com/es/"
-bicycles_endpoint_scapa = "bicicletas/?en-stock={}"
+# Urls Escapa
+url_escapa = "https://www.biciescapa.com/es/"
+bicycles_endpoint_escapa = "bicicletas/?en-stock={}"
 
 urls = {
-    "scapa": {
-        "url": "https://www.biciescapa.com/es/",
-        "bicycles_endpoint": "bicicletas/",
-        "page_endpoint": "?en-stock={}"
+    "escapa": {
+        "bicycles_endpoint": "https://www.biciescapa.com/es/bicicletas/?en-stock=1&page={}",
+        "web": "https://www.biciescapa.com/es/"
     },
     "biking_point": {
-        "url": "https://www.bikingpoint.es/es/",
-        "bicycles_endpoint": "bicicletas.html",
-        "search_endpoint": "catalogsearch/result/?q={}",
-        "page_endpoint": "?p={}"
+        "bicycles_endpoint": "https://www.bikingpoint.es/es/bicicletas.html/?p={}",
+        "search_endpoint": "https://www.bikingpoint.es/es/catalogsearch/result/?q={}",
     }
 }
 
@@ -160,7 +160,7 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
     return JsonResponse({"message": "Scraping started in background"})
 
 
-async def run_scraper(start_page, last_page):
+async def run_scraper(start_page, last_page, web=None, delete=False):
     print("run_scraper function start")
     async with async_playwright() as p:
         browser = await p.chromium.launch(
@@ -168,8 +168,14 @@ async def run_scraper(start_page, last_page):
         )
         counter = int(start_page)
 
+        # Array with all bicycles references in the DB for the current web
+        bicycle_references = await sync_to_async(
+            lambda: list(Bicycle.objects.filter(web=web).values_list("reference", flat=True,))
+            )()
+
         while counter <= last_page:
-            url = f"https://www.bikingpoint.es/es/bicicletas.html?p={counter}"
+
+            url = (urls[web]["bicycles_endpoint"]).format(counter)
             print(f"url: {url}")
             try:
                 list_page = await browser.new_page(user_agent=random.choice(USER_AGENTS))
@@ -178,31 +184,115 @@ async def run_scraper(start_page, last_page):
                 await stealth.apply_stealth_async(list_page)
                 await asyncio.sleep(random.uniform(3, 6))
                 await list_page.goto(url, wait_until="domcontentloaded")
-                
+                html = await list_page.content()
+                soup = BeautifulSoup(html, "html.parser")
+                try:
+                    await list_page.wait_for_function("() => !document.body.innerText.includes('Verifying you are human')", timeout=180000)
+                except:
+                    print(f"Error cloudflare challenge no se resolvio")
+
                 html = await list_page.content()
                 soup = BeautifulSoup(html, "html.parser")
 
-                if (
-                    "No podemos encontrar productos que coincida con la selección."
-                    in soup.text
-                ):
-                    print("No hay más productos, finalizando.")
-                    break
-
-                bicycles = soup.find_all("li", class_="item product product-item")
-                print(f"Página {counter}: Encontrados {len(bicycles)} bicicletas")
-
-                await create_bicycles(bicycles, USER_AGENTS)
-
+                if web == "biking_point":
+                    if (
+                        "No podemos encontrar productos que coincida con la selección."
+                        in soup.text
+                    ):
+                        print("No hay más productos, finalizando.")
+                        break
+                    else:
+                        bicycles = soup.find_all("li", class_="item product product-item")
+                        print(f"Página {counter}: Encontradas {len(bicycles)} bicicletas")
+                
+                if web == "escapa":
+                    bicycles = soup.find_all("article", class_="product-miniature js-product-miniature mb-3")
+                                
+                # Call to create_bicycles and return an arrays with referencies that not exist yet in the DB
+                bicycle_references = await create_bicycles(bicycles, USER_AGENTS, web, bicycle_references)
+                print(f"bicycle_references: {bicycle_references}")
+                
                 counter += 1
+
+                if web == "escapa":
+                    search_number = (re.search(r"Mostrando \d+-(\d+)", soup.text)).group(1)
+                    number_bicycles = (re.search(r"de (\d+) producto", soup.text)).group(1)
+                    print(search_number)
+                    print(number_bicycles)
+                    if (number_bicycles == search_number):
+                        print("No hay más productos, finalizando.")
+                        break
+
             except Exception as e:
                 print(f"Error en la página {counter}: {e}")
                 break
+        
+        # Delete bicycles that no longer exists
+        if delete:
+            await delete_bicycles(bicycle_references)
+
 
         await browser.close()
     print("Scraping terminado.")
 
 
+async def delete_bicycles(bicycles_reference):
+    print("Deleting bicycles")
+    for reference in bicycles_reference:
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(
+                headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"]
+            )
+            try:
+                page = await browser.new_page(user_agent=random.choice(USER_AGENTS))
+                stealth = Stealth()
+                await stealth.apply_stealth_async(page)
+                await asyncio.sleep(random.uniform(3, 6))
+                bicycle = await sync_to_async(lambda: get_object_or_404(Bicycle, reference=reference))()
+
+                # Search reference on the corresponding page
+                bicycle_exist = True
+                if bicycle.web == "biking_point":
+                    url = urls["biking_point"]["search_endpoint"]
+                    await page.goto(url.format(reference))
+                    content = await page.content()
+                    if "La búsqueda no ha devuelto ningún resultado." in content:
+                        bicycle_exist = False
+
+                elif bicycle.web == "escapa":
+                    url = urls["escapa"]["web"]
+                    await page.goto(url)
+                    try:
+                        await page.click("button#onetrust-accept-btn-handler", timeout=3000)
+                    except:
+                        pass
+
+                    await page.fill("input[name='s']", str(reference))
+                    await asyncio.sleep(random.uniform(3, 6))
+                    await page.wait_for_selector("div.dfd-card-flag", timeout=5000)
+
+                    content = await page.content()
+                    soup = BeautifulSoup(content, "html.parser")
+                    try:
+                        div = soup.find("div", class_="dfd-card-flag", attrs={"data-availability":"out-of-stock"})
+                    
+                        if div.text.strip() == "Agotado" or "Prueba de nuevo con otra búsqueda…" in soup.text:
+                            bicycle_exist = False
+                    except Exception as e:
+                        print(f"Error finding bicycle in Escapa: {e}")
+
+                # If bicycle not exist, delete it
+                if not bicycle_exist:
+                    await sync_to_async(bicycle.delete)()
+                    print(f"Reference {reference} was deleted from web {bicycle.web}")
+
+            except Exception as e:
+                print("Error during delete bicycle: ", e)
+            
+            finally:
+                await browser.close()
+
+"""
 def search_bicycle(request, query=None):
     if request.method == "GET":
         return render(request, "search_bicycle.html")
@@ -211,12 +301,36 @@ def search_bicycle(request, query=None):
         try:
             reference = int(query)
             if len(query) == 5:
-                results = Bicycle.objects.filter(reference=reference)
+                results = Bicycle.objects.get(reference=reference)
             else:
                 results = Bicycle.objects.filter(name__icontains=query)
         except:
             results = Bicycle.objects.filter(name__icontains=query)
         return render(request, "search_bicycle.html", {"results": results})
+"""
+def search_bicycle(request):
+    results = []
+    max_results = 50  # límite para no sobrecargar workers
+
+    if request.method == "POST":
+        query = request.POST.get("query", "").strip()
+
+        if query:
+            try:
+                reference = int(query)
+                if len(query) == 5:
+                    # usamos try-except para capturar que no exista
+                    try:
+                        results = [Bicycle.objects.get(reference=reference)]
+                    except ObjectDoesNotExist:
+                        results = []
+                else:
+                    # filtramos y limitamos resultados
+                    results = list(Bicycle.objects.filter(name__icontains=query)[:max_results])
+            except ValueError:
+                results = list(Bicycle.objects.filter(name__icontains=query)[:max_results])
+
+    return render(request, "search_bicycle.html", {"results": results})
 
 
 def get_price_history(request, reference):
@@ -405,3 +519,4 @@ def alert_lower_price(reference, today_price):
                 print(
                     f"La {bicycle['name']} (referencia {bicycle['reference']}) ha bajado de precio!!"
                 )
+

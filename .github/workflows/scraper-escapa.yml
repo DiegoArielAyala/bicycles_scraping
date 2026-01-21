@@ -1,0 +1,60 @@
+name: Exec Scraper Escapa
+
+on:
+    push:
+      branches:
+        - develop
+    schedule:
+      - cron: '0 10 * * *'
+    workflow_dispatch:
+
+jobs:
+    run-scraper:
+        runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/develop'
+        environment: staging
+        env:
+            DJANGO_SETTINGS_MODULE: bicyclesscraping.settings
+            SECRET_KEY: dummy
+            DB_HOST_STAGING: ${{ secrets.DB_HOST_STAGING }}
+            DB_USER_STAGING: ${{ secrets.DB_USER_STAGING }}
+            DB_NAME_STAGING: ${{ secrets.DB_NAME_STAGING }}
+            DB_PASSWORD_STAGING: ${{ secrets.DB_PASSWORD_STAGING }}
+            DB_PORT_STAGING: ${{ secrets.DB_PORT_STAGING }}
+
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                python-version: '3.11'
+
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                pip install -r requirements.txt
+            
+            - name: Install Playwright browsers
+              run: playwright install --with-deps
+
+            - name: Debug env variables
+              run: |
+                echo "DEBUG: DB_HOST_STAGING = ${{ secrets.DB_HOST_STAGING }}"
+                echo "DEBUG: DB_PORT_STAGING = ${{ secrets.DB_PORT_STAGING }}"
+                echo "DEBUG: DB_NAME_STAGING = ${{ secrets.DB_NAME_STAGING }}"
+                echo "DEBUG: DB_USER_STAGING = ${{ secrets.DB_USER_STAGING }}"
+
+            - name: Optional - Check DB connectivity
+              run: |
+                sudo apt-get update && apt-get install -y postgresql-client
+                PGPASSWORD="$DB_PASSWORD_STAGING" psql -h "$DB_HOST_STAGING" -p "$DB_PORT_STAGING" -U "$DB_USER_STAGING" -d "$DB_NAME_STAGING" -c '\dt'
+              continue-on-error: true
+
+            - name: Run migrations
+              run: python manage.py migrate
+
+            - name: Run scraper
+              run: python run_scraper.py --start 1 --end 25 --web escapa --delete
+

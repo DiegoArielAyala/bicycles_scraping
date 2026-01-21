@@ -1,4 +1,5 @@
 .env
+.env.staging
 subscription_list.json
 venv
 __pycache__
