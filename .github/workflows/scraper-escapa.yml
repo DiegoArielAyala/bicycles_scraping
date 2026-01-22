@@ -12,15 +12,15 @@ jobs:
     run-scraper:
         runs-on: ubuntu-latest
         if: github.ref == 'refs/heads/master'
-        environment: staging
+        environment: production
         env:
             DJANGO_SETTINGS_MODULE: bicyclesscraping.settings
             SECRET_KEY: dummy
-            DB_HOST_STAGING: ${{ secrets.DB_HOST }}
-            DB_USER_STAGING: ${{ secrets.DB_USER }}
-            DB_NAME_STAGING: ${{ secrets.DB_NAME }}
-            DB_PASSWORD_STAGING: ${{ secrets.DB_PASSWORD }}
-            DB_PORT_STAGING: ${{ secrets.DB_PORT }}
+            DB_HOST: ${{ secrets.DB_HOST }}
+            DB_USER: ${{ secrets.DB_USER }}
+            DB_NAME: ${{ secrets.DB_NAME }}
+            DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+            DB_PORT: ${{ secrets.DB_PORT }}
 
         steps:
             - name: Checkout repo
@@ -41,10 +41,10 @@ jobs:
 
             - name: Debug env variables
               run: |
-                echo "DEBUG: DB_HOST_STAGING = ${{ secrets.DB_HOST }}"
-                echo "DEBUG: DB_PORT_STAGING = ${{ secrets.DB_PORT }}"
-                echo "DEBUG: DB_NAME_STAGING = ${{ secrets.DB_NAME }}"
-                echo "DEBUG: DB_USER_STAGING = ${{ secrets.DB_USER }}"
+                echo "DEBUG: DB_HOST = ${{ secrets.DB_HOST }}"
+                echo "DEBUG: DB_PORT = ${{ secrets.DB_PORT }}"
+                echo "DEBUG: DB_NAME = ${{ secrets.DB_NAME }}"
+                echo "DEBUG: DB_USER = ${{ secrets.DB_USER }}"
 
             - name: Optional - Check DB connectivity
               run: |
