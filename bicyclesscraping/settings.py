@@ -83,6 +83,7 @@ WSGI_APPLICATION = "bicyclesscraping.wsgi.application"
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 DB_HOST_STAGING = os.getenv("DB_HOST_STAGING")
+DB_HOST = os.getenv("DB_HOST")
 
 if DATABASE_URL:
     DATABASES = {
@@ -99,6 +100,17 @@ elif DB_HOST_STAGING:
             "PORT": os.getenv("DB_PORT_STAGING"),
             "USER": os.getenv("DB_USER_STAGING"),
             "PASSWORD": os.getenv("DB_PASSWORD_STAGING")
+        }
+    }
+elif DB_HOST:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DB_NAME"),
+            "HOST": os.getenv("DB_HOST"),
+            "PORT": os.getenv("DB_PORT"),
+            "USER": os.getenv("DB_USER"),
+            "PASSWORD": os.getenv("DB_PASSWORD")
         }
     }
 else:
