@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from bs4 import BeautifulSoup
 import os, dotenv
-from urllib.parse import urljoin
 import json
 import smtplib
 from email.mime.text import MIMEText
@@ -28,17 +27,7 @@ from asgiref.sync import sync_to_async
 from django.core.exceptions import ObjectDoesNotExist
 
 
-dotenv.load_dotenv()
-
-url = "https://www.bikingpoint.es/es/"
-bicycles_endpoint = "bicicletas.html"
-search_endpoint = "catalogsearch/result/?q={}"
-page_endpoint = "?p={}"
-bicycles_url = urljoin(url, bicycles_endpoint)
-
-# Urls Escapa
-url_escapa = "https://www.biciescapa.com/es/"
-bicycles_endpoint_escapa = "bicicletas/?en-stock={}"
+dotenv.load_dotenv(".env." + os.getenv("ENV", "local"))
 
 urls = {
     "escapa": {
@@ -160,7 +149,7 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
     return JsonResponse({"message": "Scraping started in background"})
 
 
-async def run_scraper(start_page, last_page, web=None, delete=False):
+async def run_scraper(start_page, last_page, env, web=None, delete=False):
     print("run_scraper function start")
     async with async_playwright() as p:
         browser = await p.chromium.launch(

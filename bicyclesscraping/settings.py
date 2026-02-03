@@ -81,6 +81,8 @@ WSGI_APPLICATION = "bicyclesscraping.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+ENV = os.getenv("ENV", "local")
+
 DATABASE_URL = os.getenv("DATABASE_URL")
 DB_HOST_STAGING = os.getenv("DB_HOST_STAGING")
 DB_HOST = os.getenv("DB_HOST")

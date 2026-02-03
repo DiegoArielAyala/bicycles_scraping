@@ -1,0 +1,1455 @@
+run_scraper function start
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=1
+Página 1: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 30465, 27752, 62776, 62667, 626671, 35477, 35475, 35515, 61563, 34209, 35480, 35478, 35813, 34548, 631941, 61562, 62668, 31140, 63076, 626681, 63291, 34490, 35500, 35658, 35651, 63195, 27890, 34136, 34694, 33495, 35659, 34210, 35503, 35497, 30703, 61668, 35483, 35556, 34195, 626691, 61576, 61572, 35494, 61568, 61674, 31078, 34632, 61869, 63196, 631966, 61621, 34171, 35504, 35628, 35498, 30688, 63210, 35123, 30937, 63596, 35490, 62677, 35488, 63593, 32784, 35653, 60064, 34014, 29404, 61624, 631971, 30487, 28114, 34196, 30476, 35495, 34003, 63211, 61610, 35621, 59926, 63594, 61648, 34185, 60063, 35662, 61628, 60077, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 31063, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837, 33154, 62771]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-look-795-blade-rs-red-axs-bl-thun-2025.html
+Response status: 200
+bicycle_reference: 62771
+Cleaning duplicates
+No duplicates found for reference: 62771
+New price history saved: 2026-01-23 : 11490.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-scott-lumen-eride-900-sl.html
+Response status: 200
+bicycle_reference: 30465
+Cleaning duplicates
+No duplicates found for reference: 30465
+New price history saved: 2026-01-23 : 9999.00
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-look-795-blade-rs-d-ace-di2-iconic-2025.html
+Response status: 200
+bicycle_reference: 62776
+Cleaning duplicates
+No duplicates found for reference: 62776
+New price history saved: 2026-01-23 : 9690.00
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-slr-29-team-tr-white-2026.html
+Response status: 200
+bicycle_reference: 62667
+Cleaning duplicates
+No duplicates found for reference: 62667
+New price history saved: 2026-01-23 : 8999.00
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-slr-29-team-tr-black-2026.html
+Response status: 200
+bicycle_reference: 626671
+Cleaning duplicates
+No duplicates found for reference: 626671
+New price history saved: 2026-01-23 : 8999.00
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-pro-grey-green-2026.html
+Response status: 200
+bicycle_reference: 35477
+Cleaning duplicates
+No duplicates found for reference: 35477
+New price history saved: 2026-01-23 : 8849.00
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-pro-white-carbon-2026.html
+Response status: 200
+bicycle_reference: 35475
+Cleaning duplicates
+No duplicates found for reference: 35475
+New price history saved: 2026-01-23 : 8849.00
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-scott-foil-rc-pro-2026.html
+Response status: 200
+bicycle_reference: 35515
+Cleaning duplicates
+No duplicates found for reference: 35515
+New price history saved: 2026-01-23 : 8849.00
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-look-795-blade-rs-dura-ace-di2.html
+Response status: 200
+bicycle_reference: 61563
+Cleaning duplicates
+No duplicates found for reference: 61563
+New price history saved: 2026-01-23 : 8799.00
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-world-cup-evo-2025.html
+Response status: 200
+bicycle_reference: 34209
+Cleaning duplicates
+No duplicates found for reference: 34209
+New price history saved: 2026-01-23 : 8499.00
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-world-cup-purple-2026.html
+Response status: 200
+bicycle_reference: 35480
+Cleaning duplicates
+No duplicates found for reference: 35480
+New price history saved: 2026-01-23 : 8499.00
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-world-cup-black-2026.html
+Response status: 200
+bicycle_reference: 35478
+Cleaning duplicates
+No duplicates found for reference: 35478
+New price history saved: 2026-01-23 : 8499.00
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-giant-reign-advanced-e-1-2026.html
+Response status: 200
+bicycle_reference: 35813
+Cleaning duplicates
+No duplicates found for reference: 35813
+New price history saved: 2026-01-23 : 8299.00
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-giant-propel-advanced-sl-0-dura-ace-2025.html
+Response status: 200
+bicycle_reference: 34548
+Cleaning duplicates
+No duplicates found for reference: 34548
+New price history saved: 2026-01-23 : 7979.30
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-massi-arrow3-race-d-ace-di2-db-xtec-2026.html
+Response status: 200
+bicycle_reference: 631941
+Cleaning duplicates
+No duplicates found for reference: 631941
+New price history saved: 2026-01-23 : 7399.00
+bicycle_references: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 61562, 62668, 31140, 63076, 626681, 63291, 34490, 35500, 35658, 35651, 63195, 27890, 34136, 34694, 33495, 35659, 34210, 35503, 35497, 30703, 61668, 35483, 35556, 34195, 626691, 61576, 61572, 35494, 61568, 61674, 31078, 34632, 61869, 63196, 631966, 61621, 34171, 35504, 35628, 35498, 30688, 63210, 35123, 30937, 63596, 35490, 62677, 35488, 63593, 32784, 35653, 60064, 34014, 29404, 61624, 631971, 30487, 28114, 34196, 30476, 35495, 34003, 63211, 61610, 35621, 59926, 63594, 61648, 34185, 60063, 35662, 61628, 60077, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 31063, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837, 33154]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=2
+Página 2: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 61562, 62668, 31140, 63076, 626681, 63291, 34490, 35500, 35658, 35651, 63195, 27890, 34136, 34694, 33495, 35659, 34210, 35503, 35497, 30703, 61668, 35483, 35556, 34195, 626691, 61576, 61572, 35494, 61568, 61674, 31078, 34632, 61869, 63196, 631966, 61621, 34171, 35504, 35628, 35498, 30688, 63210, 35123, 30937, 63596, 35490, 62677, 35488, 63593, 32784, 35653, 60064, 34014, 29404, 61624, 631971, 30487, 28114, 34196, 30476, 35495, 34003, 63211, 61610, 35621, 59926, 63594, 61648, 34185, 60063, 35662, 61628, 60077, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 31063, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837, 33154]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-slr-29-replica-tr-black-2026.html
+Response status: 200
+bicycle_reference: 626681
+Cleaning duplicates
+No duplicates found for reference: 626681
+New price history saved: 2026-01-23 : 6999.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-look-795-blade-rs-pro-team-ulte-di2-2025.html
+Response status: 200
+bicycle_reference: 61562
+Cleaning duplicates
+No duplicates found for reference: 61562
+New price history saved: 2026-01-23 : 6999.00
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-slr-29-replica-tr-white-2026.html
+Response status: 200
+bicycle_reference: 62668
+Cleaning duplicates
+No duplicates found for reference: 62668
+New price history saved: 2026-01-23 : 6999.00
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-giant-trance-x-advanced-e-0-elite-2025.html
+Response status: 200
+bicycle_reference: 31140
+Cleaning duplicates
+No duplicates found for reference: 31140
+New price history saved: 2026-01-23 : 6999.00
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-look-e765-optimum-2-rival-axs-2025.html
+Response status: 200
+bicycle_reference: 63076
+Cleaning duplicates
+No duplicates found for reference: 63076
+New price history saved: 2026-01-23 : 6999.00
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-look-e765-gravel-2-apex-1x12-2025.html
+Response status: 200
+bicycle_reference: 63291
+Cleaning duplicates
+No duplicates found for reference: 63291
+New price history saved: 2026-01-23 : 6990.00
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-10-blue-pink-2026.html
+Response status: 200
+bicycle_reference: 35500
+Cleaning duplicates
+No duplicates found for reference: 35500
+New price history saved: 2026-01-23 : 6899.00
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-10-black-2026.html
+Response status: 200
+bicycle_reference: 34490
+Cleaning duplicates
+No duplicates found for reference: 34490
+New price history saved: 2026-01-23 : 6899.00
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-giant-reign-advanced-e-2-2026.html
+Response status: 200
+bicycle_reference: 35658
+Cleaning duplicates
+No duplicates found for reference: 35658
+New price history saved: 2026-01-23 : 6699.00
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-scott-patron-eride-900-ultimate-2022.html
+Response status: 200
+bicycle_reference: 27890
+Cleaning duplicates
+No duplicates found for reference: 27890
+New price history saved: 2026-01-23 : 6599.00
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-giant-propel-advanced-pro-0-di2-2026.html
+Response status: 200
+bicycle_reference: 35651
+Cleaning duplicates
+No duplicates found for reference: 35651
+New price history saved: 2026-01-23 : 6599.00
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-massi-arrow-3-race-d-ace-di2-db-2026.html
+Response status: 200
+bicycle_reference: 63195
+Cleaning duplicates
+No duplicates found for reference: 63195
+New price history saved: 2026-01-23 : 6599.00
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-giant-tcr-advanced-pro-0-di2-2026.html
+Response status: 200
+bicycle_reference: 33495
+Cleaning duplicates
+No duplicates found for reference: 33495
+New price history saved: 2026-01-23 : 6499.00
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-scott-voltage-eride-900-tuned-2025.html
+Response status: 200
+bicycle_reference: 34136
+Cleaning duplicates
+No duplicates found for reference: 34136
+New price history saved: 2026-01-23 : 6499.00
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-giant-tcr-advanced-pro-0-di2-plata-2026.html
+Response status: 200
+bicycle_reference: 34694
+Cleaning duplicates
+No duplicates found for reference: 34694
+New price history saved: 2026-01-23 : 6499.00
+bicycle_references: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 35659, 34210, 35503, 35497, 30703, 61668, 35483, 35556, 34195, 626691, 61576, 61572, 35494, 61568, 61674, 31078, 34632, 61869, 63196, 631966, 61621, 34171, 35504, 35628, 35498, 30688, 63210, 35123, 30937, 63596, 35490, 62677, 35488, 63593, 32784, 35653, 60064, 34014, 29404, 61624, 631971, 30487, 28114, 34196, 30476, 35495, 34003, 63211, 61610, 35621, 59926, 63594, 61648, 34185, 60063, 35662, 61628, 60077, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 31063, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837, 33154]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=3
+Página 3: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 35659, 34210, 35503, 35497, 30703, 61668, 35483, 35556, 34195, 626691, 61576, 61572, 35494, 61568, 61674, 31078, 34632, 61869, 63196, 631966, 61621, 34171, 35504, 35628, 35498, 30688, 63210, 35123, 30937, 63596, 35490, 62677, 35488, 63593, 32784, 35653, 60064, 34014, 29404, 61624, 631971, 30487, 28114, 34196, 30476, 35495, 34003, 63211, 61610, 35621, 59926, 63594, 61648, 34185, 60063, 35662, 61628, 60077, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 31063, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837, 33154]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-giant-anthem-advanced-sl-1-2026.html
+Response status: 200
+bicycle_reference: 35659
+Cleaning duplicates
+No duplicates found for reference: 35659
+New price history saved: 2026-01-23 : 6499.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-world-cup-2025.html
+Response status: 200
+bicycle_reference: 34210
+Cleaning duplicates
+No duplicates found for reference: 34210
+New price history saved: 2026-01-23 : 6486.75
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-scott-foil-rc-10-black-2026.html
+Response status: 200
+bicycle_reference: 35497
+Cleaning duplicates
+No duplicates found for reference: 35497
+New price history saved: 2026-01-23 : 6199.00
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-20-black-2026.html
+Response status: 200
+bicycle_reference: 35503
+Cleaning duplicates
+No duplicates found for reference: 35503
+New price history saved: 2026-01-23 : 6199.00
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-supersonic-t-m-ed-esp.html
+Response status: 200
+bicycle_reference: 30703
+Cleaning duplicates
+No duplicates found for reference: 30703
+New price history saved: 2026-01-23 : 5999.00
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-massi-k2-evo-team-29-720wh-ep801-2026.html
+Response status: 200
+bicycle_reference: 61668
+Cleaning duplicates
+No duplicates found for reference: 61668
+New price history saved: 2026-01-23 : 5999.00
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-team-issue-silver-2026.html
+Response status: 200
+bicycle_reference: 35483
+Cleaning duplicates
+No duplicates found for reference: 35483
+New price history saved: 2026-01-23 : 5899.00
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-team-issue-green-2026.html
+Response status: 200
+bicycle_reference: 35556
+Cleaning duplicates
+No duplicates found for reference: 35556
+New price history saved: 2026-01-23 : 5899.00
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-scott-patron-910-2025.html
+Response status: 200
+bicycle_reference: 34195
+Cleaning duplicates
+No duplicates found for reference: 34195
+New price history saved: 2026-01-23 : 5886.75
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-slr-29-expert-tr-2026.html
+Response status: 200
+bicycle_reference: 626691
+Cleaning duplicates
+No duplicates found for reference: 626691
+New price history saved: 2026-01-23 : 5499.00
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-look-785-huez-ultegra-di2-proteam-2025.html
+Response status: 200
+bicycle_reference: 61576
+Cleaning duplicates
+No duplicates found for reference: 61576
+New price history saved: 2026-01-23 : 5499.00
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-look-785-huez-disc-105-di2-2025.html
+Response status: 200
+bicycle_reference: 61572
+Cleaning duplicates
+No duplicates found for reference: 61572
+New price history saved: 2026-01-23 : 5490.00
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-gravel-10-2026.html
+Response status: 200
+bicycle_reference: 35494
+Cleaning duplicates
+No duplicates found for reference: 35494
+New price history saved: 2026-01-23 : 5449.00
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-look-795-blade-disc-105-di2-2024.html
+Response status: 200
+bicycle_reference: 61568
+Cleaning duplicates
+No duplicates found for reference: 61568
+New price history saved: 2026-01-23 : 5432.00
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-massi-k2-evo-29-advanced-630wh-ep6-2026.html
+Response status: 200
+bicycle_reference: 61674
+Cleaning duplicates
+No duplicates found for reference: 61674
+New price history saved: 2026-01-23 : 5399.00
+bicycle_references: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 31078, 34632, 61869, 63196, 631966, 61621, 34171, 35504, 35628, 35498, 30688, 63210, 35123, 30937, 63596, 35490, 62677, 35488, 63593, 32784, 35653, 60064, 34014, 29404, 61624, 631971, 30487, 28114, 34196, 30476, 35495, 34003, 63211, 61610, 35621, 59926, 63594, 61648, 34185, 60063, 35662, 61628, 60077, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 31063, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837, 33154]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=4
+Página 4: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 31078, 34632, 61869, 63196, 631966, 61621, 34171, 35504, 35628, 35498, 30688, 63210, 35123, 30937, 63596, 35490, 62677, 35488, 63593, 32784, 35653, 60064, 34014, 29404, 61624, 631971, 30487, 28114, 34196, 30476, 35495, 34003, 63211, 61610, 35621, 59926, 63594, 61648, 34185, 60063, 35662, 61628, 60077, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 31063, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837, 33154]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-giant-trance-x-advanced-e-1-elite-2025.html
+Response status: 200
+bicycle_reference: 31078
+Cleaning duplicates
+No duplicates found for reference: 31078
+New price history saved: 2026-01-23 : 5299.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-scott-lumen-905-2025.html
+Response status: 200
+bicycle_reference: 34632
+Cleaning duplicates
+No duplicates found for reference: 34632
+New price history saved: 2026-01-23 : 5299.00
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-look-765-optimum-2-db-105-r38d-2025.html
+Response status: 200
+bicycle_reference: 61869
+Cleaning duplicates
+No duplicates found for reference: 61869
+New price history saved: 2026-01-23 : 5290.00
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-massi-arrow-3-race-ult-di2-xtech-wh-2026.html
+Response status: 200
+bicycle_reference: 63196
+Cleaning duplicates
+No duplicates found for reference: 63196
+New price history saved: 2026-01-23 : 5199.00
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-massi-arrow-3-race-ult-di2-xtech-bk-2026.html
+Response status: 200
+bicycle_reference: 631966
+Cleaning duplicates
+No duplicates found for reference: 631966
+New price history saved: 2026-01-23 : 5199.00
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-massi-arrow-race-ultegra-di2-xtech-2026.html
+Response status: 200
+bicycle_reference: 61621
+Cleaning duplicates
+No duplicates found for reference: 61621
+New price history saved: 2026-01-23 : 5199.00
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-10-yellow-2025.html
+Response status: 200
+bicycle_reference: 34171
+Cleaning duplicates
+No duplicates found for reference: 34171
+New price history saved: 2026-01-23 : 5136.75
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-30-green-2026.html
+Response status: 200
+bicycle_reference: 35504
+Cleaning duplicates
+No duplicates found for reference: 35504
+New price history saved: 2026-01-23 : 5099.00
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-30-black-2026.html
+Response status: 200
+bicycle_reference: 35628
+Cleaning duplicates
+No duplicates found for reference: 35628
+New price history saved: 2026-01-23 : 5099.00
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-scott-foil-rc-20-blue-2026.html
+Response status: 200
+bicycle_reference: 35498
+Cleaning duplicates
+No duplicates found for reference: 35498
+New price history saved: 2026-01-23 : 5099.00
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-giant-propel-advanced-sl-1.html
+Response status: 200
+bicycle_reference: 30688
+Cleaning duplicates
+No duplicates found for reference: 30688
+New price history saved: 2026-01-23 : 4999.00
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-2-race-ultegra-xtech-2026.html
+Response status: 200
+bicycle_reference: 63210
+Cleaning duplicates
+No duplicates found for reference: 63210
+New price history saved: 2026-01-23 : 4999.00
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-team-xx-t-type-tm-ed-esp.html
+Response status: 200
+bicycle_reference: 35123
+Cleaning duplicates
+No duplicates found for reference: 35123
+New price history saved: 2026-01-23 : 4999.00
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-liv-embolden-e-1-pro-2025.html
+Response status: 200
+bicycle_reference: 30937
+Cleaning duplicates
+No duplicates found for reference: 30937
+New price history saved: 2026-01-23 : 4899.00
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-massi-across-carbon-race-grx-di2-2026.html
+Response status: 200
+bicycle_reference: 63596
+Cleaning duplicates
+No duplicates found for reference: 63596
+New price history saved: 2026-01-23 : 4799.00
+bicycle_references: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 35490, 62677, 35488, 63593, 32784, 35653, 60064, 34014, 29404, 61624, 631971, 30487, 28114, 34196, 30476, 35495, 34003, 63211, 61610, 35621, 59926, 63594, 61648, 34185, 60063, 35662, 61628, 60077, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 31063, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837, 33154]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=5
+Página 5: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 35490, 62677, 35488, 63593, 32784, 35653, 60064, 34014, 29404, 61624, 631971, 30487, 28114, 34196, 30476, 35495, 34003, 63211, 61610, 35621, 59926, 63594, 61648, 34185, 60063, 35662, 61628, 60077, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 31063, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837, 33154]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-team-grey-2026.html
+Response status: 200
+bicycle_reference: 35490
+Cleaning duplicates
+No duplicates found for reference: 35490
+New price history saved: 2026-01-23 : 4799.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-massi-k2-evo-29-630wh-ep6-trail-2026.html
+Response status: 200
+bicycle_reference: 62677
+Cleaning duplicates
+No duplicates found for reference: 62677
+New price history saved: 2026-01-23 : 4799.00
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-team-black-2026.html
+Response status: 200
+bicycle_reference: 35488
+Cleaning duplicates
+No duplicates found for reference: 35488
+New price history saved: 2026-01-23 : 4799.00
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-massi-across-carbon-race-105-di2-2026.html
+Response status: 200
+bicycle_reference: 63593
+Cleaning duplicates
+No duplicates found for reference: 63593
+New price history saved: 2026-01-23 : 4799.00
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-giant-tcr-advanced-pro-1-di2-plata-2026.html
+Response status: 200
+bicycle_reference: 35653
+Cleaning duplicates
+No duplicates found for reference: 35653
+New price history saved: 2026-01-23 : 4699.00
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-giant-tcr-advanced-pro-1-di2-negro-2026.html
+Response status: 200
+bicycle_reference: 32784
+Cleaning duplicates
+No duplicates found for reference: 32784
+New price history saved: 2026-01-23 : 4699.00
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-29-pro-tr.html
+Response status: 200
+bicycle_reference: 60064
+Cleaning duplicates
+No duplicates found for reference: 60064
+New price history saved: 2026-01-23 : 4499.25
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-giant-tcr-advanced-pro-0-di2-2025.html
+Response status: 200
+bicycle_reference: 33154
+Cleaning duplicates
+No duplicates found for reference: 33154
+New price history saved: 2026-01-23 : 4499.00
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-scott-voltage-eride-910-2025.html
+Response status: 200
+bicycle_reference: 34014
+Cleaning duplicates
+No duplicates found for reference: 34014
+New price history saved: 2026-01-23 : 4499.00
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-giant-trance-x-advanced-e-1-2023.html
+Response status: 200
+bicycle_reference: 31063
+Cleaning duplicates
+No duplicates found for reference: 31063
+New price history saved: 2026-01-23 : 4499.00
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-massi-arrow-3-race-105-di2-xtech-bk-2026.html
+Response status: 200
+bicycle_reference: 631971
+Cleaning duplicates
+No duplicates found for reference: 631971
+New price history saved: 2026-01-23 : 4499.00
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-eride-30.html
+Response status: 200
+bicycle_reference: 29404
+Cleaning duplicates
+No duplicates found for reference: 29404
+New price history saved: 2026-01-23 : 4499.00
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-massi-arrow-race-105-di2-db-xtech-2026.html
+Response status: 200
+bicycle_reference: 61624
+Cleaning duplicates
+No duplicates found for reference: 61624
+New price history saved: 2026-01-23 : 4499.00
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-giant-propel-advanced-pro-0-2025.html
+Response status: 200
+bicycle_reference: 34003
+Cleaning duplicates
+No duplicates found for reference: 34003
+New price history saved: 2026-01-23 : 4469.00
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-10-2023.html
+Response status: 200
+bicycle_reference: 30487
+Cleaning duplicates
+No duplicates found for reference: 30487
+New price history saved: 2026-01-23 : 4450.00
+bicycle_references: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 28114, 34196, 30476, 35495, 63211, 61610, 35621, 59926, 63594, 61648, 34185, 60063, 35662, 61628, 60077, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=6
+Página 6: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 28114, 34196, 30476, 35495, 63211, 61610, 35621, 59926, 63594, 61648, 34185, 60063, 35662, 61628, 60077, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-giant-trance-x-advanced-e-0.html
+Response status: 200
+bicycle_reference: 28114
+Cleaning duplicates
+No duplicates found for reference: 28114
+New price history saved: 2026-01-23 : 4399.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-scott-lumen-920-2025.html
+Response status: 200
+bicycle_reference: 34196
+Cleaning duplicates
+No duplicates found for reference: 34196
+New price history saved: 2026-01-23 : 4299.00
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-scott-foil-rc-20-2023.html
+Response status: 200
+bicycle_reference: 30476
+Cleaning duplicates
+No duplicates found for reference: 30476
+New price history saved: 2026-01-23 : 4299.00
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-gravel-20-beige-2026.html
+Response status: 200
+bicycle_reference: 35495
+Cleaning duplicates
+No duplicates found for reference: 35495
+New price history saved: 2026-01-23 : 4249.00
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-scott-solace-gravel-eride-30-2023.html
+Response status: 200
+bicycle_reference: 30438
+Reference 30438 not in bicycles_reference
+Cleaning duplicates
+No duplicates found for reference: 30438
+Bicycle not exist
+Saved bike for: 622
+PriceHistory saved for 30438
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-race-105-di2-12-db-xtech-2026.html
+Response status: 200
+bicycle_reference: 61610
+Cleaning duplicates
+No duplicates found for reference: 61610
+New price history saved: 2026-01-23 : 4199.00
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-giant-propel-advanced-1-2026.html
+Response status: 200
+bicycle_reference: 35621
+Cleaning duplicates
+No duplicates found for reference: 35621
+New price history saved: 2026-01-23 : 4199.00
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-2-race-105-di2-db-xtech-2026.html
+Response status: 200
+bicycle_reference: 63211
+Cleaning duplicates
+No duplicates found for reference: 63211
+New price history saved: 2026-01-23 : 4199.00
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-massi-across-carbon-race-grx-1x12-2026.html
+Response status: 200
+bicycle_reference: 63594
+Cleaning duplicates
+No duplicates found for reference: 63594
+New price history saved: 2026-01-23 : 4099.00
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-massi-arrow-race-ult-disc-di2-carbo.html
+Response status: 200
+bicycle_reference: 59926
+Cleaning duplicates
+No duplicates found for reference: 59926
+New price history saved: 2026-01-23 : 4099.00
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-29-expert-2025.html
+Response status: 200
+bicycle_reference: 61648
+Cleaning duplicates
+No duplicates found for reference: 61648
+New price history saved: 2026-01-23 : 4049.25
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-gravel-10-2025.html
+Response status: 200
+bicycle_reference: 34185
+Cleaning duplicates
+No duplicates found for reference: 34185
+New price history saved: 2026-01-23 : 4049.00
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-29-pro-1x12.html
+Response status: 200
+bicycle_reference: 60063
+Cleaning duplicates
+No duplicates found for reference: 60063
+New price history saved: 2026-01-23 : 3999.20
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-massi-arrow-race-105-di2-db-2026.html
+Response status: 200
+bicycle_reference: 61628
+Cleaning duplicates
+No duplicates found for reference: 61628
+New price history saved: 2026-01-23 : 3999.00
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-massi-pro-rc-29-elite-1x12.html
+Response status: 200
+bicycle_reference: 60077
+Cleaning duplicates
+No duplicates found for reference: 60077
+New price history saved: 2026-01-23 : 3999.00
+bicycle_references: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 35662, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=7
+Página 7: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 35662, 60081, 64920, 629721, 29347, 60067, 34663, 35499, 57695, 34175, 34198, 28329, 63214, 61611, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 34013, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-massi-across-carbon-grx-di2-green-2026.html
+Response status: 200
+bicycle_reference: 629721
+Cleaning duplicates
+No duplicates found for reference: 629721
+New price history saved: 2026-01-23 : 3999.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-massi-pro-29-expert-1x12.html
+Response status: 200
+bicycle_reference: 60081
+Cleaning duplicates
+No duplicates found for reference: 60081
+New price history saved: 2026-01-23 : 3999.00
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-liv-langma-advanced-0-2026.html
+Response status: 200
+bicycle_reference: 35662
+Cleaning duplicates
+No duplicates found for reference: 35662
+New price history saved: 2026-01-23 : 3999.00
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-sl-ltd-x-3-2026.html
+Response status: 200
+bicycle_reference: 64920
+Cleaning duplicates
+No duplicates found for reference: 64920
+New price history saved: 2026-01-23 : 3999.00
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-29-adv-xt-r-al.html
+Response status: 200
+bicycle_reference: 29347
+Cleaning duplicates
+No duplicates found for reference: 29347
+New price history saved: 2026-01-23 : 3974.25
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-scott-foil-rc-20-2025.html
+Response status: 200
+bicycle_reference: 34013
+Cleaning duplicates
+No duplicates found for reference: 34013
+New price history saved: 2026-01-23 : 3971.22
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-29-elite-tr.html
+Response status: 200
+bicycle_reference: 60067
+Cleaning duplicates
+No duplicates found for reference: 60067
+New price history saved: 2026-01-23 : 3919.20
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-giant-trance-x-e-2-pro-29-bateria-625.html
+Response status: 200
+bicycle_reference: 34663
+Cleaning duplicates
+No duplicates found for reference: 34663
+New price history saved: 2026-01-23 : 3899.00
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-30-white-2026.html
+Response status: 200
+bicycle_reference: 35499
+Cleaning duplicates
+No duplicates found for reference: 35499
+New price history saved: 2026-01-23 : 3899.00
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-29-endurance-2022.html
+Response status: 200
+bicycle_reference: 57695
+Cleaning duplicates
+No duplicates found for reference: 57695
+New price history saved: 2026-01-23 : 3839.20
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-30-2025.html
+Response status: 200
+bicycle_reference: 34175
+Cleaning duplicates
+No duplicates found for reference: 34175
+New price history saved: 2026-01-23 : 3824.00
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-eride-20-2025.html
+Response status: 200
+bicycle_reference: 34198
+Cleaning duplicates
+No duplicates found for reference: 34198
+New price history saved: 2026-01-23 : 3799.00
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-liv-intrigue-x-e-2-pro.html
+Response status: 200
+bicycle_reference: 28329
+Cleaning duplicates
+No duplicates found for reference: 28329
+New price history saved: 2026-01-23 : 3779.00
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-2-race-105-di2-2026.html
+Response status: 200
+bicycle_reference: 63214
+Cleaning duplicates
+No duplicates found for reference: 63214
+New price history saved: 2026-01-23 : 3699.00
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-race-105-di2-12v-db-2026.html
+Response status: 200
+bicycle_reference: 61611
+Cleaning duplicates
+No duplicates found for reference: 61611
+New price history saved: 2026-01-23 : 3699.00
+bicycle_references: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=8
+Página 8: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 27385, 59831, 61315, 59927, 28254, 34517, 28119, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 61912, 33919, 34004, 35220, 57126, 28174, 30480, 31141, 61613, 35664, 30483, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-look-785-huez-disc-105-proteam-2025.html
+Response status: 200
+bicycle_reference: 61912
+Cleaning duplicates
+No duplicates found for reference: 61912
+New price history saved: 2026-01-23 : 3690.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-scott-voltage-eride-920-2025.html
+Response status: 200
+bicycle_reference: 33919
+Cleaning duplicates
+No duplicates found for reference: 33919
+New price history saved: 2026-01-23 : 3668.68
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-giant-propel-advanced-pro-1-2025.html
+Response status: 200
+bicycle_reference: 34004
+Cleaning duplicates
+No duplicates found for reference: 34004
+New price history saved: 2026-01-23 : 3557.81
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-race-ultegra-di2-tour.html
+Response status: 200
+bicycle_reference: 59831
+Cleaning duplicates
+No duplicates found for reference: 59831
+New price history saved: 2026-01-23 : 3519.20
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-scott-strike-eride-920-azul.html
+Response status: 200
+bicycle_reference: 27385
+Cleaning duplicates
+No duplicates found for reference: 27385
+New price history saved: 2026-01-23 : 3499.00
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-team-black-2024.html
+Response status: 200
+bicycle_reference: 30480
+Cleaning duplicates
+No duplicates found for reference: 30480
+New price history saved: 2026-01-23 : 3499.00
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-giant-trance-x-e-3-pro-29-bateria-625.html
+Response status: 200
+bicycle_reference: 35220
+Cleaning duplicates
+No duplicates found for reference: 35220
+New price history saved: 2026-01-23 : 3499.00
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-look-785-huez-rs-chame-ult-di2-12v-2022.html
+Response status: 200
+bicycle_reference: 57126
+Cleaning duplicates
+No duplicates found for reference: 57126
+New price history saved: 2026-01-23 : 3499.00
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-giant-anthem-advanced-pro-29-1-2022.html
+Response status: 200
+bicycle_reference: 28174
+Cleaning duplicates
+No duplicates found for reference: 28174
+New price history saved: 2026-01-23 : 3499.00
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-giant-trance-x-advanced-e-3-elite-2025.html
+Response status: 200
+bicycle_reference: 31141
+Cleaning duplicates
+No duplicates found for reference: 31141
+New price history saved: 2026-01-23 : 3449.00
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-liv-devote-advanced-1-2026.html
+Response status: 200
+bicycle_reference: 35664
+Cleaning duplicates
+No duplicates found for reference: 35664
+New price history saved: 2026-01-23 : 3399.00
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-race-105-12-db-xtech-2026.html
+Response status: 200
+bicycle_reference: 61613
+Cleaning duplicates
+No duplicates found for reference: 61613
+New price history saved: 2026-01-23 : 3399.00
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-massi-arrow-race-ultegra-disc-di2.html
+Response status: 200
+bicycle_reference: 59927
+Cleaning duplicates
+No duplicates found for reference: 59927
+New price history saved: 2026-01-23 : 3399.00
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-team-white-2024.html
+Response status: 200
+bicycle_reference: 30483
+Cleaning duplicates
+No duplicates found for reference: 30483
+New price history saved: 2026-01-23 : 3349.00
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-giant-trance-x-e-2-pro-29.html
+Response status: 200
+bicycle_reference: 28119
+Cleaning duplicates
+No duplicates found for reference: 28119
+New price history saved: 2026-01-23 : 3299.00
+bicycle_references: [27257, 61315, 28254, 34517, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=9
+Página 9: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 61315, 28254, 34517, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 61715, 61663, 59928, 63202, 35654, 64303, 63238, 35663, 632381, 27384, 61655, 59917, 35552, 33991, 59971, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-2-105-12v-xtech-2026.html
+Response status: 200
+bicycle_reference: 63202
+Cleaning duplicates
+No duplicates found for reference: 63202
+New price history saved: 2026-01-23 : 3299.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-giant-tcr-advanced-1-pro-compact-2026.html
+Response status: 200
+bicycle_reference: 35654
+Cleaning duplicates
+No duplicates found for reference: 35654
+New price history saved: 2026-01-23 : 3299.00
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-sl-ltd-x-2-2026.html
+Response status: 200
+bicycle_reference: 64303
+Cleaning duplicates
+No duplicates found for reference: 64303
+New price history saved: 2026-01-23 : 3299.00
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-massi-arrow-race-105-disc-di2-carbo.html
+Response status: 200
+bicycle_reference: 59928
+Cleaning duplicates
+No duplicates found for reference: 59928
+New price history saved: 2026-01-23 : 3299.00
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-massi-across-carbon-grx-1x12.html
+Response status: 200
+bicycle_reference: 61715
+Cleaning duplicates
+No duplicates found for reference: 61715
+New price history saved: 2026-01-23 : 3299.00
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-massi-across-carbon-grx-1x12-black-2026.html
+Response status: 200
+bicycle_reference: 63238
+Cleaning duplicates
+No duplicates found for reference: 63238
+New price history saved: 2026-01-23 : 3299.00
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-liv-langma-advanced-1-pro-compact-2026.html
+Response status: 200
+bicycle_reference: 35663
+Cleaning duplicates
+No duplicates found for reference: 35663
+New price history saved: 2026-01-23 : 3299.00
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-massi-across-carbon-grx-1x12-green-2026.html
+Response status: 200
+bicycle_reference: 632381
+Cleaning duplicates
+No duplicates found for reference: 632381
+New price history saved: 2026-01-23 : 3299.00
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-massi-pro-29-elite-2026.html
+Response status: 200
+bicycle_reference: 61663
+Cleaning duplicates
+No duplicates found for reference: 61663
+New price history saved: 2026-01-23 : 3299.00
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-scott-strike-eride-930.html
+Response status: 200
+bicycle_reference: 27384
+Cleaning duplicates
+No duplicates found for reference: 27384
+New price history saved: 2026-01-23 : 3290.00
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-29-comp-1x12-2025.html
+Response status: 200
+bicycle_reference: 61655
+Cleaning duplicates
+No duplicates found for reference: 61655
+New price history saved: 2026-01-23 : 3279.20
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-race-105-disc-di2-carbon-2023.html
+Response status: 200
+bicycle_reference: 59917
+Cleaning duplicates
+No duplicates found for reference: 59917
+New price history saved: 2026-01-23 : 3199.20
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-bmc-team-machine-slr-2022-t-56-2a-mano.html
+Response status: 200
+bicycle_reference: 35552
+Cleaning duplicates
+No duplicates found for reference: 35552
+New price history saved: 2026-01-23 : 3199.00
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-t-iss-tr-t-m-2024-2a-mano.html
+Response status: 200
+bicycle_reference: 35923
+Reference 35923 not in bicycles_reference
+Cleaning duplicates
+No duplicates found for reference: 35923
+Bicycle not exist
+Saved bike for: 623
+PriceHistory saved for 35923
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-29-comp-plus.html
+Response status: 200
+bicycle_reference: 59971
+Cleaning duplicates
+No duplicates found for reference: 59971
+New price history saved: 2026-01-23 : 3039.20
+bicycle_references: [27257, 61315, 28254, 34517, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 33991, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=10
+Página 10: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 61315, 28254, 34517, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 33991, 57733, 28175, 60083, 30938, 31077, 34206, 35828, 60246, 57157, 30966, 63215, 28121, 30492, 61716, 30489, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-look-765-rs-db-petrol-rival-red500.html
+Response status: 200
+bicycle_reference: 57157
+Cleaning duplicates
+No duplicates found for reference: 57157
+New price history saved: 2026-01-23 : 2999.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-15-t-l-ed-esp.html
+Response status: 200
+bicycle_reference: 30966
+Cleaning duplicates
+No duplicates found for reference: 30966
+New price history saved: 2026-01-23 : 2999.00
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-comp-2025.html
+Response status: 200
+bicycle_reference: 34206
+Cleaning duplicates
+No duplicates found for reference: 34206
+New price history saved: 2026-01-23 : 2999.00
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-giant-anthem-advanced-pro-29-2.html
+Response status: 520
+New price history saved: 2026-01-23 : 2999.00
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-gravel-ultegra-2x11.html
+Response status: 200
+bicycle_reference: 57733
+Cleaning duplicates
+No duplicates found for reference: 57733
+New price history saved: 2026-01-23 : 2999.00
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-massi-pro-29-elite-1x12.html
+Response status: 200
+bicycle_reference: 60083
+Cleaning duplicates
+No duplicates found for reference: 60083
+New price history saved: 2026-01-23 : 2999.00
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-giant-stance-e-1-29-2025.html
+Response status: 200
+bicycle_reference: 30938
+Cleaning duplicates
+No duplicates found for reference: 30938
+New price history saved: 2026-01-23 : 2999.00
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-930-white-2023.html
+Response status: 200
+bicycle_reference: 31077
+Cleaning duplicates
+No duplicates found for reference: 31077
+New price history saved: 2026-01-23 : 2999.00
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-giant-revolt-advanced-0-2025.html
+Response status: 200
+bicycle_reference: 33991
+Cleaning duplicates
+No duplicates found for reference: 33991
+New price history saved: 2026-01-23 : 2999.00
+33991 changed price from 2999.0 to 2999.00
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-orbea-orca-aero-m20-2023-t-m-2a-mano.html
+Response status: 200
+bicycle_reference: 35828
+Cleaning duplicates
+No duplicates found for reference: 35828
+New price history saved: 2026-01-23 : 2999.00
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-massi-k2-29-630wh-e7000-pro-2025.html
+Response status: 200
+bicycle_reference: 60246
+Cleaning duplicates
+No duplicates found for reference: 60246
+New price history saved: 2026-01-23 : 2999.00
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-massi-across-carbon-105-2x12.html
+Response status: 200
+bicycle_reference: 61716
+Cleaning duplicates
+No duplicates found for reference: 61716
+New price history saved: 2026-01-23 : 2899.00
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-40-2023.html
+Response status: 200
+bicycle_reference: 30492
+Cleaning duplicates
+No duplicates found for reference: 30492
+New price history saved: 2026-01-23 : 2899.00
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-giant-trance-x-e-3-pro-29-2022.html
+Response status: 200
+bicycle_reference: 28121
+Cleaning duplicates
+No duplicates found for reference: 28121
+New price history saved: 2026-01-23 : 2899.00
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-20-2024.html
+Response status: 200
+bicycle_reference: 30489
+Cleaning duplicates
+No duplicates found for reference: 30489
+New price history saved: 2026-01-23 : 2899.00
+bicycle_references: [27257, 61315, 28254, 34517, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 28175, 63215, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=11
+Página 11: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 61315, 28254, 34517, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 28175, 63215, 31591, 60200, 35857, 35496, 30490, 33417, 60445, 60071, 61656, 35797, 61664, 62799, 35666, 57700, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-2-race-105-12v-db-2026.html
+Response status: 200
+bicycle_reference: 63215
+Cleaning duplicates
+No duplicates found for reference: 63215
+New price history saved: 2026-01-23 : 2899.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-29-tech-venom-t-s-31591.html
+Response status: 200
+bicycle_reference: 31591
+Cleaning duplicates
+No duplicates found for reference: 31591
+New price history saved: 2026-01-23 : 2879.20
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-gravel-grx-1x11.html
+Response status: 200
+bicycle_reference: 60200
+Cleaning duplicates
+No duplicates found for reference: 60200
+New price history saved: 2026-01-23 : 2879.00
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-gravel-30-white-2026.html
+Response status: 200
+bicycle_reference: 35496
+Cleaning duplicates
+No duplicates found for reference: 35496
+New price history saved: 2026-01-23 : 2849.00
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-rc-30.html
+Response status: 200
+bicycle_reference: 30490
+Cleaning duplicates
+No duplicates found for reference: 30490
+New price history saved: 2026-01-23 : 2849.00
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-scott-scale-gravel-10-2026.html
+Response status: 200
+bicycle_reference: 35857
+Cleaning duplicates
+No duplicates found for reference: 35857
+New price history saved: 2026-01-23 : 2849.00
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-scott-foil-rc-30-2024.html
+Response status: 200
+bicycle_reference: 33417
+Cleaning duplicates
+No duplicates found for reference: 33417
+New price history saved: 2026-01-23 : 2799.94
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-race-105-di2-12v.html
+Response status: 200
+bicycle_reference: 60445
+Cleaning duplicates
+No duplicates found for reference: 60445
+New price history saved: 2026-01-23 : 2799.20
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-29-tech-1x12v.html
+Response status: 200
+bicycle_reference: 60071
+Cleaning duplicates
+No duplicates found for reference: 60071
+New price history saved: 2026-01-23 : 2799.20
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-29-tech-1x12-2025.html
+Response status: 200
+bicycle_reference: 61656
+Cleaning duplicates
+No duplicates found for reference: 61656
+New price history saved: 2026-01-23 : 2799.20
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-giant-propel-advanced-2-2026.html
+Response status: 200
+bicycle_reference: 35797
+Cleaning duplicates
+No duplicates found for reference: 35797
+New price history saved: 2026-01-23 : 2799.00
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-massi-pro-29-performance-1x12-2026.html
+Response status: 200
+bicycle_reference: 61664
+Cleaning duplicates
+No duplicates found for reference: 61664
+New price history saved: 2026-01-23 : 2799.00
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-liv-tempt-e-ex-box-2026.html
+Response status: 200
+bicycle_reference: 35666
+Cleaning duplicates
+No duplicates found for reference: 35666
+New price history saved: 2026-01-23 : 2799.00
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-look-765-gravel-apex-1x12-red-dust-2025.html
+Response status: 200
+bicycle_reference: 62799
+Cleaning duplicates
+No duplicates found for reference: 62799
+New price history saved: 2026-01-23 : 2799.00
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-29-tech-1x12.html
+Response status: 200
+bicycle_reference: 57700
+Cleaning duplicates
+No duplicates found for reference: 57700
+New price history saved: 2026-01-23 : 2719.20
+bicycle_references: [27257, 61315, 28254, 34517, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 28175, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=12
+Página 12: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 61315, 28254, 34517, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 28175, 28176, 61709, 35983, 34187, 34200, 35655, 35667, 35800, 61659, 35661, 64758, 29315, 30486, 34049, 30750, 61069, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 30484, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-giant-stance-e-1-pro-29-2025-t-m-2a-man.html
+Response status: 200
+bicycle_reference: 35983
+Cleaning duplicates
+No duplicates found for reference: 35983
+New price history saved: 2026-01-23 : 2699.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-rc-comp-blue-2023.html
+Response status: 200
+bicycle_reference: 30484
+Cleaning duplicates
+No duplicates found for reference: 30484
+New price history saved: 2026-01-23 : 2699.00
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-gravel-30-2025.html
+Response status: 200
+bicycle_reference: 34187
+Cleaning duplicates
+No duplicates found for reference: 34187
+New price history saved: 2026-01-23 : 2699.00
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-giant-anthem-advanced-pro-29-3-2022.html
+Response status: 200
+bicycle_reference: 28176
+Cleaning duplicates
+No duplicates found for reference: 28176
+New price history saved: 2026-01-23 : 2699.00
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-gravel-grx-1x11-2025.html
+Response status: 200
+bicycle_reference: 61709
+Cleaning duplicates
+No duplicates found for reference: 61709
+New price history saved: 2026-01-23 : 2699.00
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-scott-scale-rc-team-2025.html
+Response status: 200
+bicycle_reference: 34200
+Cleaning duplicates
+No duplicates found for reference: 34200
+New price history saved: 2026-01-23 : 2695.00
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-29-expert-2026.html
+Response status: 200
+bicycle_reference: 61659
+Cleaning duplicates
+No duplicates found for reference: 61659
+New price history saved: 2026-01-23 : 2599.00
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-giant-talon-e-box-2026.html
+Response status: 200
+bicycle_reference: 35661
+Cleaning duplicates
+No duplicates found for reference: 35661
+New price history saved: 2026-01-23 : 2599.00
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-sl-ltd-x-1-2026.html
+Response status: 200
+bicycle_reference: 64758
+Cleaning duplicates
+No duplicates found for reference: 64758
+New price history saved: 2026-01-23 : 2599.00
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-giant-revolt-advanced-3-2026.html
+Response status: 200
+bicycle_reference: 35655
+Cleaning duplicates
+No duplicates found for reference: 35655
+New price history saved: 2026-01-23 : 2599.00
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-liv-tempt-e-box-2026.html
+Response status: 200
+bicycle_reference: 35667
+Cleaning duplicates
+No duplicates found for reference: 35667
+New price history saved: 2026-01-23 : 2599.00
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-liv-langma-advanced-2-pro-compact-2026.html
+Response status: 200
+bicycle_reference: 35800
+Cleaning duplicates
+No duplicates found for reference: 35800
+New price history saved: 2026-01-23 : 2599.00
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-liv-intrigue-29-1.html
+Response status: 200
+bicycle_reference: 29315
+Cleaning duplicates
+No duplicates found for reference: 29315
+New price history saved: 2026-01-23 : 2590.00
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-massi-k2-29-elite-504wh-e7000.html
+Response status: 200
+bicycle_reference: 61069
+Cleaning duplicates
+No duplicates found for reference: 61069
+New price history saved: 2026-01-23 : 2499.00
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-scott-genius-920-2023.html
+Response status: 200
+bicycle_reference: 30486
+Cleaning duplicates
+No duplicates found for reference: 30486
+New price history saved: 2026-01-23 : 2499.00
+bicycle_references: [27257, 61315, 28254, 34517, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 28175, 34049, 30750, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=13
+Página 13: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 61315, 28254, 34517, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 28175, 34049, 30750, 34001, 63207, 635371, 27740, 61710, 53006, 35706, 61660, 59920, 59932, 35993, 34643, 27255, 35427, 33990, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-massi-across-carbon-grx-2x10-2026.html
+Response status: 200
+bicycle_reference: 635371
+Cleaning duplicates
+No duplicates found for reference: 635371
+New price history saved: 2026-01-23 : 2499.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-giant-expression-e-2-2026.html
+Response status: 200
+bicycle_reference: 34049
+Cleaning duplicates
+No duplicates found for reference: 34049
+New price history saved: 2026-01-23 : 2499.00
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-2-105-mix-12v-db-wb-2026.html
+Response status: 200
+bicycle_reference: 63207
+Cleaning duplicates
+No duplicates found for reference: 63207
+New price history saved: 2026-01-23 : 2499.00
+Bicycle_index: 4
+href: https://www.bikingpoint.es/es/bicicleta-liv-langma-advanced-1-pc-2025.html
+Response status: 200
+bicycle_reference: 34001
+Cleaning duplicates
+No duplicates found for reference: 34001
+New price history saved: 2026-01-23 : 2499.00
+Bicycle_index: 5
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-gravel-105-mix-2x11-2025.html
+Response status: 200
+bicycle_reference: 61710
+Cleaning duplicates
+No duplicates found for reference: 61710
+New price history saved: 2026-01-23 : 2429.00
+Bicycle_index: 6
+href: https://www.bikingpoint.es/es/bicicleta-massi-aire-carbon-sl-end-2022-2a-mano.html
+Response status: 200
+bicycle_reference: 35706
+Cleaning duplicates
+No duplicates found for reference: 35706
+New price history saved: 2026-01-23 : 2399.00
+Bicycle_index: 7
+href: https://www.bikingpoint.es/es/bicicleta-look-875-rs-madison-proteam-black-2025.html
+Response status: 200
+bicycle_reference: 53006
+Cleaning duplicates
+No duplicates found for reference: 53006
+New price history saved: 2026-01-23 : 2399.00
+Bicycle_index: 8
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-29-pro-2026.html
+Response status: 200
+bicycle_reference: 61660
+Cleaning duplicates
+No duplicates found for reference: 61660
+New price history saved: 2026-01-23 : 2299.00
+Bicycle_index: 9
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-race-ultegra-mix-disc.html
+Response status: 200
+bicycle_reference: 59920
+Cleaning duplicates
+No duplicates found for reference: 59920
+New price history saved: 2026-01-23 : 2239.20
+Bicycle_index: 10
+href: https://www.bikingpoint.es/es/bicicleta-massi-arrow-race-105-disc-2023.html
+Response status: 200
+bicycle_reference: 59932
+Cleaning duplicates
+No duplicates found for reference: 59932
+New price history saved: 2026-01-23 : 2199.00
+Bicycle_index: 11
+href: https://www.bikingpoint.es/es/bicicleta-scott-strike-940-t-s-2022-2a-mano.html
+Response status: 200
+bicycle_reference: 35993
+Cleaning duplicates
+No duplicates found for reference: 35993
+New price history saved: 2026-01-23 : 2199.00
+Bicycle_index: 12
+href: https://www.bikingpoint.es/es/bicicleta-scott-addict-gravel-40-black-2025.html
+Response status: 200
+bicycle_reference: 34643
+Cleaning duplicates
+No duplicates found for reference: 34643
+New price history saved: 2026-01-23 : 2136.00
+Bicycle_index: 13
+href: https://www.bikingpoint.es/es/bicicleta-scott-spark-960-black-2022.html
+Response status: 200
+bicycle_reference: 27255
+Cleaning duplicates
+No duplicates found for reference: 27255
+New price history saved: 2026-01-23 : 2099.00
+Bicycle_index: 14
+href: https://www.bikingpoint.es/es/bicicleta-scott-genius-920-t-l-2017-2a-mano.html
+Response status: 200
+bicycle_reference: 35427
+Cleaning duplicates
+No duplicates found for reference: 35427
+New price history saved: 2026-01-23 : 2099.00
+Bicycle_index: 15
+href: https://www.bikingpoint.es/es/bicicleta-giant-revolt-advanced-2-2025.html
+Response status: 200
+bicycle_reference: 33990
+Cleaning duplicates
+No duplicates found for reference: 33990
+New price history saved: 2026-01-23 : 2098.00
+bicycle_references: [27257, 61315, 28254, 34517, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 28175, 30750, 27740, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+url: https://www.bikingpoint.es/es/bicicletas.html/?p=14
+Página 14: Encontradas 15 bicicletas
+create_bicycles started for biking_point with 15 bicycles finded on the page
+Bicycle references saved in DB: [27257, 61315, 28254, 34517, 31164, 30244, 33153, 35892, 33456, 61727, 35825, 35099, 64572, 35891, 32940, 27752, 28175, 30750, 27740, 34002, 58609, 62660, 35939, 57978, 30840, 32193, 35492, 626601, 27254, 27744, 61661, 35115, 27755, 31568, 63560, 28584, 61272, 35751, 54138, 27256, 27548, 61729, 58381, 35705, 25268, 27258, 31163, 64827, 27754, 62659, 626591, 35656, 27750, 27728, 61728, 35777, 60664, 28180, 35369, 35097, 35381, 35648, 61733, 35681, 35493, 61725, 64995, 35610, 60103, 60397, 61724, 56041, 27407, 62234, 62235, 34919, 27406, 62241, 63998, 35591, 57792, 31912, 35622, 34184, 53965, 57803, 57802, 35624, 31821, 35201, 35203, 35623, 35682, 35205, 35206, 35204, 35207, 35890, 35672, 35625, 34666, 35673, 28330, 60144, 32772, 33987, 61732, 32962, 55590, 35963, 31837]
+Bicycle_index: 1
+href: https://www.bikingpoint.es/es/bicicleta-giant-revolt-advanced-1-2024.html
+Response status: 200
+bicycle_reference: 32772
+Cleaning duplicates
+No duplicates found for reference: 32772
+New price history saved: 2026-01-23 : 2089.00
+Bicycle_index: 2
+href: https://www.bikingpoint.es/es/bicicleta-liv-langma-advanced-2-pc-2025.html
+Response status: 200
+bicycle_reference: 34002
+Cleaning duplicates
+No duplicates found for reference: 34002
+New price history saved: 2026-01-23 : 2049.00
+Bicycle_index: 3
+href: https://www.bikingpoint.es/es/bicicleta-massi-team-29-slx-fox-ruedas-esp.html

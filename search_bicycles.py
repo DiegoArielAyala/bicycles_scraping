@@ -8,7 +8,7 @@ django.setup()
 from scraping.models import Bicycle
 
 async def search_bicycles(reference):
-    database_url=os.getenv("DATABASE_URL")
+    database_url=os.getenv("DATABASE_URL_PRODUCTION")
     print(database_url)
     bicycles = await sync_to_async(list)(Bicycle.objects.filter(reference=reference))
     print(bicycles)
