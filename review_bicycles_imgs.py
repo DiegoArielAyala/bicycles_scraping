@@ -1,6 +1,6 @@
 import django
 import os
-from playwright.async_api import async_playwright
+from playwright.async_api import async_playwright, Error as PlaywrightError, TimeoutError as PlaywrightTimeoutError
 import random
 from bs4 import BeautifulSoup
 import asyncio
@@ -20,7 +20,15 @@ async def update_bicycles_image_urls():
     references = await get_bicycles_references_from_db()
 
     for reference in references:
-        html = await fetch_biking_point_html(reference)
+        try:
+            html = await fetch_biking_point_html(reference)
+        except PlaywrightTimeoutError:
+            print(f"Timeout Error for reference {reference}")
+            continue
+        except PlaywrightError as e:
+            print(f"Playwright error with reference {reference}: {e}")
+        except Exception as e:
+            print(f"Unexpected error for reference {reference}: {e}")
         try:
             img_url = extract_image_url(html)
         except AttributeError:
@@ -30,6 +38,9 @@ async def update_bicycles_image_urls():
             bicycle = await get_bicycle_by_reference(reference)
         except ObjectDoesNotExist:
             print(f"Referencia {reference} no existe, continua al siguiente")
+            continue
+        if bicycle.img == img_url:
+            print(f"Img for reference {reference} is correct")
             continue
         bicycle.img = img_url
         await sync_to_async(lambda: bicycle.save())()

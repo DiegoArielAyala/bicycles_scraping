@@ -149,7 +149,7 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
     return JsonResponse({"message": "Scraping started in background"})
 
 
-async def run_scraper(start_page, last_page, env, web=None, delete=False):
+async def run_scraper(start_page, last_page, web=None, delete=False):
     print("run_scraper function start")
     async with async_playwright() as p:
         browser = await p.chromium.launch(

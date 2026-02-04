@@ -1,4 +1,4 @@
-.env
+.env.production
 .env.staging
 subscription_list.json
 venv
