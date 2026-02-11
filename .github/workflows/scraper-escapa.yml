@@ -11,7 +11,6 @@ on:
 jobs:
     run-scraper:
         runs-on: ubuntu-latest
-        if: github.ref == 'refs/heads/master'
         environment: production
         env:
             ENV: production
