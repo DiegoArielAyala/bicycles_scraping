@@ -1,5 +1,6 @@
 .env.production
 .env.staging
+.env
 subscription_list.json
 venv
 __pycache__
