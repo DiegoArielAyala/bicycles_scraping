@@ -1453,3 +1453,39 @@ No duplicates found for reference: 34002
 New price history saved: 2026-01-23 : 2049.00
 Bicycle_index: 3
 href: https://www.bikingpoint.es/es/bicicleta-massi-team-29-slx-fox-ruedas-esp.html
+run_scraper function start
+url: https://www.biciescapa.com/es/bicicletas/?en-stock=1&page=1
+Error en la página 1: object of type 'coroutine' has no len()
+Traceback (most recent call last):
+  File "/home/diegoayala/bike-price-tracker/run_scraper.py", line 9, in <module>
+    from scraping.views import run_scraper
+  File "/home/diegoayala/bike-price-tracker/scraping/views.py", line 22, in <module>
+    from .scraper import run_scraper
+  File "/home/diegoayala/bike-price-tracker/scraping/scraper.py", line 187, in <module>
+    main()
+  File "/home/diegoayala/bike-price-tracker/scraping/scraper.py", line 185, in main
+    asyncio.run(run_scraper(1, 5, web="escapa", delete=True))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/home/diegoayala/bike-price-tracker/scraping/scraper.py", line 88, in run_scraper
+    await delete_bicycles(bicycle_references_not_in_web)
+UnboundLocalError: local variable 'bicycle_references_not_in_web' referenced before assignment
+sys:1: RuntimeWarning: coroutine 'get_product_elements_html' was never awaited
+/home/diegoayala/bike-price-tracker/scraping/utils.py:50: RuntimeWarning: coroutine 'get_basic_bicycle_date' was never awaited
+  bicycle_href, bicycle_name, bicycle_img, bicycle_price, bicycle_reference = get_basic_bicycle_date(bicycle, web, bicycle_references_in_db)
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+run_scraper function start
+url: https://www.biciescapa.com/es/bicicletas/?en-stock=1&page=1
+create_bicycles started for escapa with 24 product_elements_html finded on the page
+Bicycle references saved in DB: [81662, 80050, 59165, 66646, 78628, 78697, 89142, 83404, 89145, 83769, 83412, 78696, 80053, 80051, 81322, 69737, 76136, 66708, 90457, 90397, 89514, 89485, 89162, 89470, 88146, 84791, 84123, 91044, 88141, 91050, 84969, 89537, 88142, 89482, 86036, 89732, 88916, 89540, 90848, 86039, 89956, 89981, 89982, 89195, 88527, 90899, 88728, 88729, 90621, 90898, 90623, 88499, 83022, 87778, 90622, 91055, 90624, 90398, 90399, 90579, 91171, 89156, 89155, 84968, 90456, 89051, 90393, 90406, 90396, 90407, 90386, 90383, 91182, 91238, 90473, 88148, 78446, 90625, 89459, 88685, 89166, 84180, 89150, 89168, 89516, 84866, 89594, 89192, 89149, 89469, 89164, 89151, 89507, 88147, 90419, 90581, 83633, 85352, 84659, 76663, 89258, 90384, 90583, 90420, 88684, 60586, 78447, 89079, 88688, 89152, 89197, 90840, 83388, 89479, 89506, 89257, 88140, 89508, 89052, 89593, 89466, 89196, 85006, 89512, 88145, 89259, 90405, 88555, 82969, 90365, 84805, 89484, 89511, 91011, 90359, 89154, 81325, 85345, 78575, 87572, 84749, 84759, 85956, 83457, 81336, 84658, 84664, 90341, 87587, 83441, 71434, 71433, 90194, 90232, 89908, 84746, 89515, 87593, 87626, 89478, 84548, 89474, 90228, 81321, 81317, 84757, 66604, 85818, 84621, 83415, 81331, 89911, 84405, 89194, 89523, 90580, 90195, 90193, 90192, 83768, 85920, 89157, 89504, 86562, 83443, 90234, 85831, 83448, 85347, 85353, 78724, 85758, 86568, 82967, 83445, 81569, 69706, 87588, 87592, 78635, 90230, 78568, 89153, 84782, 87576, 83410, 83468, 89463, 84403, 84080, 78573, 90196, 83459, 84794, 84987, 83466, 87578, 78564, 79866, 28188, 89373, 84078, 89372, 85919, 77684, 89503, 89505, 84971, 77683, 89159, 77686, 84780, 89467, 84970, 86037, 65694, 85854, 60400, 89957, 84990, 78567, 83426, 86034, 66710, 86038, 88859, 85820, 89980, 88858, 84492, 90849, 87914, 86556, 81319, 87725, 86561, 85041, 81318, 84748, 85832, 85354, 81334, 86546, 84486, 90212, 86547, 81320, 91186, 91564, 91301, 91474, 91475, 91476, 90438]
+Bicycle_index: 1
+Error en la página 1: cannot unpack non-iterable coroutine object
+Scraping terminado.
+Traceback (most recent call last):
+  File "/home/diegoayala/bike-price-tracker/run_scraper.py", line 23, in <module>
+    main()
+  File "/home/diegoayala/bike-price-tracker/run_scraper.py", line 20, in main
+    asyncio.run(run_scraper(args.start, args.end, args.env, args.web, args.delete))
+TypeError: run_scraper() takes from 2 to 4 positional arguments but 5 were given
