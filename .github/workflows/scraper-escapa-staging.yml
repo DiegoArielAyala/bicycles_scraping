@@ -23,8 +23,10 @@ jobs:
             DB_PORT_STAGING: ${{ secrets.DB_PORT_STAGING }}
 
         steps:
-            - name: Checkout repo
+            - name: Checkout develop branch
               uses: actions/checkout@v4
+              with:
+                ref: develop
 
             - name: Set up Python
               uses: actions/setup-python@v5

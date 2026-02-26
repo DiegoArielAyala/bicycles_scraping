@@ -1,7 +1,9 @@
 import django
 import os
-from playwright.async_api import async_playwright, Error as PlaywrightError, TimeoutError as PlaywrightTimeoutError
 import random
+import logging
+
+from playwright.async_api import async_playwright, Error as PlaywrightError, TimeoutError as PlaywrightTimeoutError
 from bs4 import BeautifulSoup
 import asyncio
 from asgiref.sync import sync_to_async
@@ -11,8 +13,14 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bicyclesscraping.settings")
 django.setup()
 
 from scraping.models import Bicycle
-from scraping.views import USER_AGENTS, urls
+from scraping.constants import USER_AGENTS
+from scraping.scraper import urls
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelsanme)s - %(name)s - %(message)s "
+)
+logger = logging.getLogger(__name__)
 
 # Use Playwright to get the correct img url from each bicycle reference
 
@@ -29,10 +37,10 @@ async def update_bicycles_image_urls():
             print(f"Playwright error with reference {reference}: {e}")
         except Exception as e:
             print(f"Unexpected error for reference {reference}: {e}")
-        try:
-            img_url = extract_image_url(html)
-        except AttributeError:
-            print(f"No se encontro la img_url para la referencia {reference}")
+             
+        img_url = extract_image_url(html)
+        if img_url is None:
+            logger.warning(f"Img url not found for reference {reference}")
             continue
         try:
             bicycle = await get_bicycle_by_reference(reference)
@@ -63,8 +71,12 @@ async def fetch_biking_point_html(reference):
 
 def extract_image_url(html):
     soup = BeautifulSoup(html, "html.parser")
-    img_url = soup.find("img", class_="img-fluid")["src"]
-    return img_url
+    img_tag = soup.find("img", class_="img-fluid")
+    if not img_tag:
+        return None
+    else:
+        img_url = img_tag.get("src")
+        return img_url
 
 async def get_bicycle_by_reference(reference):
     bicycle = await sync_to_async(lambda: Bicycle.objects.get(reference=reference))()

@@ -35,6 +35,9 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
         browser = await p.chromium.launch(
             headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"]
         )
+        context = await browser.new_context(user_agent=random.choice(USER_AGENTS))
+        stealth = Stealth()
+        await stealth.apply_stealth_async(context)
         counter = int(start_page)
 
         # Array with all bicycles references in the DB for the current web
@@ -48,7 +51,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
             bicycle_references_not_in_web = []
 
             try:
-                html = await get_html(browser, url)
+                html = await get_html(context, url)
                 if not html:
                     print(f"Page {counter} didn't load. Exit loop")
                     break
@@ -65,7 +68,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                 """
                 Buscar la forma que no se ejecute create_bicycles si la bicicleta ya se encuentra en la DB, y solo se agregue el precio de hoy (ejecutando add_todays_price)
                 """
-                bicycle_references_not_in_web = await create_bicycles(product_elements_html, web, bicycle_references_in_db)
+                bicycle_references_not_in_web = await create_bicycles(product_elements_html, web, bicycle_references_in_db, context)
                 print(f"bicycle_references_not_in_web: {bicycle_references_not_in_web}")
                 
                 counter += 1
@@ -81,27 +84,24 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
         
         # Delete bicycles that no longer exists
         if delete:
-            await delete_bicycles(bicycle_references_not_in_web)
+            await delete_bicycles(bicycle_references_not_in_web, context)
 
-        await browser.close()
     print("Scraping terminado.")
 
-async def get_html(browser, url):
+async def get_html(context, url):
     """
     Returns page HTML as string, or None if something failed.
     """
-    list_page = await browser.new_page(user_agent=random.choice(USER_AGENTS))
+    list_page = await context.new_page()
     html = None
     
     try:
-        stealth = Stealth()
-        await stealth.apply_stealth_async(list_page)
         await asyncio.sleep(random.uniform(3, 6))
         await list_page.goto(url, wait_until="domcontentloaded")
 
         try:
             await list_page.wait_for_function("() => !document.body.innerText.includes('Verifying you are human')", timeout=180000)
-        except:
+        except Exception:
             print(f"Error cloudflare challenge no se resolvio")
 
         html = await list_page.content()
@@ -132,69 +132,56 @@ def is_last_page(soup):
     print(number_bicycles)
     return number_bicycles == search_number
 
-async def delete_bicycles(bicycle_references_not_in_web):
+async def delete_bicycles(bicycle_references_not_in_web, context):
     print("Deleting bicycles")
     for reference in bicycle_references_not_in_web:
-        async with async_playwright() as p:
-            browser = await p.chromium.launch(
-                headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"]
-            )
-            try:
-                page = await browser.new_page(user_agent=random.choice(USER_AGENTS))
-                stealth = Stealth()
-                await stealth.apply_stealth_async(page)
+        try:
+            page = await context.new_page()
+            bicycle = await sync_to_async(lambda: get_object_or_404(Bicycle, reference=reference))()
+
+            # Search reference on the corresponding page
+            bicycle_exist = True
+            if bicycle.web == "biking_point":
+                url = urls["biking_point"]["search_endpoint"]
+                await page.goto(url.format(reference))
+                content = await page.content()
+                if "La búsqueda no ha devuelto ningún resultado." in content:
+                    bicycle_exist = False
+
+            elif bicycle.web == "escapa":
+                url = urls["escapa"]["web"]
+                await page.goto(url)
+                try:
+                    await page.click("button#onetrust-accept-btn-handler", timeout=3000)
+                except:
+                    pass
+
+                await page.fill("input[name='s']", str(reference))
                 await asyncio.sleep(random.uniform(3, 6))
-                bicycle = await sync_to_async(lambda: get_object_or_404(Bicycle, reference=reference))()
+                await page.wait_for_selector("div.dfd-card-flag", timeout=5000)
 
-                # Search reference on the corresponding page
-                bicycle_exist = True
-                if bicycle.web == "biking_point":
-                    url = urls["biking_point"]["search_endpoint"]
-                    await page.goto(url.format(reference))
-                    content = await page.content()
-                    if "La búsqueda no ha devuelto ningún resultado." in content:
+                content = await page.content()
+                soup = BeautifulSoup(content, "html.parser")
+                try:
+                    div = soup.find("div", class_="dfd-card-flag", attrs={"data-availability":"out-of-stock"})
+                
+                    if div.text.strip() == "Agotado" or "Prueba de nuevo con otra búsqueda…" in soup.text:
                         bicycle_exist = False
+                except Exception as e:
+                    print(f"Error finding bicycle in Escapa: {e}")
 
-                elif bicycle.web == "escapa":
-                    url = urls["escapa"]["web"]
-                    await page.goto(url)
-                    try:
-                        await page.click("button#onetrust-accept-btn-handler", timeout=3000)
-                    except:
-                        pass
+            # If bicycle not exist, delete it
+            if not bicycle_exist:
+                await sync_to_async(bicycle.delete)()
+                print(f"Reference {reference} was deleted from web {bicycle.web}")
 
-                    await page.fill("input[name='s']", str(reference))
-                    await asyncio.sleep(random.uniform(3, 6))
-                    await page.wait_for_selector("div.dfd-card-flag", timeout=5000)
+        except Exception as e:
+            print("Error during delete bicycle: ", e)
 
-                    content = await page.content()
-                    soup = BeautifulSoup(content, "html.parser")
-                    try:
-                        div = soup.find("div", class_="dfd-card-flag", attrs={"data-availability":"out-of-stock"})
-                    
-                        if div.text.strip() == "Agotado" or "Prueba de nuevo con otra búsqueda…" in soup.text:
-                            bicycle_exist = False
-                    except Exception as e:
-                        print(f"Error finding bicycle in Escapa: {e}")
-
-                # If bicycle not exist, delete it
-                if not bicycle_exist:
-                    await sync_to_async(bicycle.delete)()
-                    print(f"Reference {reference} was deleted from web {bicycle.web}")
-
-            except Exception as e:
-                print("Error during delete bicycle: ", e)
-            
-            finally:
-                await browser.close()
 
 def is_last_product(soup):
     return "No podemos encontrar productos que coincida con la selección." in soup.text
 
-def main():
-    asyncio.run(run_scraper(1, 30, web="escapa"))
-
-main()
 
 """
 Funcion original para preguntarle al chat despues si los cambios que hice son los correctos
