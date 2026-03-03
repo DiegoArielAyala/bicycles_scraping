@@ -44,14 +44,12 @@ async def create_bicycles(product_elements_html, web, bicycle_references_in_db, 
     logger.debug(f"create_bicycles started for {web} with {len(product_elements_html)} product_elements_html finded on the page")
     bicycle_index = 1
 
-    logger.debug(f"Bicycle references saved in DB: {bicycle_references_in_db}")
     for bicycle in product_elements_html:
+        logger.debug(f"Bicycle references saved in DB: {bicycle_references_in_db}")
+        logger.debug(f"Number of Bicycle references saved in DB: {len(bicycle_references_in_db)}")
         logger.debug(f"Bicycle_index: {bicycle_index}")
         bicycle_index+=1
         
-        """
-        Colocar aca primero la comprobacion de si existe ya la bicicleta en la DB y solo en el caso que no exista, buscar todos sus datos (href, name, img, etc)
-        """
         bicycle_href = get_href(bicycle)
         if not bicycle_href:
             logger.error(f"Href not found in web {web} ")
@@ -85,16 +83,18 @@ async def create_bicycles(product_elements_html, web, bicycle_references_in_db, 
                 logger.info(f"Creating a new bicycle for reference {bicycle_reference}")
                 create_new_bicycle(bicycle, web, bicycle_references_in_db, bicycle_href, bicycle_reference)
 
-                # Revisar si esto esta bien ubicado aca
-                try:
-                    bicycle_references_in_db.remove(int(bicycle_reference))
-                except (ValueError, TypeError):
-                    logger.debug(f"Reference {bicycle_reference} not in bicycle_references_in_db")
-                await clean_duplicates(bicycle_reference)
-                #
+            try:
+                logger.debug(f"Before delete reference: {len(bicycle_references_in_db)}")
+                bicycle_references_in_db.remove(int(bicycle_reference))
+                logger.debug(f"After delete reference: {len(bicycle_references_in_db)}")
+            except (ValueError, TypeError):
+                logger.debug(f"Reference {bicycle_reference} not in bicycle_references_in_db")
+                continue
+            
+            await clean_duplicates(bicycle_reference)
                         
         except Exception as e:
-            print("Error durante el guardado de Bicycle o add_todays_price")
+            print(f"Error durante el guardado de Bicycle o add_todays_price {e}")
             
     return bicycle_references_in_db
     

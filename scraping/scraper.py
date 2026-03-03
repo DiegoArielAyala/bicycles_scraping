@@ -3,6 +3,7 @@ import django
 import random
 import re
 import os
+import logging
 
 from asgiref.sync import sync_to_async
 from bs4 import BeautifulSoup
@@ -17,6 +18,9 @@ from .constants import USER_AGENTS
 from .models import Bicycle
 from .utils import create_bicycles
 
+logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(name)s - %(message)s")
+logger = logging.getLogger(__name__)
+
 urls = {
     "escapa": {
         "bicycles_endpoint": "https://www.biciescapa.com/es/bicicletas/?en-stock=1&page={}",
@@ -30,7 +34,7 @@ urls = {
 
 
 async def run_scraper(start_page, last_page, web=None, delete=False):
-    print("run_scraper function start")
+    logger.info("run_scraper function start")
     async with async_playwright() as p:
         browser = await p.chromium.launch(
             headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"]
@@ -47,13 +51,12 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
 
         while counter <= last_page:
             url = (urls[web]["bicycles_endpoint"]).format(counter)
-            print(f"url: {url}")
-            bicycle_references_not_in_web = []
+            logger.debug(f"Url: {url}")
 
             try:
                 html = await get_html(context, url)
                 if not html:
-                    print(f"Page {counter} didn't load. Exit loop")
+                    logger.debug(f"Page {counter} didn't load. Exit loop")
                     break
                 soup = BeautifulSoup(html, "html.parser")
                 product_elements_html = await get_product_elements_html(web, soup, counter)
@@ -62,31 +65,25 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                     break
                                 
                 # Call to create_bicycles and return an arrays with referencies that not exist in web
-                """
-                Revisar que el flujo de esta variable bicycle_references_in_db sea correcto. Aparentemente bicycle_references_not_in_web solo se estaria quedando con las referencias que no existen de la ultima iteracion de create_bicycles y deberia ir acumulando todas las referencias de cada iteracion, para luego pasarselo a delete_bicycles 
-                """
-                """
-                Buscar la forma que no se ejecute create_bicycles si la bicicleta ya se encuentra en la DB, y solo se agregue el precio de hoy (ejecutando add_todays_price)
-                """
-                bicycle_references_not_in_web = await create_bicycles(product_elements_html, web, bicycle_references_in_db, context)
-                print(f"bicycle_references_not_in_web: {bicycle_references_not_in_web}")
+
+                bicycle_references_in_db = await create_bicycles(product_elements_html, web, bicycle_references_in_db, context)
                 
                 counter += 1
 
                 # Check if total searched bicycle's numbers is equal to actual search bicycle's number
                 if web == "escapa" and is_last_page(soup):
-                    print("No hay más productos, finalizando.")
+                    logger.info("No hay más productos, finalizando.")
                     break
 
             except Exception as e:
-                print(f"Error en la página {counter}: {e}")
+                logger.error(f"Error en la página {counter}: {e}")
                 break
         
         # Delete bicycles that no longer exists
         if delete:
-            await delete_bicycles(bicycle_references_not_in_web, context)
+            await delete_bicycles(bicycle_references_in_db, context)
 
-    print("Scraping terminado.")
+    logger.info("Scraping terminado.")
 
 async def get_html(context, url):
     """
@@ -102,7 +99,7 @@ async def get_html(context, url):
         try:
             await list_page.wait_for_function("() => !document.body.innerText.includes('Verifying you are human')", timeout=180000)
         except Exception:
-            print(f"Error cloudflare challenge no se resolvio")
+            logger.error(f"Error cloudflare challenge no se resolvio")
 
         html = await list_page.content()
     
@@ -114,11 +111,11 @@ async def get_html(context, url):
 async def get_product_elements_html(web, soup, counter):
     if web == "biking_point":
         if is_last_product(soup):
-            print("No hay más productos, finalizando.")
+            logger.info("No hay más productos, finalizando.")
             return []
         else:
             product_elements_html = soup.find_all("li", class_="item product product-item")
-            print(f"Página {counter}: Encontradas {len(product_elements_html)} bicicletas")
+            logger.debug(f"Página {counter}: Encontradas {len(product_elements_html)} bicicletas")
             return product_elements_html
     
     if web == "escapa":
@@ -128,12 +125,12 @@ async def get_product_elements_html(web, soup, counter):
 def is_last_page(soup):
     search_number = (re.search(r"Mostrando \d+-(\d+)", soup.text)).group(1)
     number_bicycles = (re.search(r"de (\d+) producto", soup.text)).group(1)
-    print(search_number)
-    print(number_bicycles)
+    logger.debug(search_number)
+    logger.debug(number_bicycles)
     return number_bicycles == search_number
 
 async def delete_bicycles(bicycle_references_not_in_web, context):
-    print("Deleting bicycles")
+    logger.info("Deleting bicycles")
     for reference in bicycle_references_not_in_web:
         try:
             page = await context.new_page()
