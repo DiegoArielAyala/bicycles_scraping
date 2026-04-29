@@ -193,6 +193,9 @@ def get_price_history(request, reference):
     return render(request, "price_history.html", {"graphic": graphic})
 
 
+"""
+Elimine el campo reference del modelo Subscription. Hay que adaptar las funciones subscription y unsubscription para que la reference la obtenga a traves de bicycle.reference, y no directamente reference.
+"""
 @login_required
 def subscription(request):
     form = SubscriptionForm()
@@ -209,7 +212,6 @@ def subscription(request):
         bicycle = get_object_or_404(Bicycle, reference=request.POST["reference"])
         subscribe = Subscription(
             email=request.POST["email"],
-            reference=request.POST["reference"],
             bicycle=bicycle,
         )
         try:
