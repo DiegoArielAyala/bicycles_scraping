@@ -5,9 +5,6 @@ from ..exceptions import PriceNotFoundError
 logger = logging.getLogger(__name__)
 
 class ScrapingStrategy():
-    def get_name(self, product_element):
-        pass
-
     def get_price(self, product_element, bicycle_reference):
         price_text = self._extract_price(product_element, bicycle_reference)
         return self.clean_price(price_text, bicycle_reference)
@@ -38,5 +35,20 @@ class ScrapingStrategy():
     def _extract_reference(self, product_element):
         raise NotImplementedError
 
-    def get_img(self, product_element):
-        pass
+    def get_product_info(self, product_element, bicycle_reference):
+        bicycle_name = "Bicycle"
+        bicycle_img = None
+
+        bicycle_name = self._extract_name(product_element, bicycle_reference)
+        bicycle_img = self._extract_img(product_element, bicycle_reference)
+
+        logger.debug({"event": "product_info_extracted", "strategy": self.__class__.__name__, "reference": bicycle_reference, "name": bicycle_name, "img": bicycle_img
+        })
+
+        return bicycle_name, bicycle_img
+
+    def _extract_name(self, product_element, bicycle_reference):
+        raise NotImplementedError
+    
+    def _extract_img(self, product_element, bicycle_reference):
+        raise NotImplementedError

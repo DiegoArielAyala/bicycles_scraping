@@ -14,7 +14,7 @@ django.setup()
 
 from scraping.models import Bicycle
 from scraping.constants import USER_AGENTS
-from scraping.scraper import urls
+from scraping.strategies import urls
 
 logging.basicConfig(
     level=logging.DEBUG,

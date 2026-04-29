@@ -1,5 +1,4 @@
 import logging
-import re
 
 from asgiref.sync import sync_to_async
 from django.shortcuts import get_object_or_404
@@ -8,11 +7,11 @@ from django.http import Http404
 from datetime import datetime
 
 from .decorators import log_function
-from .exceptions import PriceNotFoundError, ReferenceNotFound
+from .exceptions import PriceNotFoundError, ReferenceNotFoundError, NameNotFoundError, ImgNotFoundError
 from .forms import BicycleForm
 from .metrics import increment
 from .models import Bicycle, PriceHistory
-from .scraper.factory import strategy_factory
+from .strategies.factory import strategy_factory
 
 
 url = "https://www.bikingpoint.es/es/"
@@ -59,7 +58,7 @@ async def create_bicycles(product_elements_html, web, bicycle_references_in_db):
         try:
             bicycle_reference = strategy.get_reference(product_element)
 
-        except ReferenceNotFound:
+        except ReferenceNotFoundError:
             logger.warning({"event": "reference_not_found", "web": web})
             continue
         
@@ -108,10 +107,19 @@ async def create_new_bicycle(product_element, web, bicycle_href, bicycle_referen
         logger.exception(f"Unexpected error during get todays price for reference {bicycle_reference}: {e}")
         return
     
-    bicycle_data = await get_basic_bicycle_data(product_element, web, bicycle_reference)
-    if bicycle_data is None:
-        logger.error({"event": "get_basic_data", "web": web, "reference": bicycle_reference})
-        return
+    try:
+        bicycle_data = strategy.get_product_info(product_element, bicycle_reference)
+    except NameNotFoundError:
+        logger.warning({"event": "name_not_found", "web": web, "reference": bicycle_reference})
+        increment("name_not_found", web=web)
+        bicycle_data = ("Bicycle", None)
+    except ImgNotFoundError:
+        logger.warning({"event": "img_not_found", "web": web, "reference": bicycle_reference})
+        increment("img_not_found", web=web)
+        bicycle_data = ("Bicycle", None)
+    except Exception as e:
+        logger.exception(f"Unexpected error during get product info for reference {bicycle_reference}: {e}")
+        bicycle_data = ("Bicycle", None)
 
     bicycle_name, bicycle_img = bicycle_data
 
@@ -187,7 +195,7 @@ async def get_basic_bicycle_data(product_element, web, bicycle_reference):
     
     return bicycle_name, bicycle_img
 
-
+"""
 def get_bicycle_reference(product_element, web):
     if web == "biking_point":
         img_tag = product_element.find("img")
@@ -206,6 +214,7 @@ def get_bicycle_reference(product_element, web):
 
     logger.debug(f"Bicycle reference: {bicycle_reference}" )
     return bicycle_reference
+"""
 
 
 def get_href(product_element):
