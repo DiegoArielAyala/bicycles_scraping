@@ -20,10 +20,12 @@ from django.urls import path
 
 from scraping.users.views import views
 
+from ..scraping.users.views import user_views
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.home, name="home"),
-    path("signup/", views.signup, name="signup"),
+    path("signup/", user_views.SignupView.as_view(), name="signup"),
     path("signin/", views.signin, name="signin"),
     path("signout/", views.signout, name="signout"),
     path("create_bicycles/", views.scraping, name="create_bicycles"),

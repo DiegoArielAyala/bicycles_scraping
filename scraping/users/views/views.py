@@ -6,6 +6,14 @@ import smtplib
 import plotly.graph_objects as go
 import logging
 
+
+from rest_framework import serializers, status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .user_views import SearchBicycleView
+from ..serializers import UserSerializer
+
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -22,7 +30,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from ...runner import run_scraper
-from rest_framework.decorators import api_view
 
 
 dotenv.load_dotenv(".env." + os.getenv("ENV", "local"))
@@ -38,29 +45,24 @@ def signup(request):
 
 @api_view(["POST"])
 def signup(request):
-    logger.debug({"event": "signup_post"})
-    if request.data["password1"] == request.data["password2"]:
-        try:
-            user = User.objects.create_user(
-                username=request.data["username"],
-                password=request.data["password1"],
-            )
-            logger.debug({"event": "new_user", "user": user.username})
-            user.save()
-            login(request, user)
-            return redirect("home")
-        except IntegrityError:
-            return render(
-                request,
-                "signup.html",
-                {"form": UserCreationForm(), "error": "User already exists"},
-            )
-    else:
-        return render(
-            request,
-            "signup.html",
-            {"form": UserCreationForm(), "error": "Password not match"},
-        )
+    logger.debug({"event": "signup"})
+    serializer = UserSerializer(data=request.data)
+
+    try:
+        serializer.is_valid(raise_exception=True)
+    except serializers.ValidationError as e:
+        logger.warning({"event": "signup_validation_error", "errors": e.detail})
+        return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
+
+    user = serializer.save()
+
+    logger.info({"event": "user_created", "username": user.username})
+
+    return Response(
+        {"message": "User created successfully",
+         "username": user.username}, 
+         status=status.HTTP_201_CREATED
+    )
 
 """
 def signup(request):
@@ -154,6 +156,7 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
         return redirect("create_bicycles")
 
     return JsonResponse({"message": "Scraping started in background"})
+
 
 def search_bicycle(request):
     results = []
