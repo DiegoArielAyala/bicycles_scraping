@@ -1,34 +1,68 @@
-from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 import asyncio 
 import os
 import dotenv
 import json
 import smtplib
+import plotly.graph_objects as go
+import logging
+
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import plotly.graph_objects as go
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
-from .models import Bicycle, PriceHistory, Subscription
-from .forms import SubscriptionForm
+from ...models import Bicycle, PriceHistory, Subscription
+from ...forms import SubscriptionForm
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from .runner import run_scraper
+from ...runner import run_scraper
+from rest_framework.decorators import api_view
 
 
 dotenv.load_dotenv(".env." + os.getenv("ENV", "local"))
-
+logger = logging.getLogger(__name__)
 
 def home(request):
     return render(request, "home.html")
 
+@api_view(["GET"])
+def signup(request):
+    return render(request, "signup.html", {"form": UserCreationForm()})
+    
 
+@api_view(["POST"])
+def signup(request):
+    logger.debug({"event": "signup_post"})
+    if request.data["password1"] == request.data["password2"]:
+        try:
+            user = User.objects.create_user(
+                username=request.data["username"],
+                password=request.data["password1"],
+            )
+            logger.debug({"event": "new_user", "user": user.username})
+            user.save()
+            login(request, user)
+            return redirect("home")
+        except IntegrityError:
+            return render(
+                request,
+                "signup.html",
+                {"form": UserCreationForm(), "error": "User already exists"},
+            )
+    else:
+        return render(
+            request,
+            "signup.html",
+            {"form": UserCreationForm(), "error": "Password not match"},
+        )
+
+"""
 def signup(request):
     if request.method == "GET":
         return render(request, "signup.html", {"form": UserCreationForm()})
@@ -57,6 +91,7 @@ def signup(request):
                 {"form": UserCreationForm(), "error": "Password not match"},
             )
 
+"""
 
 def signin(request):
     form = AuthenticationForm(request)

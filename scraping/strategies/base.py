@@ -1,19 +1,65 @@
 import logging
 
-from ..exceptions import PriceNotFoundError
+from abc import ABC, abstractmethod
+from bs4 import Tag
+from typing import Optional, Tuple
+
+from ..dto import BicycleDTO
 
 logger = logging.getLogger(__name__)
 
-class ScrapingStrategy():
-    def get_price(self, product_element, bicycle_reference):
-        price_text = self._extract_price(product_element, bicycle_reference)
-        return self.clean_price(price_text, bicycle_reference)
+class ScrapingStrategy(ABC):
+    BASE_URL = None
+    SEARCH_ENDPOINT = None
 
-    def _extract_price(self, product_element, bicycle_reference):
-        raise NotImplementedError
+    def get_price(self, product_element: Tag, bicycle_reference: str) -> Optional[str]:
+        raw_price = self._extract_price(product_element, bicycle_reference)
+        
+        try:
+            return BicycleDTO(price=raw_price).price
+        except Exception as e:
+            logger.warning({"event:": "invalid_price", "reference": bicycle_reference, "error": e})
+            return None
     
-    def clean_price(self, price_text, bicycle_reference):
-        cleaned_price = (
+    def get_product_info(self, product_element: Tag, bicycle_reference: str) -> Tuple[str, Optional[str]]:
+        bicycle_name = self._extract_name(product_element, bicycle_reference)
+        bicycle_img = self._extract_img(product_element, bicycle_reference)
+        
+        return bicycle_name or "Bicycle", bicycle_img
+
+    def get_reference(self, product_element: Tag) -> Optional[str]:
+        return self._extract_reference(product_element)
+
+    @abstractmethod
+    def get_product_elements_html(self, soup):
+        pass
+    
+    @abstractmethod
+    def _extract_price(self, product_element: Tag, bicycle_reference: str) -> Optional[str]:
+        pass
+
+    @abstractmethod
+    def _extract_name(self, product_element: Tag, bicycle_reference: str) -> Optional[str]:
+        pass
+
+    @abstractmethod
+    def _extract_img(self, product_element: Tag, bicycle_reference: str) -> Optional[str]:
+        pass
+
+    @abstractmethod
+    def _extract_reference(self, product_element: Tag) -> Optional[str]:
+        pass
+
+    @abstractmethod
+    async def bicycle_exists(self, page, reference: str) -> bool:
+        pass
+
+    @abstractmethod
+    def get_list_url(self, counter: int) -> str:
+        pass
+
+    def clean_price(self, price_text):
+        return (
             price_text
             .replace("\xa0", "")
             .replace("€", "")
@@ -21,34 +67,4 @@ class ScrapingStrategy():
             .replace(",", ".")
             .strip()
         )
-        
-        if not cleaned_price:
-            raise PriceNotFoundError(f"Price text is empty after cleaning for reference {bicycle_reference}")
 
-        return cleaned_price
-
-    def get_reference(self, product_element):
-        bicycle_reference = self._extract_reference(product_element)
-        logger.debug(f"Bicycle reference: {bicycle_reference}")
-        return bicycle_reference
-
-    def _extract_reference(self, product_element):
-        raise NotImplementedError
-
-    def get_product_info(self, product_element, bicycle_reference):
-        bicycle_name = "Bicycle"
-        bicycle_img = None
-
-        bicycle_name = self._extract_name(product_element, bicycle_reference)
-        bicycle_img = self._extract_img(product_element, bicycle_reference)
-
-        logger.debug({"event": "product_info_extracted", "strategy": self.__class__.__name__, "reference": bicycle_reference, "name": bicycle_name, "img": bicycle_img
-        })
-
-        return bicycle_name, bicycle_img
-
-    def _extract_name(self, product_element, bicycle_reference):
-        raise NotImplementedError
-    
-    def _extract_img(self, product_element, bicycle_reference):
-        raise NotImplementedError

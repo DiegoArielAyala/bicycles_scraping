@@ -1,13 +1,13 @@
 import logging
+import asyncio
 
 from asgiref.sync import sync_to_async
-from django.shortcuts import get_object_or_404
-from django.db import DatabaseError, IntegrityError
-from django.http import Http404
 from datetime import datetime
 
+from .context_managers import log_context
 from .decorators import log_function
-from .exceptions import PriceNotFoundError, ReferenceNotFoundError, NameNotFoundError, ImgNotFoundError
+from .dto import BicycleDTO
+from .exceptions import PriceNotFoundError, ReferenceNotFoundError, InvalidFormError
 from .forms import BicycleForm
 from .metrics import increment
 from .models import Bicycle, PriceHistory
@@ -41,180 +41,115 @@ logger = logging.getLogger(__name__)
 
 @log_function
 async def create_bicycles(product_elements_html, web, bicycle_references_in_db):
-    logger.debug(f"create_bicycles started for {web} with {len(product_elements_html)} product_elements_html finded on the page")
+    bicycle_references_in_db = set(bicycle_references_in_db)
+
+    logger.debug({"event": "create_bicycles_start", "web": web, "items": len(product_elements_html)})
     bicycle_index = 1
     strategy = strategy_factory(web)
 
     for product_element in product_elements_html:
-        logger.debug(f"Number of Bicycle references saved in DB: {len(bicycle_references_in_db)}")
-        logger.debug(f"Bicycle_index: {bicycle_index}")
-        bicycle_index+=1
+        bicycle_index += 1
         
-        bicycle_href = get_href(product_element)
-        if not bicycle_href:
-            logger.error({"event": "href_not_found", "web": web})
-            continue
-        
-        try:
-            bicycle_reference = strategy.get_reference(product_element)
+        with log_context("process_product", web=web, index=bicycle_index):
 
-        except ReferenceNotFoundError:
-            logger.warning({"event": "reference_not_found", "web": web})
-            continue
-        
-        # Buscar en la DB si existe esa referencia
-        try:
-            bicycle_object = await sync_to_async(lambda: get_object_or_404(Bicycle, reference=bicycle_reference))()
-
-        # Create new Bicycle if it not exist yet
-        except Http404:
-            logger.info(f"Creating a new bicycle for reference {bicycle_reference}")
-            await create_new_bicycle(product_element, web, bicycle_href, bicycle_reference, strategy)
-            continue
-        
-        try:
-            bicycle_price = strategy.get_price(product_element, bicycle_reference)
-        except PriceNotFoundError:
-            increment("PriceNotFoundError", web=web)
-            logger.warning({"event": "get_todays_price_error", "web": web, "reference": bicycle_reference})
-            continue
-
-        await sync_to_async(add_todays_price)(bicycle_object, bicycle_price)
-        # Update Current Price if it changed
-        await update_current_price(bicycle_object, bicycle_price)
+            bicycle_href = get_href(product_element)
+            if not bicycle_href:
+                logger.error({"event": "href_not_found", "web": web})
+                continue
             
-        try:
-            logger.debug(f"Before delete reference: {len(bicycle_references_in_db)}")
-            bicycle_references_in_db.remove(int(bicycle_reference))
-            logger.debug(f"After delete reference: {len(bicycle_references_in_db)}")
-        except (ValueError, TypeError):
-            logger.debug(f"Reference {bicycle_reference} not in bicycle_references_in_db")
-            continue
-        
-        await clean_duplicates(bicycle_reference)
+            try:
+                bicycle_reference = strategy.get_reference(product_element)
+                bicycle_price = strategy.get_price(product_element, bicycle_reference)
+            except ReferenceNotFoundError:
+                logger.warning({"event": "reference_not_found", "web": web})
+                continue
+            except PriceNotFoundError:
+                increment("PriceNotFoundError", web=web)
+                logger.warning({"event": "get_todays_price_error", "web": web, "reference": bicycle_reference})
+                continue
+            
+            # Buscar en la DB si existe esa referencia
+            try:
+                bicycle_object = await sync_to_async(lambda: Bicycle.objects.get(reference=bicycle_reference))()
+
+            # Create new Bicycle if it not exist yet
+            except Bicycle.DoesNotExist:
+                with log_context("create_new_bicycle", web=web, reference=bicycle_reference):
+                    logger.info({"event": "creating_bicycle", "reference": bicycle_reference})
+                    await create_new_bicycle(product_element, web, bicycle_href, bicycle_reference, strategy)
+                    continue
+                    
+            await sync_to_async(add_todays_price)(bicycle_object, bicycle_price)
+            # Update Current Price if it changed
+            await update_current_price(bicycle_object, bicycle_price)
+                
+            bicycle_references_in_db.discard(int(bicycle_reference))
+            logger.debug({"event": "discard_reference", "items": len(bicycle_references_in_db)})
+
+            with log_context("clean_duplicates", reference=bicycle_reference):
+                await clean_duplicates(bicycle_reference)
  
     return bicycle_references_in_db
-    
 
+
+@log_function
 async def create_new_bicycle(product_element, web, bicycle_href, bicycle_reference, strategy):
-    try:
-        bicycle_price = strategy.get_price(product_element, bicycle_reference)
-    except PriceNotFoundError:
-        logger.warning({"event": "get_todays_price_error", "web": web, "reference": bicycle_reference})
-        increment("price_not_found", web=web)
-        return
-    except Exception as e:
-        logger.exception(f"Unexpected error during get todays price for reference {bicycle_reference}: {e}")
+    bicycle_price = strategy.get_price(product_element, bicycle_reference)
+    bicycle_name, bicycle_img = strategy.get_product_info(product_element, bicycle_reference)
+    
+    if bicycle_price is None:
+        logger.warning({"event": "price_not_found", "web": web, "reference": bicycle_reference})
+        increment("price_not_found")
         return
     
-    try:
-        bicycle_data = strategy.get_product_info(product_element, bicycle_reference)
-    except NameNotFoundError:
-        logger.warning({"event": "name_not_found", "web": web, "reference": bicycle_reference})
-        increment("name_not_found", web=web)
-        bicycle_data = ("Bicycle", None)
-    except ImgNotFoundError:
-        logger.warning({"event": "img_not_found", "web": web, "reference": bicycle_reference})
-        increment("img_not_found", web=web)
-        bicycle_data = ("Bicycle", None)
-    except Exception as e:
-        logger.exception(f"Unexpected error during get product info for reference {bicycle_reference}: {e}")
-        bicycle_data = ("Bicycle", None)
+    logger.debug({"event": "scraped_product", "web": web, "reference": bicycle_reference, "price": bicycle_price, "name": bicycle_name})
 
-    bicycle_name, bicycle_img = bicycle_data
-
-    bicycle_form = BicycleForm(
-        {
-            "name": bicycle_name,
-            "img": bicycle_img,
-            "current_price": bicycle_price,
-            "url": bicycle_href,
-            "reference": bicycle_reference,
-            "web": web
-        }
+    bicycle = BicycleDTO(
+        name=bicycle_name,
+        img=bicycle_img,
+        url=bicycle_href,
+        reference=bicycle_reference,
+        price=bicycle_price,
+        web=web
     )
-    is_valid = await sync_to_async(bicycle_form.is_valid)()
-    if is_valid:
-        try:
-            new_bicycle = await sync_to_async(bicycle_form.save)()
-            increment("New bike created", web=web)
-            logger.info(f"Created new bike. Id: {new_bicycle.id}")
-        except Exception as e:
-            logger.exception(f"Unexpecting error saving new bike: {e}")
 
-        try:
-            price_history = PriceHistory(
-                bicycle=new_bicycle,
-                date=datetime.now().date(),
-                price=bicycle_price,
-            )
-            await sync_to_async(price_history.save)()
-            logger.info(f"Price History saved for {new_bicycle.reference}")
-        except IntegrityError as e:
-            logger.warning(f"Duplicate price history for {new_bicycle.reference}: {e}")
-        except DatabaseError as e:
-            logger.error(f"DB error saving price history: {e}")
-            raise
-        except Exception as e:
-            logger.exception(f"Unexpecting error saving price history: {e}")
-            raise
-
-        """ Continuar con el punto 4 del chat Branch-Plan de estudio"""
-    else:
-        logger.error(f"Invalid form: {bicycle_form.errors}")
-
-
-async def get_basic_bicycle_data(product_element, web, bicycle_reference):
-    bicycle_name = "Bicycle"
-    bicycle_img = None
-        
-    if web == "biking_point":
-        name_tag = product_element.find("strong", class_="product-item-name")
-        img_attr = "src"
-    elif web == "escapa":
-        name_tag = product_element.find("h3", class_="h3 product-title")
-        img_attr = "src"
-    else:
-        name_tag = None
-
-    if name_tag is None:
-        logger.warning(f"Name not found for reference {bicycle_reference}")
-    else:
-        bicycle_name = name_tag.text.strip()
-        logger.debug(f"Bicycle name: {bicycle_name}")
-
-    img_tag = product_element.find("img")
-    bicycle_img = img_tag.get(img_attr) if img_tag else None
-
-    if not img_tag:
-        logger.warning(f"Image not found for reference {bicycle_reference}")  
-    elif not bicycle_img:
-        logger.warning(f"Image attribute not found for reference {bicycle_reference}")
-    else:
-        logger.debug(f"Bicycle image: {bicycle_img}")
+    bicycle_form = await sync_to_async(validated_bicycle_form)(bicycle.name, bicycle.img, bicycle.price, bicycle.url, bicycle.reference, bicycle.web)
     
-    return bicycle_name, bicycle_img
+    new_bicycle = await save_new_bicycle(bicycle_form)
 
-"""
-def get_bicycle_reference(product_element, web):
-    if web == "biking_point":
-        img_tag = product_element.find("img")
-        if img_tag is None:
-            return None
-        data_src = img_tag.get("data-src")
-        match = re.search(r"/(\d+)_([^/]+)\.jpg", data_src)
-        
-        bicycle_reference = match.group(1)
+    await save_price_history(new_bicycle, bicycle.price)
 
-    elif web == "escapa":
-        bicycle_reference = product_element.get("data-id-product")
-    else:
-        logger.error(f"Web {web} is not valid")
-        return None
 
-    logger.debug(f"Bicycle reference: {bicycle_reference}" )
-    return bicycle_reference
-"""
+def validated_bicycle_form(bicycle_name, bicycle_img, bicycle_price, bicycle_href, bicycle_reference, web):
+    bicycle_form = BicycleForm({
+        "name": bicycle_name,
+        "img": bicycle_img,
+        "current_price": bicycle_price,
+        "url": bicycle_href,
+        "reference": bicycle_reference,
+        "web": web
+    })
+
+    if not bicycle_form.is_valid():
+        logger.warning({"event": "invalid_form", "web": web, "reference": bicycle_reference})
+        raise InvalidFormError(bicycle_form.errors)
+
+    return bicycle_form
+
+async def save_new_bicycle(bicycle_form):
+    new_bicycle = await sync_to_async(bicycle_form.save)()
+    increment("new_bike_created", web=new_bicycle.web)
+    logger.info({"event": "bicycle_created", "id": new_bicycle.id, "reference": new_bicycle.reference})
+    return new_bicycle
+
+async def save_price_history(new_bicycle, bicycle_price):
+    price_history = PriceHistory(
+        bicycle = new_bicycle,
+        date = datetime.now().date(),
+        price = bicycle_price,
+    )
+    await sync_to_async(price_history.save)()
+    logger.info({"event": "price_history_saved", "reference": new_bicycle.reference, "price": bicycle_price})
 
 
 def get_href(product_element):
@@ -226,20 +161,34 @@ def get_href(product_element):
     return bicycle_href
 
 async def clean_duplicates(reference):
-    print("Cleaning duplicates")
+    logger.debug("Cleaning duplicates")
     try:
         bicycles = await sync_to_async(lambda: list(
             Bicycle.objects.filter(reference=reference).order_by("id")
         ))()
         if len(bicycles) > 1:
-            for bicycle in bicycles[1:]:
-                print(f"Delete {bicycle.reference} from DB")
-                await sync_to_async(bicycle.delete)()
-                increment("Deleted bicycle", web=bicycle.web)
+            duplicates = bicycles[1:]
+            logger.info({"event": "deleting_duplicates", "reference": reference, "count": len(duplicates)})
+            results = await asyncio.gather(*[sync_to_async(bicycle.delete)() for bicycle in duplicates], return_exceptions=True)
+
+            success = 0
+            errors = 0
+
+            for result in results:
+                if isinstance(result, Exception):
+                    errors += 1
+                    logger.error({"event": "deleted_duplicate_error", "reference": reference, "error": str(result)})
+                else:
+                    success += 1
+
+            logger.info({"event": "deleted_duplicates", "reference": reference, "success": success, "errors": errors})
+            increment("deleted_bicycle", count=success)
+            if errors >= 1:
+                increment("deleted_errors", count=errors)
         else:
-            print(f"No duplicates found for reference: {reference}")
+            logger.info({"event": "not_found_duplicates", "reference": reference})
     except Exception as e:
-        print(f"Error searching Bicycle in DB: {e}")
+        logger.exception(f"Error searching Bicycle in DB: {e}")
 
 
 def add_todays_price(bicycle_object, bicycle_price):
@@ -254,44 +203,6 @@ def add_todays_price(bicycle_object, bicycle_price):
         )
     logger.debug(f"New price history saved: {new_price_history}")
 
-# Recibe la soup de una bicicleta y retorna su precio actual
-"""Funcion movida a las clases especificas de cada web"""
-"""
-def get_todays_price(product_element, web, bicycle_reference):
-    try:
-        if web == "biking_point":
-            prices = product_element.find_all("span", class_="price")
-            if not prices:
-                raise PriceNotFoundError(f"Price span not found for reference {bicycle_reference}")
-            price_text = prices[0].text
-        
-        elif web == "escapa":
-            price_span = product_element.find("span", class_= "price current-price-discount") or product_element.find("span", class_= "price")
-            if not price_span:
-                raise PriceNotFoundError(f"Price span not found for reference {bicycle_reference}")
-            price_text = price_span.text
-        
-        else:
-            raise PriceNotFoundError(f"Unknown web {web}")
-
-        cleaned_price = (
-            price_text
-            .replace("\xa0", "")
-            .replace("€", "")
-            .replace(".", "")
-            .replace(",", ".")
-            .strip()
-        )
-        
-        if not cleaned_price:
-            raise PriceNotFoundError(f"Price text is empty after cleaning for reference {bicycle_reference}")
-
-        return cleaned_price
-    
-    except Exception as e:
-        logger.exception(f"Unexpected error for reference {bicycle_reference}: {e}")
-        raise
-"""
 
 async def update_current_price(bicycle_object, bicycle_price):
     new_price = round(float(bicycle_price), 2)
@@ -304,3 +215,5 @@ async def update_current_price(bicycle_object, bicycle_price):
         logger.info(f"{bicycle_object.reference} changed price from {old_price} to {new_price}")
 
 
+def is_last_product(soup):
+    return "No podemos encontrar productos que coincida con la selección." in soup.text

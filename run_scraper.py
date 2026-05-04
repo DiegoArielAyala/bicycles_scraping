@@ -6,7 +6,7 @@ import argparse
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bicyclesscraping.settings")
 django.setup()
 
-from scraping.views import run_scraper
+from scraping.users.views.views import run_scraper
 
 def main():
     parser = argparse.ArgumentParser(description="Run scraper with page range")

@@ -11,8 +11,5 @@ class PriceNotFoundError(NotFoundError):
 class ReferenceNotFoundError(NotFoundError):
     pass
 
-class NameNotFoundError(NotFoundError):
-    pass
-
-class ImgNotFoundError(NotFoundError):
+class InvalidFormError(ScrapingError):
     pass
