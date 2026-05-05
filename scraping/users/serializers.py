@@ -1,7 +1,7 @@
-from rest_framework import serializers
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
-
+from rest_framework import serializers
 from ..models import Bicycle
 
 class UserSerializer(serializers.ModelSerializer):
@@ -36,13 +36,15 @@ class BicycleSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "price", "web", "reference", "url", "img"]
 
 class SigninSerializer(serializers.Serializer):
+    username = serializers.CharField()
     password = serializers.CharField(write_only=True)
 
-    class Meta:
-        model = User
-        fields = ["username", "password"]
+    def validate(self, data):
+        user = authenticate(username=data["username"], password=data["password"])
 
-    def validate_user(self, user_data):
-        user = User.objects.filter(username=user_data.username)
-        if user["password"] == user_data["password"]:
-            return user
+        if not user:
+            raise serializers.ValidationError({"detail": "User or password incorrect"})
+        
+        data["user"] = user
+
+        return data
