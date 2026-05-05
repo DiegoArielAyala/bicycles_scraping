@@ -26,7 +26,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.home, name="home"),
     path("signup/", user_views.SignupView.as_view(), name="signup"),
-    path("signin/", views.signin, name="signin"),
+    path("signin/", user_views.SigninView.as_view(), name="signin"),
     path("signout/", views.signout, name="signout"),
     path("create_bicycles/", views.scraping, name="create_bicycles"),
     path("extract_bicycles/", views.extract_bicycles_from_web, name="extract_bicycles"),

@@ -1,14 +1,12 @@
 import logging
 
-from django.contrib.auth import login
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.exceptions import TokenError
 
 from ...models import Bicycle
-from ..serializers import UserSerializer, BicycleSerializer, SigninSerializer
+from ..serializers import UserSerializer, BicycleSerializer, SigninSerializer, SignoutSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -42,3 +40,14 @@ class SigninView(APIView):
         refresh = RefreshToken.for_user(user)
         
         return Response({"refresh": str(refresh), "access": str(refresh.access_token)})
+
+class SignoutView(APIView):
+    def post(self, request):
+        serializer = SignoutSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        token = serializer.validated_data["token"]
+        refresh = RefreshToken(token)
+        refresh.blacklist()
+        
+        return Response({"message": "Successfully logged out"})

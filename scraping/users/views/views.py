@@ -17,15 +17,13 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import logout
 from ...models import Bicycle, PriceHistory, Subscription
 from ...forms import SubscriptionForm
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist
 from ...runner import run_scraper
 
 
@@ -55,28 +53,6 @@ def signup(request):
          "username": user.username}, 
          status=status.HTTP_201_CREATED
     )
-
-def signin(request):
-    form = AuthenticationForm(request)
-    print(request)
-    if request.method == "GET":
-        return render(request, "signin.html", {"form": form})
-    else:
-        try:
-            user = authenticate(
-                request,
-                username=request.POST["username"],
-                password=request.POST["password"],
-            )
-            login(request, user)
-            return redirect("home")
-        except:
-            return render(
-                request,
-                "signin.html",
-                {"form": form, "error": "User or password incorrect."},
-            )
-
 
 @login_required
 def signout(request):

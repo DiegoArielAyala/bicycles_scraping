@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
+
 from ..models import Bicycle
 
 class UserSerializer(serializers.ModelSerializer):
@@ -47,4 +48,10 @@ class SigninSerializer(serializers.Serializer):
         
         data["user"] = user
 
+        return data
+    
+class SignoutSerializer(serializers.Serializer):
+    def validate(self, data):
+        if not data["refresh"]:
+            raise serializers.ValidationError({"detail": "Invalid token" })
         return data
