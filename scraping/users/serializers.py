@@ -34,3 +34,15 @@ class BicycleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bicycle
         fields = ["id", "name", "price", "web", "reference", "url", "img"]
+
+class SigninSerializer(serializers.Serializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ["username", "password"]
+
+    def validate_user(self, user_data):
+        user = User.objects.filter(username=user_data.username)
+        if user["password"] == user_data["password"]:
+            return user

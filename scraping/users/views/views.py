@@ -11,7 +11,6 @@ from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .user_views import SearchBicycleView
 from ..serializers import UserSerializer
 
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
@@ -19,9 +18,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
-from django.db import IntegrityError
 from ...models import Bicycle, PriceHistory, Subscription
 from ...forms import SubscriptionForm
 from django.http import JsonResponse
@@ -37,11 +34,6 @@ logger = logging.getLogger(__name__)
 
 def home(request):
     return render(request, "home.html")
-
-@api_view(["GET"])
-def signup(request):
-    return render(request, "signup.html", {"form": UserCreationForm()})
-    
 
 @api_view(["POST"])
 def signup(request):
@@ -63,37 +55,6 @@ def signup(request):
          "username": user.username}, 
          status=status.HTTP_201_CREATED
     )
-
-"""
-def signup(request):
-    if request.method == "GET":
-        return render(request, "signup.html", {"form": UserCreationForm()})
-    else:
-        print(request.POST)
-        if request.POST["password1"] == request.POST["password2"]:
-            try:
-                user = User.objects.create_user(
-                    username=request.POST["username"],
-                    password=request.POST["password1"],
-                )
-                print(user)
-                user.save()
-                login(request, user)
-                return redirect("home")
-            except IntegrityError:
-                return render(
-                    request,
-                    "signup.html",
-                    {"form": UserCreationForm(), "error": "User already exists"},
-                )
-        else:
-            return render(
-                request,
-                "signup.html",
-                {"form": UserCreationForm(), "error": "Password not match"},
-            )
-
-"""
 
 def signin(request):
     form = AuthenticationForm(request)
@@ -156,32 +117,6 @@ def extract_bicycles_from_web(request, start_page=1, last_page=30):
         return redirect("create_bicycles")
 
     return JsonResponse({"message": "Scraping started in background"})
-
-
-def search_bicycle(request):
-    results = []
-    max_results = 50  # límite para no sobrecargar workers
-
-    if request.method == "POST":
-        query = request.POST.get("query", "").strip()
-
-        if query:
-            try:
-                reference = int(query)
-                if len(query) == 5:
-                    # usamos try-except para capturar que no exista
-                    try:
-                        results = [Bicycle.objects.get(reference=reference)]
-                    except ObjectDoesNotExist:
-                        results = []
-                else:
-                    # filtramos y limitamos resultados
-                    results = list(Bicycle.objects.filter(name__icontains=query)[:max_results])
-            except ValueError:
-                results = list(Bicycle.objects.filter(name__icontains=query)[:max_results])
-
-    return render(request, "search_bicycle.html", {"results": results})
-
 
 def get_price_history(request, reference):
     bicycle = get_list_or_404(Bicycle, reference=reference)[0]
