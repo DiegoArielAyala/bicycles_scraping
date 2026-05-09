@@ -54,45 +54,11 @@ def signup(request):
          status=status.HTTP_201_CREATED
     )
 
-@login_required
-def signout(request):
-    logout(request)
-    return redirect("home")
-
-
 def scraping(request):
     return render(
         request, "create_bicycles.html", {"cron_token": settings.CRON_SECRET_TOKEN}
     )
 
-
-@csrf_exempt
-def extract_bicycles_from_web(request, start_page=1, last_page=30):
-    print("Ejecutando extract_bicycles_from_web")
-    if request.method != "POST":
-        return JsonResponse({"error": "Only POST method"}, status=405)
-
-    token = request.GET.get("token") or request.POST.get("token")
-    if token != settings.CRON_SECRET_TOKEN:
-        return JsonResponse({"error": "Not authorized"}, status=403)
-
-    start_page = (
-        request.GET.get("start_page") or request.POST.get("start_page") or start_page
-    )
-    last_page = (
-        request.GET.get("last_page") or request.POST.get("last_page") or last_page
-    )
-
-    start_page = int(start_page)
-    last_page = int(last_page)
-
-    asyncio.create_task(run_scraper(start_page, last_page))
-
-    if "text/html" in request.headers.get("Accept", ""):
-        messages.success(request, "Scraping started in background")
-        return redirect("create_bicycles")
-
-    return JsonResponse({"message": "Scraping started in background"})
 
 def get_price_history(request, reference):
     bicycle = get_list_or_404(Bicycle, reference=reference)[0]

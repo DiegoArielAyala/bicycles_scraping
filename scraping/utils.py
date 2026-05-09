@@ -1,5 +1,6 @@
 import logging
 import asyncio
+import plotly.graph_objects as go
 
 from asgiref.sync import sync_to_async
 from datetime import datetime
@@ -217,3 +218,41 @@ async def update_current_price(bicycle_object, bicycle_price):
 
 def is_last_product(soup):
     return "No podemos encontrar productos que coincida con la selección." in soup.text
+
+def get_price_graphic(dates, prices, bicycle):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=dates, y=prices, mode="lines+markers", name="Precio"))
+    fig.update_layout(
+        plot_bgcolor="#212529",
+        paper_bgcolor="#212529",
+        title={
+            "text": f"{bicycle.name}",
+            "x": 0.5,
+            "xanchor": "center",
+            "font": {"size": 24, "family": "system-ui"},
+        },
+        xaxis=dict(
+            title=dict(text="Date", font=dict(color="#f8f9fa")),
+            color="#f8f9fa",
+            gridcolor="#343a40",
+            linecolor="#f8f9fa",
+            tickfont=dict(color="#f8f9fa"),
+        ),
+        yaxis=dict(
+            title=dict(text="Price (€)", font=dict(color="#f8f9fa")),
+            color="#f8f9fa",
+            gridcolor="#343a40",
+            linecolor="#f8f9fa",
+            tickfont=dict(color="#f8f9fa"),
+        ),
+        hovermode="x unified",
+        font=dict(
+            family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+            size=16,
+            color="#f8f9fa",
+        ),
+        margin=dict(t=100, b=40, l=40, r=20),
+    )
+    graphic = fig.to_html()
+
+    return graphic

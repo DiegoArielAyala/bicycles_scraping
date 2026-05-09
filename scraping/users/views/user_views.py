@@ -1,12 +1,16 @@
 import logging
 
+from django.conf import settings
+from django.shortcuts import get_object_or_404
+from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from ...models import Bicycle
-from ..serializers import UserSerializer, BicycleSerializer, SigninSerializer, SignoutSerializer
+from ...models import Bicycle, PriceHistory
+from ..serializers import UserSerializer, BicycleSerializer, SigninSerializer, SignoutSerializer, ScrapingSerializer, ShowPriceHistorySerializer
+from ...services.github_actions import trigger_github_action
 
 logger = logging.getLogger(__name__)
 
@@ -46,8 +50,38 @@ class SignoutView(APIView):
         serializer = SignoutSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        token = serializer.validated_data["token"]
-        refresh = RefreshToken(token)
+        refresh = serializer.validated_data["refresh"]
         refresh.blacklist()
         
         return Response({"message": "Successfully logged out"})
+    
+
+class ScrapingView(APIView):
+    def post(self, request):
+        serializer = ScrapingSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+
+        token = request.headers.get("X-CRON-TOKEN")
+        if token != settings.CRON_SECRET_TOKEN:
+            logger.error({"event": "invalid_cron_secret"})
+            return Response({"error": "Unauthorized"}, status=403)
+
+        trigger_github_action(data)
+
+        return Response({"message": "Scraping triggered", "job": "github-actions"}, status=status.HTTP_202_ACCEPTED)
+
+class ShowPriceHistoryView(APIView):
+    def get(self, request, reference):
+        bicycle = get_object_or_404(Bicycle, reference=reference)
+        price_history_objects = PriceHistory.objects.filter(bicycle=bicycle).order_by("date")
+
+        dates = [price.date for price in price_history_objects]
+        prices = [price.price for price in price_history_objects]
+
+        data = {"name": bicycle.name, "dates": dates, "prices": prices}
+
+        serializer = ShowPriceHistorySerializer(data)
+        serializer.is_valid(raise_exception=True)
+
+        return Response(serializer.data)

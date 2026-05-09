@@ -1,9 +1,15 @@
+import logging
+
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.exceptions import TokenError
 
-from ..models import Bicycle
+from ..models import Bicycle, PriceHistory
+
+logger = logging.getLogger(__name__)
 
 class UserSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True)
@@ -51,7 +57,24 @@ class SigninSerializer(serializers.Serializer):
         return data
     
 class SignoutSerializer(serializers.Serializer):
+    token = serializers.CharField(write_only=True)
+
     def validate(self, data):
-        if not data["refresh"]:
-            raise serializers.ValidationError({"detail": "Invalid token" })
-        return data
+        try:
+            refresh = RefreshToken(data["token"])
+            data["refresh"] = refresh
+            return data
+        except TokenError:
+            logger.exception({"event": "token_error"})
+            raise serializers.ValidationError({"detail": "Invalid or expired token"})
+        
+class ScrapingSerializer(serializers.Serializer):
+    start_page = serializers.IntegerField()
+    last_page = serializers.IntegerField()
+    web = serializers.CharField()
+    delete = serializers.BooleanField()
+
+class ShowPriceHistorySerializer(serializers.Serializer):
+    name = serializers.CharField()
+    dates = serializers.ListField()
+    prices = serializers.ListField()
