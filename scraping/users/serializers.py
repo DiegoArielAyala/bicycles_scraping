@@ -108,4 +108,35 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop("reference", None)
         return Subscription.objects.create(**validated_data)
+
+
+class UnsubscribeSerializer(serializers.ModelSerializer):
+    reference = serializers.CharField()
+
+    class Meta:
+        model = Subscription
+        fields = ["email", "reference"]
+    
+    
+    def validate(self, data):
+        email = data["email"]
+        reference = data["reference"]
+        try:
+            bicycle = Bicycle.objects.get(reference=reference)
+        except Bicycle.DoesNotExist:
+            raise serializers.ValidationError({"detail": "Bicycle not found"})
         
+        subscription_exists = Subscription.objects.filter(email=email, bicycle=bicycle).exists()
+
+        if not subscription_exists:
+            raise serializers.ValidationError({"detail": "Subscription not found"})
+
+        data["bicycle"] = bicycle
+        return data
+        
+    
+    def delete(self, validated_data):
+        validated_data.pop("reference", None)
+        return Subscription.objects.delete(**validated_data)
+        
+        """Consultar en el caso que la bicicleta no exista, como hacer para borrar las suscripciones que los usuarios tenian a esa bicicleta (Se podria ejecutar eso cuando hago delete de una bicicleta)"""

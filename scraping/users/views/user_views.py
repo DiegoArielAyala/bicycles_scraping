@@ -3,13 +3,13 @@ import logging
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from ...models import Bicycle, PriceHistory
-from ..serializers import UserSerializer, BicycleSerializer, SigninSerializer, SignoutSerializer, ScrapingSerializer, ShowPriceHistorySerializer, SubscriptionSerializer
+from ...models import Bicycle, PriceHistory, Subscription
+from ..serializers import UserSerializer, BicycleSerializer, SigninSerializer, SignoutSerializer, ScrapingSerializer, ShowPriceHistorySerializer, SubscriptionSerializer, UnsubscribeSerializer
 from ...services.github_actions import trigger_github_action
 
 logger = logging.getLogger(__name__)
@@ -86,11 +86,10 @@ class ShowPriceHistoryView(APIView):
 
         return Response(serializer.data)
 
-class SubscriptionView(APIView):
-    def post(self, request):
-        serializer = SubscriptionSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+class SubscriptionView(CreateAPIView):
+    serializer_class = SubscriptionSerializer
+    queryset = Subscription.objects.all()
 
-        serializer.save()
-
-        return Response({"message": "Suscription successfull"})
+class UnsubscribeView(DestroyAPIView):
+    serializer_class = UnsubscribeSerializer
+    queryset = Subscription.objects.all()
