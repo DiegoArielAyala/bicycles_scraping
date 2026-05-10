@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from ...models import Bicycle, PriceHistory
-from ..serializers import UserSerializer, BicycleSerializer, SigninSerializer, SignoutSerializer, ScrapingSerializer, ShowPriceHistorySerializer
+from ..serializers import UserSerializer, BicycleSerializer, SigninSerializer, SignoutSerializer, ScrapingSerializer, ShowPriceHistorySerializer, SubscriptionSerializer
 from ...services.github_actions import trigger_github_action
 
 logger = logging.getLogger(__name__)
@@ -85,3 +85,12 @@ class ShowPriceHistoryView(APIView):
         serializer.is_valid(raise_exception=True)
 
         return Response(serializer.data)
+
+class SubscriptionView(APIView):
+    def post(self, request):
+        serializer = SubscriptionSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+
+        return Response({"message": "Suscription successfull"})

@@ -7,7 +7,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 
-from ..models import Bicycle, PriceHistory
+from ..models import Bicycle, Subscription
 
 logger = logging.getLogger(__name__)
 
@@ -78,3 +78,34 @@ class ShowPriceHistorySerializer(serializers.Serializer):
     name = serializers.CharField()
     dates = serializers.ListField()
     prices = serializers.ListField()
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    reference = serializers.CharField()
+
+    class Meta:
+        model = Subscription
+        fields = ["email","reference"]
+    
+    def validate(self, data):
+        email = data["email"]
+        reference = data["reference"]
+
+        try:
+            bicycle = Bicycle.objects.get(reference=reference)
+        except Bicycle.DoesNotExist:
+            raise serializers.ValidationError({
+                "reference": "Bicycle not found"
+            })
+
+        exists = Subscription.objects.filter(email=email, bicycle=bicycle).exists()
+
+        if exists:
+            raise serializers.ValidationError({"detail": "Subscription already exists"})
+        
+        data["bicycle"] = bicycle
+        return data
+        
+    def create(self, validated_data):
+        validated_data.pop("reference", None)
+        return Subscription.objects.create(**validated_data)
+        

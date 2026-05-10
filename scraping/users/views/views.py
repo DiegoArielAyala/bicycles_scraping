@@ -1,9 +1,7 @@
-import asyncio 
 import os
 import dotenv
 import json
 import smtplib
-import plotly.graph_objects as go
 import logging
 
 
@@ -13,18 +11,12 @@ from rest_framework.response import Response
 
 from ..serializers import UserSerializer
 
-from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
-from ...models import Bicycle, PriceHistory, Subscription
+from ...models import Bicycle, Subscription
 from ...forms import SubscriptionForm
-from django.http import JsonResponse
-from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib import messages
-from ...runner import run_scraper
 
 
 dotenv.load_dotenv(".env." + os.getenv("ENV", "local"))
@@ -54,59 +46,6 @@ def signup(request):
          status=status.HTTP_201_CREATED
     )
 
-def scraping(request):
-    return render(
-        request, "create_bicycles.html", {"cron_token": settings.CRON_SECRET_TOKEN}
-    )
-
-
-def get_price_history(request, reference):
-    bicycle = get_list_or_404(Bicycle, reference=reference)[0]
-    price_history_list = get_list_or_404(PriceHistory, bicycle=bicycle.pk)
-
-    dates = sorted([price.date for price in price_history_list])
-    prices = []
-    for date in dates:
-        price_history = PriceHistory.objects.filter(bicycle=bicycle.pk, date=date)[0]
-        prices.append(price_history.price)
-
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=dates, y=prices, mode="lines+markers", name="Precio"))
-    fig.update_layout(
-        plot_bgcolor="#212529",
-        paper_bgcolor="#212529",
-        title={
-            "text": f"{bicycle.name}",
-            "x": 0.5,
-            "xanchor": "center",
-            "font": {"size": 24, "family": "system-ui"},
-        },
-        xaxis=dict(
-            title=dict(text="Date", font=dict(color="#f8f9fa")),
-            color="#f8f9fa",
-            gridcolor="#343a40",
-            linecolor="#f8f9fa",
-            tickfont=dict(color="#f8f9fa"),
-        ),
-        yaxis=dict(
-            title=dict(text="Price (€)", font=dict(color="#f8f9fa")),
-            color="#f8f9fa",
-            gridcolor="#343a40",
-            linecolor="#f8f9fa",
-            tickfont=dict(color="#f8f9fa"),
-        ),
-        hovermode="x unified",
-        font=dict(
-            family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-            size=16,
-            color="#f8f9fa",
-        ),
-        margin=dict(t=100, b=40, l=40, r=20),
-    )
-    graphic = fig.to_html()
-
-    return render(request, "price_history.html", {"graphic": graphic})
-
 
 """
 Elimine el campo reference del modelo Subscription. Hay que adaptar las funciones subscription y unsubscription para que la reference la obtenga a traves de bicycle.reference, y no directamente reference.
@@ -133,7 +72,7 @@ def subscription(request):
             subs_object = get_object_or_404(
                 Subscription,
                 email=request.POST["email"],
-                reference=request.POST["reference"],
+                bicycle=bicycle,
             )
             print(subs_object)
             return render(

@@ -32,7 +32,7 @@ urlpatterns = [
     path("create_bicycles/", views.scraping, name="create_bicycles"),
     path("extract_bicycles/", views.extract_bicycles_from_web, name="extract_bicycles"),
     path("search_bicycle/", user_views.SearchBicycleView.as_view(), name="search_bicycle"),
-    path("price_history/<int:reference>", views.get_price_history, name="price_history"),
+    path("price_history/<int:reference>", user_views.ShowPriceHistoryView.as_view(), name="price_history"),
     path("subscription/", views.subscription, name="subscription"),
     path("unsubscription/", views.unsubscription, name="unsubscription"),
 ]
