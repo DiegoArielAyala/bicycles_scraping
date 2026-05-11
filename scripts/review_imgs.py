@@ -12,9 +12,9 @@ from django.core.exceptions import ObjectDoesNotExist
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bicyclesscraping.settings")
 django.setup()
 
-from scraping.models import Bicycle
-from scraping.constants import USER_AGENTS
-from scraping.strategies import urls
+from apps.scraping.models import Bicycle
+from apps.scraping.constants import USER_AGENTS
+from apps.scraping.strategies import urls
 
 logging.basicConfig(
     level=logging.DEBUG,

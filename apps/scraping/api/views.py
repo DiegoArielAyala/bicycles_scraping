@@ -9,15 +9,11 @@ from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from ..serializers import UserSerializer
+from .serializers import UserSerializer
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from django.contrib.auth.decorators import login_required
-from ...models import Bicycle, Subscription
-from ...forms import SubscriptionForm
-
 
 dotenv.load_dotenv(".env." + os.getenv("ENV", "local"))
 logger = logging.getLogger(__name__)
@@ -45,76 +41,6 @@ def signup(request):
          "username": user.username}, 
          status=status.HTTP_201_CREATED
     )
-
-
-"""
-Elimine el campo reference del modelo Subscription. Hay que adaptar las funciones subscription y unsubscription para que la reference la obtenga a traves de bicycle.reference, y no directamente reference.
-"""
-@login_required
-def subscription(request):
-    form = SubscriptionForm()
-    if request.method == "GET":
-        try:
-            reference = request.GET.get("reference")
-            form = SubscriptionForm(initial={"reference": reference})
-            return render(
-                request, "subscription.html", {"form": form, "reference": reference}
-            )
-        except:
-            return render(request, "subscription.html", {"form": form})
-    else:
-        bicycle = get_object_or_404(Bicycle, reference=request.POST["reference"])
-        subscribe = Subscription(
-            email=request.POST["email"],
-            bicycle=bicycle,
-        )
-        try:
-            subs_object = get_object_or_404(
-                Subscription,
-                email=request.POST["email"],
-                bicycle=bicycle,
-            )
-            print(subs_object)
-            return render(
-                request,
-                "subscription.html",
-                {"form": form, "message": "Subscription already exist"},
-            )
-        except:
-            subscribe.save()
-            return render(
-                request,
-                "subscription.html",
-                {"form": form, "message": "Subscribed successfully!"},
-            )
-
-
-@login_required
-def unsubscription(request):
-    form = SubscriptionForm()
-    if request.method == "GET":
-        return render(request, "unsubscription.html", {"form": form})
-    else:
-        subscription = get_object_or_404(
-            Subscription,
-            email=request.POST["email"],
-            reference=request.POST["reference"],
-        )
-        # try:
-        subscription.delete()
-        return render(
-            request,
-            "unsubscription.html",
-            {"form": form, "message": f"Unsubscribeb from {subscription.bicycle}"},
-        )
-        """
-        except:
-            return render(request, "unsubscription.html", {
-                "form": form,
-                "message": f"This subscription does not exist"
-            })
-        """
-
 
 # Recibir la confirmacion de la suscripcion al mail
 def send_subscript_confirm(email, reference):

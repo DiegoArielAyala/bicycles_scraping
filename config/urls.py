@@ -18,9 +18,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from scraping.users.views import views
+from apps.scraping.api import views
 
-from ..scraping.users.views import user_views
+from ..apps.scraping.api import user_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -33,6 +33,6 @@ urlpatterns = [
     path("extract_bicycles/", views.extract_bicycles_from_web, name="extract_bicycles"),
     path("search_bicycle/", user_views.SearchBicycleView.as_view(), name="search_bicycle"),
     path("price_history/<int:reference>", user_views.ShowPriceHistoryView.as_view(), name="price_history"),
-    path("subscription/", views.subscription, name="subscription"),
-    path("unsubscription/", views.unsubscription, name="unsubscription"),
+    path("subscription/", user_views.SubscriptionView.as_view(), name="subscription"),
+    path("unsubscription/", user_views.UnsubscribeView.as_view(), name="unsubscription"),
 ]

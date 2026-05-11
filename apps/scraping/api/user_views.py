@@ -3,14 +3,15 @@ import logging
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from ...models import Bicycle, PriceHistory, Subscription
-from ..serializers import UserSerializer, BicycleSerializer, SigninSerializer, SignoutSerializer, ScrapingSerializer, ShowPriceHistorySerializer, SubscriptionSerializer, UnsubscribeSerializer
-from ...services.github_actions import trigger_github_action
+from ..models import Bicycle, PriceHistory, Subscription
+from .serializers import UserSerializer, BicycleSerializer, SigninSerializer, SignoutSerializer, ScrapingSerializer, ShowPriceHistorySerializer, SubscriptionSerializer, UnsubscribeSerializer
+from ..github_actions import trigger_github_action
 
 logger = logging.getLogger(__name__)
 
@@ -46,6 +47,7 @@ class SigninView(APIView):
         return Response({"refresh": str(refresh), "access": str(refresh.access_token)})
 
 class SignoutView(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         serializer = SignoutSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -57,6 +59,7 @@ class SignoutView(APIView):
     
 
 class ScrapingView(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         serializer = ScrapingSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -88,8 +91,19 @@ class ShowPriceHistoryView(APIView):
 
 class SubscriptionView(CreateAPIView):
     serializer_class = SubscriptionSerializer
+    permission_classes = [IsAuthenticated]
     queryset = Subscription.objects.all()
 
 class UnsubscribeView(DestroyAPIView):
     serializer_class = UnsubscribeSerializer
+    permission_classes = [IsAuthenticated]
     queryset = Subscription.objects.all()
+
+    def destroy(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        subscription = serializer.validated_data["subscription"]
+        subscription.delete()
+
+        return Response({"detail": "Unsubscribed successfully"})

@@ -2,7 +2,7 @@ import re
 import logging
 
 from .base import ScrapingStrategy
-from ..utils import is_last_product
+from ....core.utils import is_last_product
 
 logger = logging.getLogger(__name__)
 

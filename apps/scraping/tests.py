@@ -1,5 +1,5 @@
 from django.test import TransactionTestCase
-from scraping.users.views.views import delete_bicycles
+from apps.scraping.api.views import delete_bicycles
 from .models import Bicycle
 import asyncio
 from django.db import connections

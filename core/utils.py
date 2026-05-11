@@ -5,14 +5,14 @@ import plotly.graph_objects as go
 from asgiref.sync import sync_to_async
 from datetime import datetime
 
-from .context_managers import log_context
-from .decorators import log_function
-from .dto import BicycleDTO
+from ..apps.scraping.context_managers import log_context
+from ..apps.scraping.decorators import log_function
+from ..apps.scraping.dto import BicycleDTO
 from .exceptions import PriceNotFoundError, ReferenceNotFoundError, InvalidFormError
-from .forms import BicycleForm
-from .metrics import increment
-from .models import Bicycle, PriceHistory
-from .strategies.factory import strategy_factory
+from ..apps.scraping.forms import BicycleForm
+from ..apps.scraping.metrics import increment
+from ..apps.scraping.models import Bicycle, PriceHistory
+from ..apps.scraping.strategies.factory import strategy_factory
 
 
 url = "https://www.bikingpoint.es/es/"
