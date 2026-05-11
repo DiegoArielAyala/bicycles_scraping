@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container py-3">
+    <section class="card shadow-lg bg-dark text-light border-0 rounded-4">
+        <div class="text-center mb-3">
+            <h1 class="display-4 mb-3 text-accent fw-bold">Create Bicycles</h1>
+            
+            <form id="scraping-form" class="d-flex flex-column align-items-center gap-3">
+                {% csrf_token %}
+                <input type="hidden" name="token" value="{{ cron_token }}">
+                
+                <div class="text-center d-flex mt-3 mb-3 w-100 justify-content-center">
+                    <label class="text-end text-secondary fs-4 my-auto me-3 w-25" for="start_page_input">Start page</label>
+                    <input class="form-control w-50 border-accent bg-dark my-auto text-light placeholder-light" type="number" name="start_page" id="start_page_input">
+                </div>
+                
+                <div class="text-center d-flex mt-3 mb-3 w-100 justify-content-center">
+                    <label class="text-end text-secondary fs-4 my-auto me-3 w-25" for="last_page_input">Last page</label>
+                    <input class="form-control w-50 border-accent bg-dark my-auto text-light placeholder-light" type="number" name="last_page" id="last_page_input">
+                </div>
+
+                <div class="text-center d-flex mt-3 mb-3 w-100 justify-content-center">
+                    <label class="text-end text-secondary fs-4 my-auto me-3 w-25" for="web_selector">
+                        Web
+                    </label>
+
+                    <select class="form-control w-50 border-accent bg-dark my-auto text-light placeholder-light" name="web" id="web_selector">
+                        <option value="biking_point">Biking Point</option>
+                        <option value="escapa">Escapa</option>
+                    </select>
+                </div>
+
+                <div class="text-center d-flex mt-3 mb-3 w-100 justify-content-center">
+                    <label class="text-end text-secondary fs-4 my-auto me-3 w-25" for="delete_checkbox">
+                        Delete
+                    </label>
+                    <div class="w-50 d-flex align-items-center my-auto">
+                        <input class="form-check-input bg-dark border-accent" type="checkbox" name="delete" id="delete_checkbox">
+
+                        <span class="text-secondary ms-3 fs-5">
+                            Enable delete mode
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="text-center py-3">
+                    <button class="btn btn-accent btn-lg px-4 shadow-sm">Start</button>
+                </div>
+            </form>
+            <div id="response-message" class="text-secondary fs-5"></div>
+        </div>
+
+    </section>
+
+</main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/scraping.js' %}"></script>
+{% endblock %}

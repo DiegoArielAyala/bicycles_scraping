@@ -7,11 +7,14 @@
             <h2 class="display-6 mb-3 text-accent">Get Price History</h2>
         </div>
         <div class="card card-body mt-5 bg-dark border-0 text-light" style="min-height: 500px;">
-            <div class="w-100">
-                {{graphic|safe}}
-            </div>
+            <div class="w-100" id="chart"></div>
         </div>
     </section>
 
 </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.plot.ly/ploty-latest.min.js"></script>
+    <script src="{% static 'js/price_history.js' %}"></script>
 {% endblock %}

@@ -63,14 +63,14 @@ class ScrapingView(APIView):
     def post(self, request):
         serializer = ScrapingSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        data = serializer.validated_data
+        scraping_data = serializer.validated_data
 
-        token = request.headers.get("X-CRON-TOKEN")
-        if token != settings.CRON_SECRET_TOKEN:
+        cron_token = request.headers.get("X-CRON-TOKEN")
+        if cron_token != settings.CRON_SECRET_TOKEN:
             logger.error({"event": "invalid_cron_secret"})
             return Response({"error": "Unauthorized"}, status=403)
 
-        trigger_github_action(data)
+        trigger_github_action(scraping_data)
 
         return Response({"message": "Scraping triggered", "job": "github-actions"}, status=status.HTTP_202_ACCEPTED)
 
