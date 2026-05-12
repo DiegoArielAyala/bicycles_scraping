@@ -13,11 +13,11 @@ from playwright_stealth import Stealth
 os.environ.setdefault("DJANGO_SETTINGS_MODULE","bicyclesscraping.settings")
 django.setup()
 
-from .constants import USER_AGENTS
+from ..constants import USER_AGENTS
 from .metrics import get_metrics
-from .models import Bicycle
-from .strategies.factory import strategy_factory
-from ...core.utils import create_bicycles, is_last_page
+from ..models import Bicycle
+from ..strategies.factory import strategy_factory
+from ....core.utils import create_bicycles, is_last_page
 
 
 logger = logging.getLogger(__name__)

@@ -9,9 +9,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from ..models import Bicycle, PriceHistory, Subscription
-from .serializers import UserSerializer, BicycleSerializer, SigninSerializer, SignoutSerializer, ScrapingSerializer, ShowPriceHistorySerializer, SubscriptionSerializer, UnsubscribeSerializer
-from ..github_actions import trigger_github_action
+from ...models import Bicycle, PriceHistory, Subscription
+from ..serializers import UserSerializer, BicycleSerializer, SigninSerializer, SignoutSerializer, ScrapingSerializer, ShowPriceHistorySerializer, SubscriptionSerializer, UnsubscribeSerializer
+from ...services.github_actions import trigger_github_action
 
 logger = logging.getLogger(__name__)
 

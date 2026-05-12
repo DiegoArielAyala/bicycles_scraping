@@ -1,6 +1,6 @@
 from django.test import TransactionTestCase
-from apps.scraping.api.views import delete_bicycles
-from .models import Bicycle
+from apps.scraping.api.views.views import delete_bicycles
+from ..models import Bicycle
 import asyncio
 from django.db import connections
 from django.db.utils import OperationalError

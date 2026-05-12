@@ -10,7 +10,7 @@ from ..apps.scraping.decorators import log_function
 from ..apps.scraping.dto import BicycleDTO
 from .exceptions import PriceNotFoundError, ReferenceNotFoundError, InvalidFormError
 from ..apps.scraping.forms import BicycleForm
-from ..apps.scraping.metrics import increment
+from ..apps.scraping.services.metrics import increment
 from ..apps.scraping.models import Bicycle, PriceHistory
 from ..apps.scraping.strategies.factory import strategy_factory
 

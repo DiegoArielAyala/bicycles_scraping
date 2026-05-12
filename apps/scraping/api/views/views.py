@@ -9,7 +9,7 @@ from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .serializers import UserSerializer
+from ..serializers import UserSerializer
 
 from django.shortcuts import render
 from email.mime.text import MIMEText
