@@ -1,14 +1,14 @@
 from django.urls import path
 
-from .views import user_views
+from .views import auth, bicycles, scraping, subscription
 
 urlpatterns = [
-    path("api/signin", user_views.SigninView.as_view(), name="signin_api"),
-    path("api/signup", user_views.SignupView.as_view(), name="signup_api"),
-    path("api/signout", user_views.SignoutView.as_view(), name="signup_api"),
-    path("api/sscraping", user_views.ScrapingView.as_view(), name="scraping_api"),
-    path("api/search_bicycle", user_views.SearchBicycleView.as_view(), name="search_bicycle_api"),
-    path("api/price_history", user_views.ShowPriceHistoryView.as_view(), name="price_history_api"),
-    path("api/subscription", user_views.SubscriptionView.as_view(), name="subscription_api"),
-    path("api/unsubscription", user_views.UnsubscribeView.as_view(), name="unsubscription_api"),
+    path("signin/", auth.SigninView.as_view(), name="signin_api"),
+    path("signup/", auth.SignupView.as_view(), name="signup_api"),
+    path("signout/", auth.SignoutView.as_view(), name="signout_api"),
+    path("scraping/", scraping.ScrapingView.as_view(), name="scraping_api"),
+    path("search_bicycle/", bicycles.SearchBicycleView.as_view(), name="search_bicycle_api"),
+    path("price_history/<str:reference>/", bicycles.ShowPriceHistoryView.as_view(), name="price_history_api"),
+    path("subscription/", subscription.SubscriptionView.as_view(), name="subscription_api"),
+    path("unsubscription/", subscription.UnsubscribeView.as_view(), name="unsubscription_api"),
 ]

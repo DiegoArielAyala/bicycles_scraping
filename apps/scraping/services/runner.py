@@ -17,7 +17,7 @@ from ..constants import USER_AGENTS
 from .metrics import get_metrics
 from ..models import Bicycle
 from ..strategies.factory import strategy_factory
-from ....core.utils import create_bicycles, is_last_page
+from ....core.utils import create_bicycles
 
 
 logger = logging.getLogger(__name__)

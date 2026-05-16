@@ -1,27 +1,22 @@
-const form = document.getElementById("search-form")
 const resultsContainer = document.getElementById("search-results")
+const params = new URLSearchParams(window.location.search)
+const query = params.get("q")
 
-form.addEventListener("submit", async (e) => {
-    e.preventDefault()
+if (query) {
+    fetchBicycles(query)
+}
 
-    const query = document.querySelector('input[name="query"]').value
-
+function fetchBicycles(query) {
     try {
-        const response = await fetch(`/api/search_bicycle/q=${query}`,{
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }) 
+        const response = await fetch(`/api/search_bicycle/?q=${query}`)
 
         const data = await response.json()
 
         renderSearchResults(data)
-
     } catch (error) {
         console.error("Search error", error)
     }
-})
+}
 
 function renderSearchResults(data) {
     resultsContainer.innerHTML = ""
