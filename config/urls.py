@@ -1,5 +1,5 @@
 """
-URL configuration for bicyclesscraping project.
+URL configuration for scraping project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.2/topics/http/urls/
@@ -21,5 +21,6 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("apps.scraping.urls")),
-    path("api/", include("apps.scraping.api.urls"))
+    path("api/", include("apps.scraping.api.urls")),
 ]
+

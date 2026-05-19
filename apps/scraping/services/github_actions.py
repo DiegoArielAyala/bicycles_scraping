@@ -3,7 +3,7 @@ import requests
 from django.conf import settings
 
 def trigger_github_action(data):
-    url = "https://api.github.com/repos/USER/REPO/actions/workflow/scraping.yml/dispatches"
+    url = "https://api.github.com/repos/USER/REPO/actions/workflow/scraper.yml/dispatches"
 
     headers = {
         "Authorization": f"Bearer {settings.GITHUB_TOKEN}",

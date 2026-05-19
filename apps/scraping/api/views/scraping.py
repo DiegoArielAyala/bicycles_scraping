@@ -25,4 +25,4 @@ class ScrapingView(APIView):
 
         trigger_github_action(scraping_data)
 
-        return Response({"message": "Scraping triggered", "job": "github-actions"}, status=status.HTTP_202_ACCEPTED)
+        return Response({"message": "Scraping triggered", "job": "github-actions"}, status=HTTP_202_ACCEPTED)

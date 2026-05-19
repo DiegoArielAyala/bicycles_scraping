@@ -4,14 +4,16 @@ import plotly.graph_objects as go
 
 from asgiref.sync import sync_to_async
 from datetime import datetime
+from decimal import Decimal
 
+from .exceptions import PriceNotFoundError, ReferenceNotFoundError, InvalidFormError
 from ..apps.scraping.context_managers import log_context
 from ..apps.scraping.decorators import log_function
 from ..apps.scraping.dto import BicycleDTO
-from .exceptions import PriceNotFoundError, ReferenceNotFoundError, InvalidFormError
+from ..apps.scraping.emails.services import EmailService
 from ..apps.scraping.forms import BicycleForm
 from ..apps.scraping.services.metrics import increment
-from ..apps.scraping.models import Bicycle, PriceHistory
+from ..apps.scraping.models import Bicycle, PriceHistory, Subscription
 from ..apps.scraping.strategies.factory import strategy_factory
 
 
@@ -30,6 +32,7 @@ headers = {
     "Sec-Fetch-User": "?1",
     "Referer": "https://www.google.com/",
 }
+MINIMUM_PRICE_DROP = Decimal("50.00")
 
 logger = logging.getLogger(__name__)
 
@@ -206,15 +209,50 @@ def add_todays_price(bicycle_object, bicycle_price):
 
 
 async def update_current_price(bicycle_object, bicycle_price):
-    new_price = round(float(bicycle_price), 2)
-    current_price = round(bicycle_object.current_price, 2)
 
-    if new_price != current_price:
-        old_price = bicycle_object.current_price
+    new_price = Decimal(bicycle_price)
+    old_price = Decimal(bicycle_object.current_price)
+
+    if new_price != old_price:
+
         bicycle_object.current_price = new_price
-        await sync_to_async(bicycle_object.save)()
-        logger.info(f"{bicycle_object.reference} changed price from {old_price} to {new_price}")
 
+        await sync_to_async(bicycle_object.save)()
+
+        logger.info(
+            f"{bicycle_object.reference} changed "
+            f"price from {old_price} to {new_price}"
+        )
+
+        if should_send_price_alert(old_price, new_price):
+
+            subscriptions = await sync_to_async(
+                lambda: list(
+                    Subscription.objects.filter(
+                        bicycle=bicycle_object
+                    )
+                )
+            )()
+
+            for subscription in subscriptions:
+
+                await sync_to_async(
+                    EmailService.send_price_drop_email
+                )(
+                    subscription=subscription,
+                    bicycle=bicycle_object,
+                    old_price=old_price,
+                    new_price=new_price,
+                )
+
+def should_send_price_alert(old_price, new_price):
+
+    old_price = Decimal(old_price)
+    new_price = Decimal(new_price)
+
+    difference = old_price - new_price
+
+    return difference >= MINIMUM_PRICE_DROP
 
 def is_last_product(soup):
     return "No podemos encontrar productos que coincida con la selección." in soup.text

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial; background:#f5f5f5; padding:40px;">
+
+    <div style="
+        max-width:600px;
+        margin:auto;
+        background:white;
+        padding:30px;
+        border-radius:12px;
+    ">
+
+        <h1>🚴 Price Drop Alert</h1>
+
+        <h2>{{ bicycle.name }}</h2>
+
+        <p>
+            The bike price has dropped.
+        </p>
+
+        <p>
+            <strong>Old price:</strong>
+            €{{ old_price }}
+        </p>
+
+        <p>
+            <strong>New price:</strong>
+            €{{ new_price }}
+        </p>
+
+        <p>
+            <strong>You save:</strong>
+            €{{ difference }}
+        </p>
+
+        <a
+            href="{{ bicycle.url }}"
+            style="
+                display:inline-block;
+                padding:12px 20px;
+                background:black;
+                color:white;
+                text-decoration:none;
+                border-radius:8px;
+            "
+        >
+            View Bike
+        </a>
+
+        <hr style="margin:30px 0;">
+
+        <p style="font-size:14px;color:gray;">
+            If you no longer want alerts,
+            you can unsubscribe anytime.
+            <a href="{{ unsubscribe_url }}">
+                Unsubscribe
+            </a>
+        </p>
+
+    </div>
+
+</body>
+</html>

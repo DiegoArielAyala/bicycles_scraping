@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 from playwright.async_api import async_playwright
 from playwright_stealth import Stealth
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE","bicyclesscraping.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE","config.settings")
 django.setup()
 
 from ..constants import USER_AGENTS
