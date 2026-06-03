@@ -9,7 +9,7 @@ import asyncio
 from asgiref.sync import sync_to_async
 from django.core.exceptions import ObjectDoesNotExist
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bicyclesscraping.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
 from apps.scraping.models import Bicycle
