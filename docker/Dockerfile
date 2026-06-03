@@ -14,7 +14,7 @@ COPY . .
 RUN chown -R pwuser:pwuser /app
 
 # Variables de entorno
-ENV DJANGO_SETTINGS_MODULE=bicyclesscraping.settings
+ENV DJANGO_SETTINGS_MODULE=config.settings
 ENV PYTHONUNBUFFERED=1
 
 # Recolectar estáticos
@@ -27,5 +27,5 @@ USER pwuser
 EXPOSE 8000
 
 # Comando final
-CMD ["gunicorn", "bicyclesscraping.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "1", "--threads", "4", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-"]
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "1", "--threads", "4", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-"]
 
