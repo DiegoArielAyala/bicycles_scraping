@@ -3,7 +3,7 @@ import django
 import asyncio
 import argparse
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "../config.settings")
 django.setup()
 
 from apps.scraping.services.runner import run_scraper
