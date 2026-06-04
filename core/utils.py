@@ -3,18 +3,18 @@ import asyncio
 import plotly.graph_objects as go
 
 from asgiref.sync import sync_to_async
+from apps.scraping.context_managers import log_context
+from apps.scraping.decorators import log_function
+from apps.scraping.dto import BicycleDTO
+from apps.scraping.emails.services import EmailService
+from apps.scraping.forms import BicycleForm
+from apps.scraping.models import Bicycle, PriceHistory, Subscription
+from apps.scraping.services.metrics import increment
+from apps.scraping.strategies.factory import strategy_factory
+from core.exceptions import PriceNotFoundError, ReferenceNotFoundError, InvalidFormError
 from datetime import datetime
 from decimal import Decimal
 
-from .exceptions import PriceNotFoundError, ReferenceNotFoundError, InvalidFormError
-from ..apps.scraping.context_managers import log_context
-from ..apps.scraping.decorators import log_function
-from ..apps.scraping.dto import BicycleDTO
-from ..apps.scraping.emails.services import EmailService
-from ..apps.scraping.forms import BicycleForm
-from ..apps.scraping.services.metrics import increment
-from ..apps.scraping.models import Bicycle, PriceHistory, Subscription
-from ..apps.scraping.strategies.factory import strategy_factory
 
 
 url = "https://www.bikingpoint.es/es/"

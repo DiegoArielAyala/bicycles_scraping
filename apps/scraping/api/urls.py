@@ -1,8 +1,8 @@
 from django.urls import path
 
+from apps.scraping.api.views import auth, bicycles, scraping, subscription
 from apps.scraping.test.send_email import TestEmailView
 
-from .views import auth, bicycles, scraping, subscription
 
 urlpatterns = [
     path("signin/", auth.SigninView.as_view(), name="signin_api"),

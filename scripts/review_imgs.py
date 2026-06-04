@@ -1,3 +1,4 @@
+import asyncio
 import django
 import os
 import random
@@ -5,7 +6,6 @@ import logging
 
 from playwright.async_api import async_playwright, Error as PlaywrightError, TimeoutError as PlaywrightTimeoutError
 from bs4 import BeautifulSoup
-import asyncio
 from asgiref.sync import sync_to_async
 from django.core.exceptions import ObjectDoesNotExist
 

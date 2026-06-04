@@ -1,10 +1,10 @@
+from apps.scraping.api.serializers import BicycleSerializer, ShowPriceHistorySerializer
+from apps.scraping.models import Bicycle, PriceHistory
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ...models import Bicycle, PriceHistory
-from ..serializers import BicycleSerializer, ShowPriceHistorySerializer
 
 class SearchBicycleView(ListAPIView):
     serializer_class = BicycleSerializer

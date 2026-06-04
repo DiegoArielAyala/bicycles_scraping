@@ -13,11 +13,11 @@ from playwright_stealth import Stealth
 os.environ.setdefault("DJANGO_SETTINGS_MODULE","config.settings")
 django.setup()
 
-from ..constants import USER_AGENTS
-from .metrics import get_metrics
-from ..models import Bicycle
-from ..strategies.factory import strategy_factory
-from ....core.utils import create_bicycles
+from apps.scraping.constants import USER_AGENTS
+from apps.scraping.services.metrics import get_metrics
+from apps.scraping.models import Bicycle
+from apps.scraping.strategies.factory import strategy_factory
+from core.utils import create_bicycles
 
 
 logger = logging.getLogger(__name__)

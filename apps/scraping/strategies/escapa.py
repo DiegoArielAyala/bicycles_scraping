@@ -1,9 +1,9 @@
 import asyncio
 import random
 
+from apps.scraping.strategies.base import ScrapingStrategy
 from bs4 import BeautifulSoup
 
-from apps.scraping.strategies.base import ScrapingStrategy
 
 class EscapaStrategy(ScrapingStrategy):
     BASE_URL = "https://www.biciescapa.com/es/"

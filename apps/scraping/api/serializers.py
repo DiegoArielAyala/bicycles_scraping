@@ -1,5 +1,6 @@
 import logging
 
+from apps.scraping.models import Bicycle, Subscription
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
@@ -7,7 +8,6 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 
-from ..models import Bicycle, Subscription
 
 logger = logging.getLogger(__name__)
 

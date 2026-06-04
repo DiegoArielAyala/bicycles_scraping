@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Bicycle, PriceHistory, Subscription
+from apps.scraping.models import Bicycle, PriceHistory, Subscription
 
 # Register your models here.
 

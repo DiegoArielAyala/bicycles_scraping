@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import pages
+from apps.scraping.views import pages
 
 urlpatterns = [
     path("", pages.home_page, name="home"),

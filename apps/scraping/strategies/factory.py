@@ -1,5 +1,5 @@
-from .biking_point import BikingPointStrategy
-from .escapa import EscapaStrategy
+from apps.scraping.strategies.biking_point import BikingPointStrategy
+from apps.scraping.strategies.escapa import EscapaStrategy
 
 STRATEGIES = {
     "biking_point": BikingPointStrategy,
