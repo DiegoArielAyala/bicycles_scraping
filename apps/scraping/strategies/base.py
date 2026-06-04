@@ -1,10 +1,10 @@
 import logging
 
 from abc import ABC, abstractmethod
+from apps.scraping.dto import BicycleDTO
 from bs4 import Tag
 from typing import Optional, Tuple
 
-from ..dto import BicycleDTO
 
 logger = logging.getLogger(__name__)
 

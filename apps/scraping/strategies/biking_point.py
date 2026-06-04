@@ -1,8 +1,8 @@
 import re
 import logging
 
-from .base import ScrapingStrategy
-from ....core.utils import is_last_product
+from apps.scraping.strategies.base import ScrapingStrategy
+from core.utils import is_last_product
 
 logger = logging.getLogger(__name__)
 

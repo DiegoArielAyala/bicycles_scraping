@@ -3,7 +3,7 @@ import random
 
 from bs4 import BeautifulSoup
 
-from .base import ScrapingStrategy
+from apps.scraping.strategies.base import ScrapingStrategy
 
 class EscapaStrategy(ScrapingStrategy):
     BASE_URL = "https://www.biciescapa.com/es/"
