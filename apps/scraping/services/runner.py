@@ -57,8 +57,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                         logger.debug(f"Page {counter} didn't load. Exit loop")
                         break
                     soup = BeautifulSoup(html, "html.parser")
-                    # product_elements_html = await get_product_elements_html(web, soup, counter)
-                    product_elements_html = await strategy.get_product_elements_html(web, soup)
+                    product_elements_html = await strategy.get_product_elements_html( soup)
                     
                     if not product_elements_html:
                         break
