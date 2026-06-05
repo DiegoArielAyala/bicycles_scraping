@@ -49,6 +49,9 @@ class EscapaStrategy(ScrapingStrategy):
         content = await page.content()
         soup = BeautifulSoup(content, "html.parser")
         div = soup.find("div", class_="dfd-card-flag", attrs={"data-availability":"out-of-stock"})
+
+        if not div:
+            return True
     
         if div.text.strip() == "Agotado" or "Prueba de nuevo con otra búsqueda…" in soup.text:
             return False
