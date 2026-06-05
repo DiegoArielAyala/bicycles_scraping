@@ -15,10 +15,9 @@ django.setup()
 
 from apps.scraping.constants import USER_AGENTS
 from apps.scraping.services.metrics import get_metrics
+from apps.scraping.services.bicycles_services import create_bicycles 
 from apps.scraping.models import Bicycle
 from apps.scraping.strategies.factory import strategy_factory
-from core.utils import create_bicycles
-
 
 logger = logging.getLogger(__name__)
 
