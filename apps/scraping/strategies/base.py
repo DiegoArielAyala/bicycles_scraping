@@ -13,7 +13,7 @@ class ScrapingStrategy(ABC):
     SEARCH_ENDPOINT = None
 
     def get_price(self, product_element: Tag, bicycle_reference: str) -> Optional[str]:
-        raw_price = self._extract_price(product_element, bicycle_reference)
+        raw_price = self._extract_price(product_element)
         
         try:
             return BicycleDTO(price=raw_price).price
