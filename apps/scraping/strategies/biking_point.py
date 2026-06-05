@@ -4,6 +4,8 @@ import logging
 from apps.scraping.strategies.base import ScrapingStrategy
 from core.utils import is_last_product
 
+""" Error de import circular - chat envio de emails gratis"""
+
 logger = logging.getLogger(__name__)
 
 class BikingPointStrategy(ScrapingStrategy):
