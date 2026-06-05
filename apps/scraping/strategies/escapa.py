@@ -18,7 +18,7 @@ class EscapaStrategy(ScrapingStrategy):
         bicycle_reference = product_element.get("data-id-product")
 
         return bicycle_reference if bicycle_reference else None
-    
+     
     def _extract_name(self, product_element):
         name_tag = product_element.find("h3", class_="h3-product-title")
         

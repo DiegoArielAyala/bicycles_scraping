@@ -18,9 +18,11 @@ from apps.scraping.services.metrics import get_metrics
 from apps.scraping.services.bicycles_services import create_bicycles 
 from apps.scraping.models import Bicycle
 from apps.scraping.strategies.factory import strategy_factory
+from apps.scraping.decorators import log_function 
 
 logger = logging.getLogger(__name__)
 
+@log_function
 async def run_scraper(start_page, last_page, web=None, delete=False):
     logger.info("run_scraper function start")
     async with async_playwright() as p:
@@ -57,7 +59,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
                         logger.debug(f"Page {counter} didn't load. Exit loop")
                         break
                     soup = BeautifulSoup(html, "html.parser")
-                    product_elements_html = await strategy.get_product_elements_html( soup)
+                    product_elements_html = strategy.get_product_elements_html(soup)
                     
                     if not product_elements_html:
                         break
@@ -75,6 +77,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
 
                 except Exception as e:
                     logger.error(f"Error en la página {counter}: {e}")
+                    delete = False
                     break
 
         # Delete bicycles that no longer exists

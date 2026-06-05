@@ -41,7 +41,7 @@ async def create_bicycles(product_elements_html, web, bicycle_references_in_db):
             
             try:
                 bicycle_reference = strategy.get_reference(product_element)
-                bicycle_price = strategy.get_price(product_element, bicycle_reference)
+                bicycle_price = strategy.get_price(product_element)
             except ReferenceNotFoundError:
                 logger.warning({"event": "reference_not_found", "web": web})
                 continue
@@ -76,7 +76,7 @@ async def create_bicycles(product_elements_html, web, bicycle_references_in_db):
 
 @log_function
 async def create_new_bicycle(product_element, web, bicycle_href, bicycle_reference, strategy):
-    bicycle_price = strategy.get_price(product_element, bicycle_reference)
+    bicycle_price = strategy.get_price(product_element)
     bicycle_name, bicycle_img = strategy.get_product_info(product_element, bicycle_reference)
     
     if bicycle_price is None:

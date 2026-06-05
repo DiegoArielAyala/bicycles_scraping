@@ -35,7 +35,7 @@ class ScrapingStrategy(ABC):
         pass
     
     @abstractmethod
-    def _extract_price(self, product_element: Tag, bicycle_reference: str) -> Optional[str]:
+    def _extract_price(self, product_element: Tag) -> Optional[str]:
         pass
 
     @abstractmethod
