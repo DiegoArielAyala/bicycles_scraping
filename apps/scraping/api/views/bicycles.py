@@ -4,25 +4,25 @@ from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from apps.scraping.api.pagination import BicyclePagination
 
 class SearchBicycleView(ListAPIView):
     serializer_class = BicycleSerializer
+    pagination_class = BicyclePagination
 
     def get_queryset(self):
-        max_results = 50
         qs = Bicycle.objects.all()
         query = (self.request.query_params.get("q") or "").strip()
         
         if not query:
-            return qs[:max_results]
+            return qs.order_by("price")
 
         if query.isdigit():
             qs = qs.filter(reference=query)
         else:
             qs = qs.filter(name__icontains=query)
 
-        return qs.order_by("price")[:max_results]
+        return qs.order_by("price")
 
 class ShowPriceHistoryView(APIView):
     def get(self, request, reference):
@@ -38,3 +38,4 @@ class ShowPriceHistoryView(APIView):
         serializer.is_valid(raise_exception=True)
 
         return Response(serializer.data)
+    

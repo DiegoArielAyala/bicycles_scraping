@@ -3,7 +3,7 @@ import logging
 from apps.scraping.api.serializers import ScrapingSerializer
 from apps.scraping.services.github_actions import trigger_github_action
 from django.conf import settings
-from rest_framework.status import HTTP_202_ACCEPTED
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -21,8 +21,8 @@ class ScrapingView(APIView):
         cron_token = request.headers.get("X-CRON-TOKEN")
         if cron_token != settings.CRON_SECRET_TOKEN:
             logger.error({"event": "invalid_cron_secret"})
-            return Response({"error": "Unauthorized"}, status=403)
+            return Response({"error": "Unauthorized"}, status=status.HTTP_403_FORBIDDEN)
 
         trigger_github_action(scraping_data)
 
-        return Response({"message": "Scraping triggered", "job": "github-actions"}, status=HTTP_202_ACCEPTED)
+        return Response({"message": "Scraping triggered", "job": "github-actions"}, status=status.HTTP_202_ACCEPTED)

@@ -30,6 +30,6 @@ class UnsubscribeByTokenView(APIView):
         try:
             subscription = Subscription.objects.get(unsubscribe_token=token)
             subscription.delete()
-            return Response({"detail": "Unsubscribed successfully"})
+            return Response({"detail": "Unsubscribed successfully"}, status=status.HTTP_200_OK)
         except Subscription.DoesNotExist:
             return Response({"detail": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)

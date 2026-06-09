@@ -1,8 +1,8 @@
 import logging
 
 from abc import ABC, abstractmethod
-from apps.scraping.dto import BicycleDTO
 from bs4 import Tag
+from core.exceptions import PriceNotFoundError
 from typing import Optional, Tuple
 
 
@@ -12,18 +12,15 @@ class ScrapingStrategy(ABC):
     BASE_URL = None
     SEARCH_ENDPOINT = None
 
-    def get_price(self, product_element: Tag, bicycle_reference: str) -> Optional[str]:
+    def get_price(self, product_element: Tag) -> Optional[str]:
         raw_price = self._extract_price(product_element)
-        
-        try:
-            return BicycleDTO(price=raw_price).price
-        except Exception as e:
-            logger.warning({"event:": "invalid_price", "reference": bicycle_reference, "error": e})
-            return None
-    
-    def get_product_info(self, product_element: Tag, bicycle_reference: str) -> Tuple[str, Optional[str]]:
-        bicycle_name = self._extract_name(product_element, bicycle_reference)
-        bicycle_img = self._extract_img(product_element, bicycle_reference)
+        if raw_price is None:
+            raise PriceNotFoundError
+        return self.clean_price(raw_price)
+  
+    def get_product_info(self, product_element: Tag) -> Tuple[str, Optional[str]]:
+        bicycle_name = self._extract_name(product_element)
+        bicycle_img = self._extract_img(product_element)
         
         return bicycle_name or "Bicycle", bicycle_img
 
@@ -39,11 +36,11 @@ class ScrapingStrategy(ABC):
         pass
 
     @abstractmethod
-    def _extract_name(self, product_element: Tag, bicycle_reference: str) -> Optional[str]:
+    def _extract_name(self, product_element: Tag) -> Optional[str]:
         pass
 
     @abstractmethod
-    def _extract_img(self, product_element: Tag, bicycle_reference: str) -> Optional[str]:
+    def _extract_img(self, product_element: Tag) -> Optional[str]:
         pass
 
     @abstractmethod

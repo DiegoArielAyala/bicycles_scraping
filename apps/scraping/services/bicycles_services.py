@@ -8,7 +8,7 @@ from apps.scraping.emails.services import EmailService
 from apps.scraping.models import Bicycle, Subscription
 from apps.scraping.services.metrics import increment
 from apps.scraping.strategies.factory import strategy_factory
-from core.exceptions import PriceNotFoundError, ReferenceNotFoundError
+from core.exceptions import PriceNotFoundError, ReferenceNotFoundError, InvalidFormError
 from core.utils import get_href, add_todays_price, clean_duplicates, save_new_bicycle, validated_bicycle_form, save_price_history, should_send_price_alert
 from decimal import Decimal
 
@@ -41,13 +41,13 @@ async def create_bicycles(product_elements_html, web, bicycle_references_in_db):
             
             try:
                 bicycle_reference = strategy.get_reference(product_element)
-                bicycle_price = strategy.get_price(product_element, bicycle_reference)
+                bicycle_price = strategy.get_price(product_element)
             except ReferenceNotFoundError:
                 logger.warning({"event": "reference_not_found", "web": web})
                 continue
             except PriceNotFoundError:
                 increment("PriceNotFoundError", web=web)
-                logger.warning({"event": "get_todays_price_error", "web": web, "reference": bicycle_reference})
+                logger.warning({"event": "price_not_found_error", "web": web, "reference": bicycle_reference})
                 continue
             
             # Buscar en la DB si existe esa referencia
@@ -76,8 +76,8 @@ async def create_bicycles(product_elements_html, web, bicycle_references_in_db):
 
 @log_function
 async def create_new_bicycle(product_element, web, bicycle_href, bicycle_reference, strategy):
-    bicycle_price = strategy.get_price(product_element, bicycle_reference)
-    bicycle_name, bicycle_img = strategy.get_product_info(product_element, bicycle_reference)
+    bicycle_price = strategy.get_price(product_element)
+    bicycle_name, bicycle_img = strategy.get_product_info(product_element)
     
     if bicycle_price is None:
         logger.warning({"event": "price_not_found", "web": web, "reference": bicycle_reference})
@@ -85,6 +85,8 @@ async def create_new_bicycle(product_element, web, bicycle_href, bicycle_referen
         return
     
     logger.debug({"event": "scraped_product", "web": web, "reference": bicycle_reference, "price": bicycle_price, "name": bicycle_name})
+
+    """ Agregar un try/except para capturar errores en la creación del objeto bicicleta, y loggear el error con el reference para poder debuggear después. """
 
     bicycle = BicycleDTO(
         name=bicycle_name,
@@ -95,7 +97,11 @@ async def create_new_bicycle(product_element, web, bicycle_href, bicycle_referen
         web=web
     )
 
-    bicycle_form = await sync_to_async(validated_bicycle_form)(bicycle.name, bicycle.img, bicycle.price, bicycle.url, bicycle.reference, bicycle.web)
+    try:
+        bicycle_form = await sync_to_async(validated_bicycle_form)(bicycle.name, bicycle.img, bicycle.price, bicycle.url, bicycle.reference, bicycle.web)
+    except InvalidFormError as e:
+        logger.warning({"event": "invalid_form", "web": web, "reference": bicycle_reference, "error": e})
+        return
     
     new_bicycle = await save_new_bicycle(bicycle_form)
 

@@ -43,7 +43,6 @@ def validated_bicycle_form(bicycle_name, bicycle_img, bicycle_price, bicycle_hre
     })
 
     if not bicycle_form.is_valid():
-        logger.warning({"event": "invalid_form", "web": web, "reference": bicycle_reference})
         raise InvalidFormError(bicycle_form.errors)
 
     return bicycle_form

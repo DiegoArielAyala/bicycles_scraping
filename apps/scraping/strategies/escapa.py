@@ -1,13 +1,16 @@
 import asyncio
+import logging
 import random
 
 from apps.scraping.strategies.base import ScrapingStrategy
 from bs4 import BeautifulSoup
+from playwright.async_api import TimeoutError
 
+logger = logging.getLogger(__name__)
 
 class EscapaStrategy(ScrapingStrategy):
     BASE_URL = "https://www.biciescapa.com/es/"
-    SEARCH_ENDPOINT = "https://www.biciescapa.com/es/bicicletas/?en-stock=1&page={}"
+    SEARCH_ENDPOINT = "https://www.biciescapa.com/es/bicicletas/?page={}"
 
     def _extract_price(self, product_element):
         price_span = product_element.find("span", class_= "price current-price-discount") or product_element.find("span", class_= "price")
@@ -37,9 +40,10 @@ class EscapaStrategy(ScrapingStrategy):
     async def bicycle_exists(self, page, reference):
         url = self.BASE_URL
         await page.goto(url)
+        
         try:
             await page.click("button#onetrust-accept-btn-handler", timeout=3000)
-        except:
+        except TimeoutError:
             pass
 
         await page.fill("input[name='s']", str(reference))
@@ -50,12 +54,12 @@ class EscapaStrategy(ScrapingStrategy):
         soup = BeautifulSoup(content, "html.parser")
         div = soup.find("div", class_="dfd-card-flag", attrs={"data-availability":"out-of-stock"})
 
-        if not div:
-            return True
-    
-        if div.text.strip() == "Agotado" or "Prueba de nuevo con otra búsqueda…" in soup.text:
+        if div and (div.text.strip() == "Agotado" or "Prueba de nuevo con otra búsqueda…" in soup.text):
+            logger.info({"event": "bicycle_not_exists", "web": "escapa", "reference": reference})
             return False
+        
         else:
+            logger.info({"event": "bicycle_exists", "web": "escapa", "reference": reference})
             return True
         
     def get_list_url(self, counter):
