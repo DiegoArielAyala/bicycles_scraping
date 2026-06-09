@@ -10,7 +10,6 @@
         </div>
 
         <form class="d-flex flex-column align-items-center gap-3" id="search-form" action="/search_bicycle/" method="GET">
-            {% csrf_token %}
             <label class="text-secondary fs-4" for="">Name or Reference:</label>
             <input class="form-control w-75 text-center fs-5 py-2 bg-dark border-accent text-light placeholder-light" type="text" name="q" placeholder="Scott - 34208 - Team Race">
             <div class="text-center py-3">
