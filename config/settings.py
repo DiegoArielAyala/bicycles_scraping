@@ -47,6 +47,15 @@ INSTALLED_APPS = [
     "apps.scraping",
     "rest_framework",
     "anymail",
+    "django_filters",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
+    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [
@@ -57,7 +66,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -229,3 +239,5 @@ ANYMAIL = {
 }
 
 FRONTEND_URL = "http://127.0.0.1:8000"
+
+SITE_ID = 1

@@ -1,3 +1,5 @@
+import { API_ENDPOINTS } from "./api/config.js";
+
 const responseContainer = document.getElementById("response-container")
 const subscriptionForm = document.getElementById("subscription-form")
 
@@ -9,7 +11,7 @@ subscriptionForm.addEventListener("submit", async (e) => {
     const accessToken = localStorage.getItem("access")
 
     try {
-        const response = await fetch("/api/subscription/", {
+        const response = await fetch(`${API_ENDPOINTS.SUBSCRIPTION}`, {
             method = "POST",
             headers = {
                 "Content-Type": "application/json",

@@ -40,7 +40,7 @@ class UserSerializer(serializers.ModelSerializer):
 class BicycleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bicycle
-        fields = ["id", "name", "price", "web", "reference", "url", "img"]
+        fields = ["id", "name", "current_price", "web", "reference", "url", "img"]
 
 class SigninSerializer(serializers.Serializer):
     username = serializers.CharField()

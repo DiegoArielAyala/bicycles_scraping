@@ -1,6 +1,6 @@
 import logging
 
-from apps.scraping.api.serializers import ScrapingSerializer
+from apps.scraping.api.v1.serializers import ScrapingSerializer
 from apps.scraping.services.github_actions import trigger_github_action
 from django.conf import settings
 from rest_framework import status

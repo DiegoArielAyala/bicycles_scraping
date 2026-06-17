@@ -1,57 +1,98 @@
-const params = new URLSearchParams(window.location.search)
-const query = params.get("q")
-let currentNextPage = null
-let currentPreviousPage = null
+import { API_ENDPOINTS } from "./api/config.js";
+
+let currentNextPage = null;
+let currentPreviousPage = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-    const resultsContainer = document.getElementById("search-results")
-    
-    resultsContainer.addEventListener("click", (e) => {
-        const nextBtn = e.target.closest("#nextPageBtn")
-        const prevBtn = e.target.closest("#prevPageBtn")
-        if (nextBtn) {
-            fetchBicyclesFromUrl(currentNextPage)
+    const resultsContainer = document.getElementById("search-results");
+
+    if (!resultsContainer) {
+        console.error("Missing #search-results container");
+        return;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get("q");
+    const minPrice = urlParams.get("min_price");
+    const maxPrice = urlParams.get("max_price");
+
+    const fetchParams = new URLSearchParams()
+    if (query) {fetchParams.append("q", query)}
+    if (minPrice) {fetchParams.append("min_price", minPrice)}
+    if (maxPrice) {fetchParams.append("max_price", maxPrice)}
+
+    // Event delegation para paginación
+    resultsContainer.addEventListener("click", async (e) => {
+        const nextBtn = e.target.closest("#nextPageBtn");
+        const prevBtn = e.target.closest("#prevPageBtn");
+
+        if (nextBtn && currentNextPage) {
+            await fetchBicyclesFromUrl(currentNextPage, resultsContainer);
         }
-        if (prevBtn) {
-            fetchBicyclesFromUrl(currentPreviousPage)
+
+        if (prevBtn && currentPreviousPage) {
+            await fetchBicyclesFromUrl(currentPreviousPage, resultsContainer);
         }
-    })
-})
+    });
 
+    fetchBicycles(fetchParams, resultsContainer);
+});
 
-if (query) {
-    fetchBicycles(query)
-}
-
-async function fetchBicycles(query) {
+async function fetchBicycles(params, resultsContainer) {
     try {
-        const response = await fetch(`/api/search_bicycle/?q=${query}`)
+        const response = await fetch(`${API_ENDPOINTS.SEARCH_BICYCLE}?${params.toString()}`);
 
-        const data = await response.json()
+        if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}`);
+        }
 
-        renderSearchResults(data)
+        const data = await response.json();
+
+        renderSearchResults(data, resultsContainer);
     } catch (error) {
-        console.error("Search error", error)
+        console.error("Search error", error);
     }
 }
 
-function renderSearchResults(data) {
-    resultsContainer.innerHTML = ""
-    currentNextPage = data.next
-    currentPreviousPage = data.previous
-    const totalResults = data.count
+async function fetchBicyclesFromUrl(url, resultsContainer) {
+    try {
+        if (!url) return;
 
-    if (!data.results.length) {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        renderSearchResults(data, resultsContainer);
+    } catch (error) {
+        console.error("Pagination error", error);
+    }
+}
+
+function renderSearchResults(data, resultsContainer) {
+    resultsContainer.innerHTML = "";
+
+    currentNextPage = data.next;
+    currentPreviousPage = data.previous;
+
+    const totalResults = data.count || 0;
+
+    if (!data.results || data.results.length === 0) {
         resultsContainer.innerHTML = `
             <div class="text-secondary fs-5 text-center mt-3">
                 We couldn't find any bicycles matching your search.
             </div>
-        `
-        return
-    } 
+        `;
+        return;
+    }
+
+    let html = ""
 
     data.results.forEach(bicycle => {
-        resultsContainer.innerHTML += `
+        html += `
             <section class="card shadow-lg rounded-4 border-0 p-4 bg-dark text-light my-3">
                 <h2 class="text-accent fs-3 text-center mb-3">${bicycle.name}</h2>
 
@@ -72,10 +113,10 @@ function renderSearchResults(data) {
                     </div>
                 </div>
             </section>
-        `
+        `;
     });
 
-    resultsContainer.innerHTML += `
+    html += `
         <div class="d-flex justify-content-center align-items-center gap-3 mt-4 mb-5">
 
             ${currentPreviousPage ? `
@@ -103,18 +144,7 @@ function renderSearchResults(data) {
             `}
 
         </div>
-    `
-}
+    `;
 
-async function fetchBicyclesFromUrl(url) {
-    try {
-        if (url) {
-            const response = await fetch(url)
-        }
-        const data = await response.json()
-
-        renderSearchResults(data)
-    } catch (error) {
-        console.error("Pagination error", error)
-    }
+    resultsContainer.innerHTML = html
 }

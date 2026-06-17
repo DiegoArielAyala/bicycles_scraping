@@ -1,3 +1,5 @@
+import { API_ENDPOINTS } from "./api/config.js";
+
 const unsubscribeForm = document.getElementById("unsubscribe-form")
 const responseContainer = document.getElementById("response-container")
 
@@ -9,7 +11,7 @@ unsubscribeForm.addEventListener("submit", async (e) => {
     const accessToken = localStorage.getItem("access")
 
     try {
-        const response = await fetch("/api/unsubscription/", {
+        const response = await fetch(`${API_ENDPOINTS.UNSUBSCRIPTION}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

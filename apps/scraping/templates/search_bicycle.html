@@ -12,16 +12,23 @@
         <form class="d-flex flex-column align-items-center gap-3" id="search-form" action="/search_bicycle/" method="GET">
             <label class="text-secondary fs-4" for="">Name or Reference:</label>
             <input class="form-control w-75 text-center fs-5 py-2 bg-dark border-accent text-light placeholder-light" type="text" name="q" placeholder="Scott - 34208 - Team Race">
+            <div class="w-75">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="text-secondary fs-5">Min Price:</label>
+                        <input class="form-control text-center fs-5 py-2 bg-dark border-accent text-light" type="number" name="min_price">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="text-secondary fs-5">Max Price:</label>
+                        <input class="form-control text-center fs-5 py-2 bg-dark border-accent text-light" type="number" name="max_price">
+                    </div>
+                </div>
+            </div>
             <div class="text-center py-3">
                 <button class="btn btn-accent btn-lg px-5 shadow-sm">Search</button>
             </div>
         </form>
-
-        {% if not results %}
-            <div class="text-secondary fs-5 text-center mt-3">
-                We couldn't find any bicycles matching your search.
-            </div>
-        {% endif %}
     </section>
 
     <div id="search-results"></div>
@@ -30,5 +37,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{% static 'js/search_bicycle.js' %}"></script>
+    <script type="module" src="{% static 'js/search_bicycle.js' %}"></script>
 {% endblock %}

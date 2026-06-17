@@ -1,4 +1,4 @@
-from apps.scraping.api.serializers import UserSerializer, SigninSerializer, SignoutSerializer
+from apps.scraping.api.v1.serializers import UserSerializer, SigninSerializer, SignoutSerializer
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView

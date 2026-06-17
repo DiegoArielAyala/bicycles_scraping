@@ -1,8 +1,10 @@
+import { API_ENDPOINTS } from "./api/config.js";
+
 document.addEventListener("DOMContentLoaded", async () => {
     const reference = window.location.pathname.split("/").filter(Boolean).pop()
 
     try {
-        const response = await fetch(`api/price_history/${reference}/`, {
+        const response = await fetch(`${API_ENDPOINTS.PRICE_HISTORY}/${reference}/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

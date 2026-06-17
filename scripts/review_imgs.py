@@ -14,12 +14,8 @@ django.setup()
 
 from apps.scraping.models import Bicycle
 from apps.scraping.constants import USER_AGENTS
-from apps.scraping.strategies import urls
+from apps.scraping.strategies.biking_point import BikingPointStrategy
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s - %(levelsanme)s - %(name)s - %(message)s "
-)
 logger = logging.getLogger(__name__)
 
 # Use Playwright to get the correct img url from each bicycle reference
@@ -30,6 +26,21 @@ async def update_bicycles_image_urls():
     for reference in references:
         try:
             html = await fetch_biking_point_html(reference)
+            img_url = extract_image_url(html)
+            if img_url is None:
+                logger.warning(f"Img url not found for reference {reference}")
+                continue
+            try:
+                bicycle = await get_bicycle_by_reference(reference)
+            except ObjectDoesNotExist:
+                print(f"Referencia {reference} no existe, continua al siguiente")
+                continue
+            if bicycle.img == img_url:
+                print(f"Img for reference {reference} is correct")
+                continue
+            bicycle.img = img_url
+            await sync_to_async(lambda: bicycle.save())()
+            print(f"Img url for Bicycle reference {reference} saved.")
         except PlaywrightTimeoutError:
             print(f"Timeout Error for reference {reference}")
             continue
@@ -38,21 +49,6 @@ async def update_bicycles_image_urls():
         except Exception as e:
             print(f"Unexpected error for reference {reference}: {e}")
              
-        img_url = extract_image_url(html)
-        if img_url is None:
-            logger.warning(f"Img url not found for reference {reference}")
-            continue
-        try:
-            bicycle = await get_bicycle_by_reference(reference)
-        except ObjectDoesNotExist:
-            print(f"Referencia {reference} no existe, continua al siguiente")
-            continue
-        if bicycle.img == img_url:
-            print(f"Img for reference {reference} is correct")
-            continue
-        bicycle.img = img_url
-        await sync_to_async(lambda: bicycle.save())()
-        print(f"Img url for Bicycle reference {reference} saved.")
 
         # Crear el cron para ejecutar el run_scraper de produccion.
         # Agregar los try/except necesarios
@@ -65,7 +61,7 @@ async def fetch_biking_point_html(reference):
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True, args= ["--no-sandbox", "--disable-dev-shm-usage", "--disable-blink-features=AutomationControlled"])
         page = await browser.new_page(user_agent=random.choice(USER_AGENTS))
-        await page.goto(urls["biking_point"]["search_endpoint"].format(reference))
+        await page.goto(BikingPointStrategy.SEARCH_ENDPOINT.format(reference))
         html = await page.content()
         return html
 

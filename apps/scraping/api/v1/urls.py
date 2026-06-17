@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import path, include
 
-from apps.scraping.api.views import auth, bicycles, scraping, subscription
+from apps.scraping.api.v1.views import auth, bicycles, scraping
+from apps.scraping.api.v1.views import subscription
 from apps.scraping.test.send_email import TestEmailView
 
 
@@ -14,4 +15,6 @@ urlpatterns = [
     path("subscription/", subscription.SubscriptionView.as_view(), name="subscription_api"),
     path("unsubscription/", subscription.UnsubscribeView.as_view(), name="unsubscription_api"),
     path("test-email/", TestEmailView.as_view(), name="test-email"),
+    path("auth/", include("dj_rest_auth.urls")),
+    path("auth/registration", include("dj_rest_auth.registration.urls"))
 ]

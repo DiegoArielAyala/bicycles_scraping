@@ -1,3 +1,5 @@
+import { API_ENDPOINTS } from "./api/config.js";
+
 const form = document.getElementById("signup-form")
 const responseContainer = document.getElementById("response-container")
 
@@ -9,7 +11,7 @@ form.addEventListener("submit", async (e) => {
     const password2 = document.getElementById("password2-input").value
 
     try {
-        const response = await fetch("/api/signup/", {
+        const response = await fetch(`${API_ENDPOINTS.SIGN_UP}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -31,6 +33,10 @@ form.addEventListener("submit", async (e) => {
         }
 
         responseContainer.innerText = "User created successfully"
+
+        setTimeout(() => {
+            window.location.href = "/signin/"
+        }, 1000)
         
     } catch (error) {
         console.error("Signup error", error)

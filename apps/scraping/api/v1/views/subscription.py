@@ -1,4 +1,4 @@
-from apps.scraping.api.serializers import SubscriptionSerializer, UnsubscribeSerializer
+from apps.scraping.api.v1.serializers import SubscriptionSerializer, UnsubscribeSerializer
 from apps.scraping.models import Subscription
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, DestroyAPIView

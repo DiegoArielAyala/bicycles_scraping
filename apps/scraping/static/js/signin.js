@@ -1,3 +1,5 @@
+import { API_ENDPOINTS } from "./api/config.js";
+
 const form = document.getElementById("signin-form")
 const signinStatusMessage = document.getElementById("status-message")
 
@@ -8,7 +10,7 @@ form.addEventListener("submit", async (e) => {
     const password = document.getElementById("password-input").value
 
     try {
-        const response = await fetch("/api/signin/", {
+        const response = await fetch(`${API_ENDPOINTS.SIGN_IN}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

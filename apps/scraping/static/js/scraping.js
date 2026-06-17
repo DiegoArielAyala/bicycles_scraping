@@ -1,3 +1,5 @@
+import { API_ENDPOINTS } from "./api/config.js";
+
 const scrapingForm = document.getElementById("scraping-form")
 const scrapingStatusMessage = document.getElementById("response-message")
 
@@ -12,7 +14,7 @@ form.addEventListener("submit", async (event) => {
     const accessToken = localStorage.getItem("access")
 
     try {
-        const response = await fetch("/api/scraping/", {
+        const response = await fetch(`${API_ENDPOINTS.SCRAPING}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
