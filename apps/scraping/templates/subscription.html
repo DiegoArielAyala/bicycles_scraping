@@ -36,5 +36,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="module" src="{% static 'js/subscription.js' %}"></script>
+    {{ block.super }}
+        <script type="module" src="{% static 'js/subscription.js' %}"></script>
 {% endblock %}

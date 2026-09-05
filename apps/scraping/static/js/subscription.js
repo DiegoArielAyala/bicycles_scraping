@@ -12,8 +12,8 @@ subscriptionForm.addEventListener("submit", async (e) => {
 
     try {
         const response = await fetch(`${API_ENDPOINTS.SUBSCRIPTION}`, {
-            method = "POST",
-            headers = {
+            method: "POST",
+            headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${accessToken}`,
             },

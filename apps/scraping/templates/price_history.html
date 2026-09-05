@@ -16,6 +16,7 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script type="module" src="{% static 'js/price_history.js' %}"></script>
+    {{ block.super }}
+        <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+        <script type="module" src="{% static 'js/price_history.js' %}"></script>
 {% endblock %}

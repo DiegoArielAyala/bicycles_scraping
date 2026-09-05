@@ -37,5 +37,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="module" src="{% static 'js/search_bicycle.js' %}"></script>
+    {{ block.super }}
+        <script type="module" src="{% static 'js/search_bicycle.js' %}"></script>
 {% endblock %}

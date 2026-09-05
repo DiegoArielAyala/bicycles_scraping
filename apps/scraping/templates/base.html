@@ -18,48 +18,16 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'search_bicycle' %}">Search bicycles</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'signout_api' %}">Sign out</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'subscription' %}">Subscribe</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'unsubscription' %}">Unsubscribe</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'signup' %}">Sign up</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'signin' %}">Sign in</a>
-                        </li>
-                    {% endif %}
-                    {% if user.username == "diegoayala" %}
-                        <span class="navbar-text"><strong>Admin functions:</strong></span>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'create_bicycles' %}">Create bicycles</a>
-                        </li>
-                    {% endif %}
+                <ul class="navbar-nav ms-auto" id="navbar-auth">
                 </ul>
-                {% if user.is_authenticated %}
-                    <span class="navbar-text ms-auto">User: {{user.username}}</span>
-                {% endif %}
             </div> 
         </div>
     </nav>
     {% block content %}
     {% endblock %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     {% block scripts %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+        <script type="module" src="{% static 'js/auth.js' %}"></script>
     {% endblock %}
 </body>
 

@@ -13,3 +13,6 @@ class ReferenceNotFoundError(NotFoundError):
 
 class InvalidFormError(ScrapingError):
     pass
+
+class CloudflareChallengeError(ScrapingError):
+    pass

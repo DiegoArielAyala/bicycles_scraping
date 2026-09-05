@@ -2,7 +2,7 @@ from apps.scraping.api.v1.pagination import BicyclePagination
 from apps.scraping.api.v1.serializers import BicycleSerializer, ShowPriceHistorySerializer
 from apps.scraping.api.v1.views.filters import BicyclesFilter
 from apps.scraping.models import Bicycle, PriceHistory
-from apps.scraping.selectors import get_bicycles
+from apps.scraping.bicycles_selectors import get_bicycles
 from apps.scraping.utils.pricing import clean_price
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView
@@ -33,7 +33,7 @@ class ShowPriceHistoryView(APIView):
 
         data = {"name": bicycle.name, "dates": dates, "prices": prices}
 
-        serializer = ShowPriceHistorySerializer(data)
+        serializer = ShowPriceHistorySerializer(data=data)
         serializer.is_valid(raise_exception=True)
 
         return Response(serializer.data)

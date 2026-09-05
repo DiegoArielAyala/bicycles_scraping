@@ -1,9 +1,7 @@
-from django.urls import path, include
-
-from apps.scraping.api.v1.views import auth, bicycles, scraping
+from apps.scraping.api.v1.views import auth, bicycles, scraping, admin
 from apps.scraping.api.v1.views import subscription
-from apps.scraping.test.send_email import TestEmailView
-
+from apps.scraping.api.v1.views.auth import GoogleLogin
+from django.urls import path, include
 
 urlpatterns = [
     path("signin/", auth.SigninView.as_view(), name="signin_api"),
@@ -14,7 +12,10 @@ urlpatterns = [
     path("price_history/<str:reference>/", bicycles.ShowPriceHistoryView.as_view(), name="price_history_api"),
     path("subscription/", subscription.SubscriptionView.as_view(), name="subscription_api"),
     path("unsubscription/", subscription.UnsubscribeView.as_view(), name="unsubscription_api"),
-    path("test-email/", TestEmailView.as_view(), name="test-email"),
     path("auth/", include("dj_rest_auth.urls")),
-    path("auth/registration", include("dj_rest_auth.registration.urls"))
+    path("auth/registration/", include("dj_rest_auth.registration.urls")),
+    path("auth/google/", GoogleLogin.as_view(), name="google_signin_api"),
+    path("me/", auth.MeView.as_view(), name="me_api"),
+    path("admin/subscriptions/", admin.AdminSubscriptionsView.as_view(), name="admin_subscriptions_api"),
+    path("admin/users/", admin.AdminUsersView.as_view(), name="admin_users_api")
 ]

@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const reference = window.location.pathname.split("/").filter(Boolean).pop()
 
     try {
-        const response = await fetch(`${API_ENDPOINTS.PRICE_HISTORY}/${reference}/`, {
+        const response = await fetch(`${API_ENDPOINTS.PRICE_HISTORY}${reference}/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -27,20 +27,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function renderChart(data) {
     const trace = {
-        x = data.dates,
-        y = data.prices,
+        x: data.dates,
+        y: data.prices,
         mode: "lines+markers",
         name: "Precio"
     }
 
     const layout = {
         title: data.name,
-        plot_bgcolor: "",
-        paper_bgbolor: "",
-        font: { color: "" },
+        plot_bgcolor: "#212529",
+        paper_bgcolor: "#212529",
+        font: { color: "#f8f9fa" },
         xaxis: { title: "Date" },
         yaxis: { title: "Price (€)" }
     }
 
-    Ploty.newPlot("chart", [trace], layout)
+    Plotly.newPlot("chart", [trace], layout)
 }

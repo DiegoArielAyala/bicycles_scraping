@@ -36,9 +36,10 @@ class BikingPointStrategy(ScrapingStrategy):
         return name_tag.text.strip() if name_tag else None
     
     def _extract_img(self, product_element):
-        img_tag = product_element.find("img")
-        
-        return img_tag.get("src") if img_tag else None
+        img_tag = product_element.find("img", class_="product-image-photo") or product_element.find("img")
+        if not img_tag:
+            return None
+        return img_tag.get("data-src") or img_tag.get("src")
 
     def get_product_elements_html(self, soup):
         if is_last_product(soup):
@@ -59,4 +60,4 @@ class BikingPointStrategy(ScrapingStrategy):
             return True
         
     def get_list_url(self, counter):
-        return self.SEARCH_ENDPOINT.format(counter)
+        return self.BASE_URL.format(counter)

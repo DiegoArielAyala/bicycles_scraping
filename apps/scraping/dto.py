@@ -15,11 +15,4 @@ class BicycleDTO(BaseModel):
         if value is None:
             return None
         
-        return float(
-            value
-            .replace("\xa0", "")
-            .replace("€", "")
-            .replace(".", "")
-            .replace(",", ".")
-            .strip()
-            )
+        return float(value)

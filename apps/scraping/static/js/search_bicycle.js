@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (minPrice) {fetchParams.append("min_price", minPrice)}
     if (maxPrice) {fetchParams.append("max_price", maxPrice)}
 
-    // Event delegation para paginación
     resultsContainer.addEventListener("click", async (e) => {
         const nextBtn = e.target.closest("#nextPageBtn");
         const prevBtn = e.target.closest("#prevPageBtn");
@@ -107,7 +106,7 @@ function renderSearchResults(data, resultsContainer) {
 
                         <div class="d-flex flex-wrap gap-3">
                             <a href="${bicycle.url}" class="btn btn-outline-light px-4">Visit site</a>
-                            <a href="/price-history/${bicycle.reference}" class="btn btn-outline-light px-4">Price History</a>
+                            <a href="/price_history/${bicycle.reference}" class="btn btn-outline-light px-4">Price History</a>
                             <a href="/subscription/?reference=${bicycle.reference}" class="btn btn-outline-light px-4">Subscribe</a>
                         </div>
                     </div>

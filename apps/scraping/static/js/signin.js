@@ -3,6 +3,16 @@ import { API_ENDPOINTS } from "./api/config.js";
 const form = document.getElementById("signin-form")
 const signinStatusMessage = document.getElementById("status-message")
 
+if (!form) {
+    throw new Error("signin-form not found");
+}
+
+const googleSigninFailed = new URLSearchParams(window.location.search).get("error") === "google"
+if (googleSigninFailed) {
+    signinStatusMessage.innerText = "Google sign-in failed. Try username and password, or try Google again in a moment."
+    window.history.replaceState({}, "", "/signin/")
+}
+
 form.addEventListener("submit", async (e) => {
     e.preventDefault()
 
@@ -33,7 +43,7 @@ form.addEventListener("submit", async (e) => {
         localStorage.setItem("refresh", data.refresh)
     
         signinStatusMessage.innerText = "Signed in successfully"
-        window.location.href = "/"
+        window.location.href = "/";
     } catch (error) {
         console.error(error)
         signinStatusMessage.innerText = "Network error"

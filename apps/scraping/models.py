@@ -1,7 +1,11 @@
 import uuid
 
+from django.contrib.auth import get_user_model
+from django.contrib.postgres.indexes import GinIndex
 from django.db import models
 from django.utils import timezone
+
+User = get_user_model()
 
 # Create your models here.
 class Bicycle(models.Model):
@@ -27,11 +31,14 @@ class Bicycle(models.Model):
             ),
             models.Index(
                 fields=["reference"]
+            ),
+            models.Index(
+                fields=["current_price"]
             )
         ]
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.id}"
 
 class PriceHistory(models.Model):
     bicycle=models.ForeignKey(Bicycle, on_delete=models.CASCADE, related_name="price_history")
@@ -47,19 +54,15 @@ class PriceHistory(models.Model):
                 name="unique_price_per_bicycle_per_day"
                 )
         ]
-        indexes = [
-            models.Index(fields=["bicycle", "date"])
-        ]
 
     def __str__(self):
         return f"{self.date} : {self.price}"
 
 class Subscription(models.Model):
     email=models.EmailField(max_length=120)
-    bicycle=models.ForeignKey(Bicycle, on_delete=models.CASCADE, related_name="subscription")
-
+    bicycle=models.ForeignKey(Bicycle, on_delete=models.CASCADE, related_name="subscriptions")
+    user=models.ForeignKey(User, on_delete=models.CASCADE, related_name="subscriptions", null=True, blank=True)
     unsubscribe_token=models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-
     created_at=models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -67,11 +70,17 @@ class Subscription(models.Model):
 
         constraints = [
             models.UniqueConstraint(
-                fields=["email", "bicycle"],
-                name="unique_email_bicycle_subscription"
+                fields=["user", "bicycle"],
+                name="unique_user_bicycle_subscription"
             )
         ]
 
+        indexes = [
+            models.Index(
+                fields=["created_at"]
+            ),
+        ]
+
     def __str__(self):
-        return f"{self.email} - {self.bicycle.name}"
+        return f"{self.email} - {self.bicycle} - {self.user}"
     

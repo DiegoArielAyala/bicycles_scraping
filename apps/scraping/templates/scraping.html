@@ -58,5 +58,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="module" src="{% static 'js/scraping.js' %}"></script>
+    {{ block.super }}
+        <script type="module" src="{% static 'js/scraping.js' %}"></script>
 {% endblock %}
