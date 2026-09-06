@@ -2956,3 +2956,786 @@ Traceback (most recent call last):
   File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
   File "<frozen importlib._bootstrap>", line 1004, in _find_and_load_unlocked
 ModuleNotFoundError: No module named 'rest_framework'
+2026-09-05 19:30:03,082 - DEBUG - asyncio - Using selector: EpollSelector
+2026-09-05 19:30:03,084 - INFO - apps.scraping.decorators - Executing run_scraper
+2026-09-05 19:30:07,235 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=1
+2026-09-05 19:30:09,676 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=1'}
+2026-09-05 19:30:10,161 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:30:18,814 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=2
+2026-09-05 19:30:18,970 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=2'}
+2026-09-05 19:31:03,974 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:31:03,974 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=2', 'page': 2}
+2026-09-05 19:31:27,809 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=2'}
+2026-09-05 19:31:27,975 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:31:34,815 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=3
+2026-09-05 19:31:34,958 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=3'}
+2026-09-05 19:32:19,963 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:32:19,963 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=3', 'page': 3}
+2026-09-05 19:32:39,971 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=3'}
+2026-09-05 19:32:40,059 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:32:44,694 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=4
+2026-09-05 19:32:44,841 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=4'}
+2026-09-05 19:33:29,847 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:33:29,847 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=4', 'page': 4}
+2026-09-05 19:33:54,886 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=4'}
+2026-09-05 19:33:54,968 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:34:01,638 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=5
+2026-09-05 19:34:01,777 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=5'}
+2026-09-05 19:34:47,195 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:34:47,195 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=5', 'page': 5}
+2026-09-05 19:35:09,497 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=5'}
+2026-09-05 19:35:09,658 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:35:16,302 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=6
+2026-09-05 19:35:16,470 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=6'}
+2026-09-05 19:36:01,476 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:36:01,476 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=6', 'page': 6}
+2026-09-05 19:36:25,054 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=6'}
+2026-09-05 19:36:25,305 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:36:30,070 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=7
+2026-09-05 19:36:30,217 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=7'}
+2026-09-05 19:37:15,228 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:37:15,228 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=7', 'page': 7}
+2026-09-05 19:37:35,182 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=7'}
+2026-09-05 19:37:35,275 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:37:43,604 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=8
+2026-09-05 19:37:43,745 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=8'}
+2026-09-05 19:38:29,159 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:38:29,159 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=8', 'page': 8}
+2026-09-05 19:38:49,051 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=8'}
+2026-09-05 19:38:49,141 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:38:56,102 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=9
+2026-09-05 19:38:56,234 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=9'}
+2026-09-05 19:39:41,237 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:39:41,238 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=9', 'page': 9}
+2026-09-05 19:40:00,891 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=9'}
+2026-09-05 19:40:00,974 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:40:06,950 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=10
+2026-09-05 19:40:07,112 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=10'}
+2026-09-05 19:40:52,116 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:40:52,116 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=10', 'page': 10}
+2026-09-05 19:41:13,926 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=10'}
+2026-09-05 19:41:14,114 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:41:20,048 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=11
+2026-09-05 19:41:20,213 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=11'}
+2026-09-05 19:42:05,218 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:42:05,218 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=11', 'page': 11}
+2026-09-05 19:42:27,054 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=11'}
+2026-09-05 19:42:27,129 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:42:35,167 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=12
+2026-09-05 19:42:35,331 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=12'}
+2026-09-05 19:43:20,401 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:43:20,401 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=12', 'page': 12}
+2026-09-05 19:43:37,453 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=12'}
+2026-09-05 19:43:37,528 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:43:42,883 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=13
+2026-09-05 19:43:43,034 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=13'}
+2026-09-05 19:44:28,041 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:44:28,041 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=13', 'page': 13}
+2026-09-05 19:44:53,600 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=13'}
+2026-09-05 19:44:53,682 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:44:58,178 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=14
+2026-09-05 19:44:58,339 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=14'}
+2026-09-05 19:45:43,346 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:45:43,346 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=14', 'page': 14}
+2026-09-05 19:46:08,313 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=14'}
+2026-09-05 19:46:08,394 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:46:16,534 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=15
+2026-09-05 19:46:16,681 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=15'}
+2026-09-05 19:47:01,693 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:47:01,694 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=15', 'page': 15}
+2026-09-05 19:47:27,299 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=15'}
+2026-09-05 19:47:27,520 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-05 19:47:33,883 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=16
+2026-09-05 19:47:34,022 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=16'}
+2026-09-05 19:48:19,027 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:48:19,027 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=16', 'page': 16}
+2026-09-05 19:48:35,265 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=16'}
+2026-09-05 19:49:20,270 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-05 19:49:20,270 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_abort', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=16', 'page': 16}
+2026-09-05 19:49:20,272 - INFO - apps.scraping.decorators - Executing create_bicycles
+2026-09-05 19:49:20,272 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'create_bicycles_start', 'web': 'biking_point', 'items': 224}
+2026-09-05 19:49:20,492 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 2}
+2026-09-05 19:49:20,496 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 2}
+2026-09-05 19:49:20,497 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 3}
+2026-09-05 19:49:20,498 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 3}
+2026-09-05 19:49:20,498 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 4}
+2026-09-05 19:49:20,499 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 4}
+2026-09-05 19:49:20,499 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 5}
+2026-09-05 19:49:20,500 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 5}
+2026-09-05 19:49:20,501 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 6}
+2026-09-05 19:49:20,501 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 6}
+2026-09-05 19:49:20,502 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 7}
+2026-09-05 19:49:20,502 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 7}
+2026-09-05 19:49:20,503 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 8}
+2026-09-05 19:49:20,503 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 8}
+2026-09-05 19:49:20,504 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 9}
+2026-09-05 19:49:20,504 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 9}
+2026-09-05 19:49:20,505 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 10}
+2026-09-05 19:49:20,505 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 10}
+2026-09-05 19:49:20,505 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 11}
+2026-09-05 19:49:20,506 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 11}
+2026-09-05 19:49:20,507 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 12}
+2026-09-05 19:49:20,507 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 12}
+2026-09-05 19:49:20,508 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 13}
+2026-09-05 19:49:20,509 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 13}
+2026-09-05 19:49:20,509 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 14}
+2026-09-05 19:49:20,511 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 14}
+2026-09-05 19:49:20,511 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 15}
+2026-09-05 19:49:20,512 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 15}
+2026-09-05 19:49:20,512 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 16}
+2026-09-05 19:49:20,513 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 16}
+2026-09-05 19:49:20,513 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 17}
+2026-09-05 19:49:20,515 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 17}
+2026-09-05 19:49:20,515 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 18}
+2026-09-05 19:49:20,516 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 18}
+2026-09-05 19:49:20,516 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 19}
+2026-09-05 19:49:20,517 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 19}
+2026-09-05 19:49:20,517 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 20}
+2026-09-05 19:49:20,518 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 20}
+2026-09-05 19:49:20,518 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 21}
+2026-09-05 19:49:20,518 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 21}
+2026-09-05 19:49:20,519 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 22}
+2026-09-05 19:49:20,519 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 22}
+2026-09-05 19:49:20,520 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 23}
+2026-09-05 19:49:20,520 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 23}
+2026-09-05 19:49:20,520 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 24}
+2026-09-05 19:49:20,520 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 24}
+2026-09-05 19:49:20,520 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 25}
+2026-09-05 19:49:20,520 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 25}
+2026-09-05 19:49:20,520 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 26}
+2026-09-05 19:49:20,521 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 26}
+2026-09-05 19:49:20,521 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 27}
+2026-09-05 19:49:20,521 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 27}
+2026-09-05 19:49:20,521 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 28}
+2026-09-05 19:49:20,521 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 28}
+2026-09-05 19:49:20,521 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 29}
+2026-09-05 19:49:20,521 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 29}
+2026-09-05 19:49:20,521 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 30}
+2026-09-05 19:49:20,522 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 30}
+2026-09-05 19:49:20,522 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 31}
+2026-09-05 19:49:20,522 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 31}
+2026-09-05 19:49:20,522 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 32}
+2026-09-05 19:49:20,522 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 32}
+2026-09-05 19:49:20,522 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 33}
+2026-09-05 19:49:20,522 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 33}
+2026-09-05 19:49:20,522 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 34}
+2026-09-05 19:49:20,523 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 34}
+2026-09-05 19:49:20,523 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 35}
+2026-09-05 19:49:20,523 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 35}
+2026-09-05 19:49:20,523 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 36}
+2026-09-05 19:49:20,523 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 36}
+2026-09-05 19:49:20,523 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 37}
+2026-09-05 19:49:20,523 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 37}
+2026-09-05 19:49:20,523 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 38}
+2026-09-05 19:49:20,523 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 38}
+2026-09-05 19:49:20,523 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 39}
+2026-09-05 19:49:20,524 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 39}
+2026-09-05 19:49:20,524 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 40}
+2026-09-05 19:49:20,524 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 40}
+2026-09-05 19:49:20,524 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 41}
+2026-09-05 19:49:20,524 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 41}
+2026-09-05 19:49:20,524 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 42}
+2026-09-05 19:49:20,525 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 42}
+2026-09-05 19:49:20,525 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 43}
+2026-09-05 19:49:20,525 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 43}
+2026-09-05 19:49:20,525 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 44}
+2026-09-05 19:49:20,525 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 44}
+2026-09-05 19:49:20,525 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 45}
+2026-09-05 19:49:20,526 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 45}
+2026-09-05 19:49:20,526 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 46}
+2026-09-05 19:49:20,526 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 46}
+2026-09-05 19:49:20,526 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 47}
+2026-09-05 19:49:20,526 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 47}
+2026-09-05 19:49:20,526 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 48}
+2026-09-05 19:49:20,526 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 48}
+2026-09-05 19:49:20,526 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 49}
+2026-09-05 19:49:20,527 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 49}
+2026-09-05 19:49:20,527 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 50}
+2026-09-05 19:49:20,527 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 50}
+2026-09-05 19:49:20,527 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 51}
+2026-09-05 19:49:20,527 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 51}
+2026-09-05 19:49:20,527 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 52}
+2026-09-05 19:49:20,527 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 52}
+2026-09-05 19:49:20,528 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 53}
+2026-09-05 19:49:20,528 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 53}
+2026-09-05 19:49:20,528 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 54}
+2026-09-05 19:49:20,528 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 54}
+2026-09-05 19:49:20,528 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 55}
+2026-09-05 19:49:20,528 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 55}
+2026-09-05 19:49:20,528 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 56}
+2026-09-05 19:49:20,529 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 56}
+2026-09-05 19:49:20,529 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 57}
+2026-09-05 19:49:20,529 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 57}
+2026-09-05 19:49:20,529 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 58}
+2026-09-05 19:49:20,529 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 58}
+2026-09-05 19:49:20,529 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 59}
+2026-09-05 19:49:20,529 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 59}
+2026-09-05 19:49:20,529 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 60}
+2026-09-05 19:49:20,530 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 60}
+2026-09-05 19:49:20,530 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 61}
+2026-09-05 19:49:20,530 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 61}
+2026-09-05 19:49:20,530 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 62}
+2026-09-05 19:49:20,530 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 62}
+2026-09-05 19:49:20,530 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 63}
+2026-09-05 19:49:20,530 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 63}
+2026-09-05 19:49:20,531 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 64}
+2026-09-05 19:49:20,531 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 64}
+2026-09-05 19:49:20,531 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 65}
+2026-09-05 19:49:20,531 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 65}
+2026-09-05 19:49:20,531 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 66}
+2026-09-05 19:49:20,531 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 66}
+2026-09-05 19:49:20,531 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 67}
+2026-09-05 19:49:20,531 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 67}
+2026-09-05 19:49:20,531 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 68}
+2026-09-05 19:49:20,532 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 68}
+2026-09-05 19:49:20,532 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 69}
+2026-09-05 19:49:20,532 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 69}
+2026-09-05 19:49:20,532 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 70}
+2026-09-05 19:49:20,532 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 70}
+2026-09-05 19:49:20,532 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 71}
+2026-09-05 19:49:20,532 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 71}
+2026-09-05 19:49:20,532 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 72}
+2026-09-05 19:49:20,532 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 72}
+2026-09-05 19:49:20,532 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 73}
+2026-09-05 19:49:20,533 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 73}
+2026-09-05 19:49:20,533 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 74}
+2026-09-05 19:49:20,533 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 74}
+2026-09-05 19:49:20,533 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 75}
+2026-09-05 19:49:20,533 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 75}
+2026-09-05 19:49:20,533 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 76}
+2026-09-05 19:49:20,533 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 76}
+2026-09-05 19:49:20,533 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 77}
+2026-09-05 19:49:20,533 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 77}
+2026-09-05 19:49:20,533 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 78}
+2026-09-05 19:49:20,534 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 78}
+2026-09-05 19:49:20,534 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 79}
+2026-09-05 19:49:20,534 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 79}
+2026-09-05 19:49:20,534 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 80}
+2026-09-05 19:49:20,534 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 80}
+2026-09-05 19:49:20,534 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 81}
+2026-09-05 19:49:20,535 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 81}
+2026-09-05 19:49:20,535 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 82}
+2026-09-05 19:49:20,535 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 82}
+2026-09-05 19:49:20,535 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 83}
+2026-09-05 19:49:20,535 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 83}
+2026-09-05 19:49:20,535 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 84}
+2026-09-05 19:49:20,536 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 84}
+2026-09-05 19:49:20,536 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 85}
+2026-09-05 19:49:20,536 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 85}
+2026-09-05 19:49:20,536 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 86}
+2026-09-05 19:49:20,536 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 86}
+2026-09-05 19:49:20,536 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 87}
+2026-09-05 19:49:20,537 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 87}
+2026-09-05 19:49:20,537 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 88}
+2026-09-05 19:49:20,537 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 88}
+2026-09-05 19:49:20,537 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 89}
+2026-09-05 19:49:20,537 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 89}
+2026-09-05 19:49:20,537 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 90}
+2026-09-05 19:49:20,537 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 90}
+2026-09-05 19:49:20,537 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 91}
+2026-09-05 19:49:20,538 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 91}
+2026-09-05 19:49:20,538 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 92}
+2026-09-05 19:49:20,538 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 92}
+2026-09-05 19:49:20,538 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 93}
+2026-09-05 19:49:20,538 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 93}
+2026-09-05 19:49:20,538 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 94}
+2026-09-05 19:49:20,538 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 94}
+2026-09-05 19:49:20,538 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 95}
+2026-09-05 19:49:20,539 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 95}
+2026-09-05 19:49:20,539 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 96}
+2026-09-05 19:49:20,539 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 96}
+2026-09-05 19:49:20,539 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 97}
+2026-09-05 19:49:20,539 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 97}
+2026-09-05 19:49:20,539 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 98}
+2026-09-05 19:49:20,540 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 98}
+2026-09-05 19:49:20,540 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 99}
+2026-09-05 19:49:20,540 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 99}
+2026-09-05 19:49:20,540 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 100}
+2026-09-05 19:49:20,540 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 100}
+2026-09-05 19:49:20,540 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 101}
+2026-09-05 19:49:20,540 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 101}
+2026-09-05 19:49:20,540 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 102}
+2026-09-05 19:49:20,541 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 102}
+2026-09-05 19:49:20,541 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 103}
+2026-09-05 19:49:20,541 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 103}
+2026-09-05 19:49:20,541 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 104}
+2026-09-05 19:49:20,541 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 104}
+2026-09-05 19:49:20,541 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 105}
+2026-09-05 19:49:20,541 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 105}
+2026-09-05 19:49:20,541 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 106}
+2026-09-05 19:49:20,542 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 106}
+2026-09-05 19:49:20,542 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 107}
+2026-09-05 19:49:20,542 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 107}
+2026-09-05 19:49:20,542 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 108}
+2026-09-05 19:49:20,542 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 108}
+2026-09-05 19:49:20,542 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 109}
+2026-09-05 19:49:20,543 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 109}
+2026-09-05 19:49:20,543 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 110}
+2026-09-05 19:49:20,543 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 110}
+2026-09-05 19:49:20,543 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 111}
+2026-09-05 19:49:20,543 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 111}
+2026-09-05 19:49:20,543 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 112}
+2026-09-05 19:49:20,543 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 112}
+2026-09-05 19:49:20,543 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 113}
+2026-09-05 19:49:20,544 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 113}
+2026-09-05 19:49:20,544 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 114}
+2026-09-05 19:49:20,544 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 114}
+2026-09-05 19:49:20,544 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 115}
+2026-09-05 19:49:20,544 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 115}
+2026-09-05 19:49:20,544 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 116}
+2026-09-05 19:49:20,544 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 116}
+2026-09-05 19:49:20,544 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 117}
+2026-09-05 19:49:20,545 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 117}
+2026-09-05 19:49:20,545 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 118}
+2026-09-05 19:49:20,545 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 118}
+2026-09-05 19:49:20,545 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 119}
+2026-09-05 19:49:20,545 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 119}
+2026-09-05 19:49:20,545 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 120}
+2026-09-05 19:49:20,546 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 120}
+2026-09-05 19:49:20,546 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 121}
+2026-09-05 19:49:20,546 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 121}
+2026-09-05 19:49:20,546 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 122}
+2026-09-05 19:49:20,546 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 122}
+2026-09-05 19:49:20,546 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 123}
+2026-09-05 19:49:20,546 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 123}
+2026-09-05 19:49:20,546 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 124}
+2026-09-05 19:49:20,547 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 124}
+2026-09-05 19:49:20,547 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 125}
+2026-09-05 19:49:20,547 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 125}
+2026-09-05 19:49:20,547 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 126}
+2026-09-05 19:49:20,547 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 126}
+2026-09-05 19:49:20,547 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 127}
+2026-09-05 19:49:20,547 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 127}
+2026-09-05 19:49:20,547 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 128}
+2026-09-05 19:49:20,548 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 128}
+2026-09-05 19:49:20,548 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 129}
+2026-09-05 19:49:20,548 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 129}
+2026-09-05 19:49:20,548 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 130}
+2026-09-05 19:49:20,548 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 130}
+2026-09-05 19:49:20,548 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 131}
+2026-09-05 19:49:20,548 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 131}
+2026-09-05 19:49:20,548 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 132}
+2026-09-05 19:49:20,549 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 132}
+2026-09-05 19:49:20,549 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 133}
+2026-09-05 19:49:20,549 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 133}
+2026-09-05 19:49:20,549 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 134}
+2026-09-05 19:49:20,549 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 134}
+2026-09-05 19:49:20,549 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 135}
+2026-09-05 19:49:20,549 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 135}
+2026-09-05 19:49:20,549 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 136}
+2026-09-05 19:49:20,549 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 136}
+2026-09-05 19:49:20,549 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 137}
+2026-09-05 19:49:20,550 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 137}
+2026-09-05 19:49:20,550 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 138}
+2026-09-05 19:49:20,550 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 138}
+2026-09-05 19:49:20,550 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 139}
+2026-09-05 19:49:20,550 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 139}
+2026-09-05 19:49:20,550 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 140}
+2026-09-05 19:49:20,551 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 140}
+2026-09-05 19:49:20,551 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 141}
+2026-09-05 19:49:20,551 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 141}
+2026-09-05 19:49:20,551 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 142}
+2026-09-05 19:49:20,551 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 142}
+2026-09-05 19:49:20,551 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 143}
+2026-09-05 19:49:20,552 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 143}
+2026-09-05 19:49:20,552 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 144}
+2026-09-05 19:49:20,552 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 144}
+2026-09-05 19:49:20,552 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 145}
+2026-09-05 19:49:20,552 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 145}
+2026-09-05 19:49:20,552 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 146}
+2026-09-05 19:49:20,552 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 146}
+2026-09-05 19:49:20,553 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 147}
+2026-09-05 19:49:20,553 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 147}
+2026-09-05 19:49:20,553 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 148}
+2026-09-05 19:49:20,553 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 148}
+2026-09-05 19:49:20,553 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 149}
+2026-09-05 19:49:20,553 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 149}
+2026-09-05 19:49:20,553 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 150}
+2026-09-05 19:49:20,554 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 150}
+2026-09-05 19:49:20,554 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 151}
+2026-09-05 19:49:20,554 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 151}
+2026-09-05 19:49:20,554 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 152}
+2026-09-05 19:49:20,554 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 152}
+2026-09-05 19:49:20,554 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 153}
+2026-09-05 19:49:20,554 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 153}
+2026-09-05 19:49:20,555 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 154}
+2026-09-05 19:49:20,555 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 154}
+2026-09-05 19:49:20,555 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 155}
+2026-09-05 19:49:20,555 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 155}
+2026-09-05 19:49:20,555 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 156}
+2026-09-05 19:49:20,555 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 156}
+2026-09-05 19:49:20,555 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 157}
+2026-09-05 19:49:20,555 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 157}
+2026-09-05 19:49:20,555 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 158}
+2026-09-05 19:49:20,556 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 158}
+2026-09-05 19:49:20,556 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 159}
+2026-09-05 19:49:20,556 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 159}
+2026-09-05 19:49:20,556 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 160}
+2026-09-05 19:49:20,556 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 160}
+2026-09-05 19:49:20,556 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 161}
+2026-09-05 19:49:20,556 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 161}
+2026-09-05 19:49:20,557 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 162}
+2026-09-05 19:49:20,557 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 162}
+2026-09-05 19:49:20,557 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 163}
+2026-09-05 19:49:20,557 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 163}
+2026-09-05 19:49:20,557 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 164}
+2026-09-05 19:49:20,557 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 164}
+2026-09-05 19:49:20,557 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 165}
+2026-09-05 19:49:20,557 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 165}
+2026-09-05 19:49:20,557 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 166}
+2026-09-05 19:49:20,558 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 166}
+2026-09-05 19:49:20,558 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 167}
+2026-09-05 19:49:20,558 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 167}
+2026-09-05 19:49:20,558 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 168}
+2026-09-05 19:49:20,558 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 168}
+2026-09-05 19:49:20,558 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 169}
+2026-09-05 19:49:20,558 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 169}
+2026-09-05 19:49:20,558 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 170}
+2026-09-05 19:49:20,559 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 170}
+2026-09-05 19:49:20,559 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 171}
+2026-09-05 19:49:20,559 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 171}
+2026-09-05 19:49:20,559 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 172}
+2026-09-05 19:49:20,559 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 172}
+2026-09-05 19:49:20,559 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 173}
+2026-09-05 19:49:20,559 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 173}
+2026-09-05 19:49:20,559 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 174}
+2026-09-05 19:49:20,560 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 174}
+2026-09-05 19:49:20,560 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 175}
+2026-09-05 19:49:20,560 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 175}
+2026-09-05 19:49:20,560 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 176}
+2026-09-05 19:49:20,560 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 176}
+2026-09-05 19:49:20,560 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 177}
+2026-09-05 19:49:20,560 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 177}
+2026-09-05 19:49:20,560 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 178}
+2026-09-05 19:49:20,561 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 178}
+2026-09-05 19:49:20,561 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 179}
+2026-09-05 19:49:20,561 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 179}
+2026-09-05 19:49:20,561 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 180}
+2026-09-05 19:49:20,561 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 180}
+2026-09-05 19:49:20,561 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 181}
+2026-09-05 19:49:20,561 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 181}
+2026-09-05 19:49:20,561 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 182}
+2026-09-05 19:49:20,561 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 182}
+2026-09-05 19:49:20,561 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 183}
+2026-09-05 19:49:20,562 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 183}
+2026-09-05 19:49:20,562 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 184}
+2026-09-05 19:49:20,562 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 184}
+2026-09-05 19:49:20,562 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 185}
+2026-09-05 19:49:20,562 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 185}
+2026-09-05 19:49:20,562 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 186}
+2026-09-05 19:49:20,562 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 186}
+2026-09-05 19:49:20,562 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 187}
+2026-09-05 19:49:20,563 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 187}
+2026-09-05 19:49:20,563 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 188}
+2026-09-05 19:49:20,563 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 188}
+2026-09-05 19:49:20,563 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 189}
+2026-09-05 19:49:20,563 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 189}
+2026-09-05 19:49:20,563 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 190}
+2026-09-05 19:49:20,563 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 190}
+2026-09-05 19:49:20,563 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 191}
+2026-09-05 19:49:20,563 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 191}
+2026-09-05 19:49:20,563 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 192}
+2026-09-05 19:49:20,564 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 192}
+2026-09-05 19:49:20,564 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 193}
+2026-09-05 19:49:20,564 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 193}
+2026-09-05 19:49:20,564 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 194}
+2026-09-05 19:49:20,564 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 194}
+2026-09-05 19:49:20,564 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 195}
+2026-09-05 19:49:20,564 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 195}
+2026-09-05 19:49:20,564 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 196}
+2026-09-05 19:49:20,564 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 196}
+2026-09-05 19:49:20,564 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 197}
+2026-09-05 19:49:20,565 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 197}
+2026-09-05 19:49:20,565 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 198}
+2026-09-05 19:49:20,565 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 198}
+2026-09-05 19:49:20,565 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 199}
+2026-09-05 19:49:20,565 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 199}
+2026-09-05 19:49:20,565 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 200}
+2026-09-05 19:49:20,565 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 200}
+2026-09-05 19:49:20,565 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 201}
+2026-09-05 19:49:20,566 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 201}
+2026-09-05 19:49:20,566 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 202}
+2026-09-05 19:49:20,566 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 202}
+2026-09-05 19:49:20,566 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 203}
+2026-09-05 19:49:20,566 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 203}
+2026-09-05 19:49:20,566 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 204}
+2026-09-05 19:49:20,566 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 204}
+2026-09-05 19:49:20,566 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 205}
+2026-09-05 19:49:20,567 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 205}
+2026-09-05 19:49:20,567 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 206}
+2026-09-05 19:49:20,567 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 206}
+2026-09-05 19:49:20,567 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 207}
+2026-09-05 19:49:20,567 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 207}
+2026-09-05 19:49:20,567 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 208}
+2026-09-05 19:49:20,567 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 208}
+2026-09-05 19:49:20,567 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 209}
+2026-09-05 19:49:20,568 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 209}
+2026-09-05 19:49:20,568 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 210}
+2026-09-05 19:49:20,568 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 210}
+2026-09-05 19:49:20,568 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 211}
+2026-09-05 19:49:20,568 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 211}
+2026-09-05 19:49:20,568 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 212}
+2026-09-05 19:49:20,568 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 212}
+2026-09-05 19:49:20,568 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 213}
+2026-09-05 19:49:20,568 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 213}
+2026-09-05 19:49:20,568 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 214}
+2026-09-05 19:49:20,569 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 214}
+2026-09-05 19:49:20,569 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 215}
+2026-09-05 19:49:20,569 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 215}
+2026-09-05 19:49:20,569 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 216}
+2026-09-05 19:49:20,569 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 216}
+2026-09-05 19:49:20,569 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 217}
+2026-09-05 19:49:20,569 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 217}
+2026-09-05 19:49:20,569 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 218}
+2026-09-05 19:49:20,569 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 218}
+2026-09-05 19:49:20,569 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 219}
+2026-09-05 19:49:20,569 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 219}
+2026-09-05 19:49:20,569 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 220}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 220}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 221}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 221}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 222}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 222}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 223}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 223}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 224}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 224}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'process_product', 'web': 'biking_point', 'index': 225}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'process_product', 'web': 'biking_point', 'index': 225}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.decorators - Executing scrape_new_bicycles
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'scrape_new_bicycles'}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'scrape_new_bicycles'}
+2026-09-05 19:49:20,570 - INFO - apps.scraping.decorators - End function scrape_new_bicycles
+2026-09-05 19:49:20,571 - INFO - apps.scraping.decorators - Executing create_new_bicycles
+2026-09-05 19:49:20,571 - INFO - apps.scraping.context_managers - {'event': 'start', 'name': 'create_new_bicycles'}
+2026-09-05 19:49:20,571 - INFO - apps.scraping.context_managers - {'event': 'end', 'name': 'create_new_bicycles'}
+2026-09-05 19:49:20,571 - INFO - apps.scraping.decorators - End function create_new_bicycles
+2026-09-05 19:49:20,571 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35563', 'items': 323}
+2026-09-05 19:49:20,571 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '62771', 'items': 322}
+2026-09-05 19:49:20,571 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '62776', 'items': 321}
+2026-09-05 19:49:20,571 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '626671', 'items': 320}
+2026-09-05 19:49:20,571 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '62667', 'items': 319}
+2026-09-05 19:49:20,571 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36684', 'items': 318}
+2026-09-05 19:49:20,571 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36698', 'items': 317}
+2026-09-05 19:49:20,571 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36696', 'items': 316}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '30465', 'items': 315}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61563', 'items': 314}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36463', 'items': 313}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '626681', 'items': 312}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36352', 'items': 311}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '62668', 'items': 310}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '626682', 'items': 309}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '34490', 'items': 308}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35658', 'items': 307}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35477', 'items': 306}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35475', 'items': 305}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '64878', 'items': 304}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36260', 'items': 303}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36454', 'items': 302}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35503', 'items': 301}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '27890', 'items': 300}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61668', 'items': 299}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35480', 'items': 298}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61562', 'items': 297}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63291', 'items': 296}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36685', 'items': 295}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '626691', 'items': 294}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61568', 'items': 293}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35801', 'items': 292}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '631961', 'items': 291}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61621', 'items': 290}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '631966', 'items': 289}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35702', 'items': 288}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35628', 'items': 287}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35504', 'items': 286}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '31140', 'items': 285}
+2026-09-05 19:49:20,572 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35500', 'items': 284}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '30703', 'items': 283}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63210', 'items': 282}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35497', 'items': 281}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61572', 'items': 280}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61576', 'items': 279}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36693', 'items': 278}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63593', 'items': 277}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '62677', 'items': 276}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61869', 'items': 275}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63596', 'items': 274}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '33495', 'items': 273}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '60064', 'items': 272}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35651', 'items': 271}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '631971', 'items': 270}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '631977', 'items': 269}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61624', 'items': 268}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63076', 'items': 267}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36585', 'items': 266}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35494', 'items': 265}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63211', 'items': 264}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '59926', 'items': 263}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63594', 'items': 262}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61648', 'items': 261}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '60063', 'items': 260}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '30487', 'items': 259}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '60077', 'items': 258}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '60081', 'items': 257}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61628', 'items': 256}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '629721', 'items': 255}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63241', 'items': 254}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '34171', 'items': 253}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '64920', 'items': 252}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '29347', 'items': 251}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '60067', 'items': 250}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '34663', 'items': 249}
+2026-09-05 19:49:20,573 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36388', 'items': 248}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35499', 'items': 247}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63199', 'items': 246}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '57695', 'items': 245}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '34185', 'items': 244}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63214', 'items': 243}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '59929', 'items': 242}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61611', 'items': 241}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '59831', 'items': 240}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '29404', 'items': 239}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '30937', 'items': 238}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61613', 'items': 237}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '59927', 'items': 236}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36216', 'items': 235}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36963', 'items': 234}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61674', 'items': 233}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61663', 'items': 232}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63238', 'items': 231}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '64303', 'items': 230}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '27385', 'items': 229}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61715', 'items': 228}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63202', 'items': 227}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '632381', 'items': 226}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '28119', 'items': 225}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '59928', 'items': 224}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61912', 'items': 223}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61655', 'items': 222}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '59917', 'items': 221}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35495', 'items': 220}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '30939', 'items': 219}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35653', 'items': 218}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '59971', 'items': 217}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36218', 'items': 216}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '28174', 'items': 215}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '30480', 'items': 214}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '60083', 'items': 213}
+2026-09-05 19:49:20,574 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '57733', 'items': 212}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '30483', 'items': 211}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '60246', 'items': 210}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '57157', 'items': 209}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35488', 'items': 208}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '30492', 'items': 207}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63215', 'items': 206}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35664', 'items': 205}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '60200', 'items': 204}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35663', 'items': 203}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '60445', 'items': 202}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '60071', 'items': 201}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '30966', 'items': 200}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61664', 'items': 199}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '57700', 'items': 198}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35590', 'items': 197}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '34206', 'items': 196}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61709', 'items': 195}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '64758', 'items': 194}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63206', 'items': 193}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35662', 'items': 192}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '29315', 'items': 191}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35666', 'items': 190}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61069', 'items': 189}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36799', 'items': 188}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '34001', 'items': 187}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63207', 'items': 186}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '635371', 'items': 185}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61710', 'items': 184}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35865', 'items': 183}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35654', 'items': 182}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61660', 'items': 181}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '62799', 'items': 180}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35800', 'items': 179}
+2026-09-05 19:49:20,575 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '59932', 'items': 178}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36525', 'items': 177}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '27255', 'items': 176}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35667', 'items': 175}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '58609', 'items': 174}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '32193', 'items': 173}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35496', 'items': 172}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35552', 'items': 171}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '30840', 'items': 170}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61661', 'items': 169}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '62660', 'items': 168}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '626601', 'items': 167}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36385', 'items': 166}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '57978', 'items': 165}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '31164', 'items': 164}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35655', 'items': 163}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61272', 'items': 162}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '36406', 'items': 161}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '31568', 'items': 160}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63560', 'items': 159}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '27257', 'items': 158}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '54138', 'items': 157}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61729', 'items': 156}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '34147', 'items': 155}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '27548', 'items': 154}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '58381', 'items': 153}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '27258', 'items': 152}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '31163', 'items': 151}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '64827', 'items': 150}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '27755', 'items': 149}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '626591', 'items': 148}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '62659', 'items': 147}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '27728', 'items': 146}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61728', 'items': 145}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35751', 'items': 144}
+2026-09-05 19:49:20,576 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '28180', 'items': 143}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35492', 'items': 142}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61732', 'items': 141}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35115', 'items': 140}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61727', 'items': 139}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '64852', 'items': 138}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61733', 'items': 137}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '65192', 'items': 136}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '64572', 'items': 135}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '64995', 'items': 134}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61725', 'items': 133}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35648', 'items': 132}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '60397', 'items': 131}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '60103', 'items': 130}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '64996', 'items': 129}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '56041', 'items': 128}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '62234', 'items': 127}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35493', 'items': 126}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '62235', 'items': 125}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '65028', 'items': 124}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '61724', 'items': 123}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35097', 'items': 122}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '62241', 'items': 121}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '63998', 'items': 120}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35591', 'items': 119}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '31912', 'items': 118}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '34184', 'items': 117}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '57792', 'items': 116}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '53965', 'items': 115}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '57803', 'items': 114}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35622', 'items': 113}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '57802', 'items': 112}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '31821', 'items': 111}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35201', 'items': 110}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35668', 'items': 109}
+2026-09-05 19:49:20,577 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35205', 'items': 108}
+2026-09-05 19:49:20,578 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35204', 'items': 107}
+2026-09-05 19:49:20,578 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35206', 'items': 106}
+2026-09-05 19:49:20,578 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35207', 'items': 105}
+2026-09-05 19:49:20,578 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35670', 'items': 104}
+2026-09-05 19:49:20,578 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35669', 'items': 103}
+2026-09-05 19:49:20,578 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35890', 'items': 102}
+2026-09-05 19:49:20,578 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '35673', 'items': 101}
+2026-09-05 19:49:20,578 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'discard_reference', 'reference': '28330', 'items': 100}
+2026-09-05 19:49:20,578 - INFO - apps.scraping.services.bicycles_services - {'event': 'Creating todays PriceHistory for 224 bicycles'}
+2026-09-05 19:49:20,848 - INFO - apps.scraping.services.bicycles_services - {'event': 'Updating current_price for 224 bicycles'}
+2026-09-05 19:49:21,169 - INFO - apps.scraping.decorators - End function create_bicycles
+2026-09-05 19:49:21,242 - INFO - apps.scraping.services.runner - Scraping terminado.
+2026-09-05 19:49:21,242 - INFO - apps.scraping.decorators - End function run_scraper. Duration 1158.158262014389s

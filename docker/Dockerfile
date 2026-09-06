@@ -16,6 +16,7 @@ RUN chown -R pwuser:pwuser /app
 # Variables de entorno
 ENV DJANGO_SETTINGS_MODULE=config.settings
 ENV PYTHONUNBUFFERED=1
+ENV SECRET_KEY=build-placeholder
 
 # Recolectar estáticos
 RUN python manage.py collectstatic --noinput
