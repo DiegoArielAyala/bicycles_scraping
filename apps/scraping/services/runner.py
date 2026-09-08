@@ -146,6 +146,7 @@ async def get_html(page, url):
     
     try:
         await page.goto(url, wait_until="domcontentloaded", timeout=60000)
+        await page.wait_for_timeout(5000)
         html = await page.content()
 
         if CLOUDFLARE_MARKER in html:
