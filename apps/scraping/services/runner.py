@@ -120,7 +120,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
             await browser.close()
 
     get_metrics()    
-    logger.info("Scraping terminado.")
+    logger.info("Scrape finished.")
 
 async def open_session(browser):
     context = await browser.new_context(
@@ -197,7 +197,7 @@ async def delete_bicycles(bicycle_references_not_in_web, page):
     logger.info({"event": "deleting_bicycles", "references_to_delete": bicycle_references_not_in_web})
     for reference in bicycle_references_not_in_web:
         try:
-            bicycle = await sync_to_async(lambda: get_object_or_404(Bicycle, reference=reference))()
+            bicycle = await sync_to_async(lambda: get_object_or_404(Bicycle, reference=str(reference)))()
             strategy = strategy_factory(bicycle.web)
 
             # Look for reference on the corresponding web

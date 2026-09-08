@@ -29,10 +29,8 @@ def create_bicycles(product_elements_html, web, bicycle_references_in_db):
     if len(product_elements_html) == 0:
         logger.debug({"event": "any_bicycle_scraped", "web": web, "items": len(product_elements_html)})
         return
-    bicycle_index = 1
-    strategy = strategy_factory(web)
 
-    bicycles_basic_data = []
+    strategy = strategy_factory(web)
 
     bicycles_data_in_db = list(Bicycle.objects.filter(reference__in=bicycle_references_in_db, web=web).values_list("reference", "id", "current_price"))
 
@@ -46,7 +44,37 @@ def create_bicycles(product_elements_html, web, bicycle_references_in_db):
         for reference, bicycle_id, current_price in bicycles_data_in_db
     }
 
+    price_history_updates, new_bicycles = process_product_elements_html(product_elements_html, web, strategy, bicycle_references_in_db, reference_to_id)
+    
+    new_bicycles_cleaned = clean_duplicates_bicycles(new_bicycles)
+    
+    new_bicycles_data = scrape_new_bicycles(new_bicycles_cleaned, strategy)
+    create_new_bicycles(new_bicycles_data)
+
+    if price_history_updates:
+        deleted_references = []
+        for price_history in price_history_updates:
+            bicycle_references_in_db.discard(price_history["reference"])
+            deleted_references.append(price_history["reference"])
+        logger.debug({"event": "discard_references", "references": deleted_references, "remaining items": len(bicycle_references_in_db)})
+
+        update_price_histories(price_history_updates, id_to_current_price)
+
+    return bicycle_references_in_db
+
+def update_price_histories(price_history_updates, id_to_current_price):
+    price_history_objects = []
+    for price_history in price_history_updates:
+        price_history_objects.append(PriceHistory(bicycle_id=price_history["bicycle_id"], price=price_history["current_price"]))        
+
+    price_drops = save_price_data(price_history_objects, id_to_current_price)
+
+    send_price_drop_emails(price_drops)
+
+def process_product_elements_html(product_elements_html, web, strategy, bicycle_references_in_db, reference_to_id):
+    price_history_updates = []
     new_bicycles = []
+    bicycle_index = 1
 
     for product_element in product_elements_html:
         bicycle_index += 1
@@ -59,13 +87,11 @@ def create_bicycles(product_elements_html, web, bicycle_references_in_db):
                 increment("PriceNotFoundError", web=web)
                 logger.warning({"event": "price_not_found_error", "web": web, "reference": reference})
                 continue
-            
             except ReferenceNotFoundError:
                 logger.warning({"event": "reference_not_found", "web": web})
                 continue
 
             if reference not in bicycle_references_in_db:
-
                 bicycle_href = get_href(product_element)
                 if not bicycle_href:
                     logger.error({"event": "href_not_found", "web": web})
@@ -75,29 +101,12 @@ def create_bicycles(product_elements_html, web, bicycle_references_in_db):
                 continue
 
             else:
-                bicycles_basic_data.append({
+                price_history_updates.append({
                     "reference":reference,
                     "current_price":current_price,
                     "bicycle_id":reference_to_id.get(reference),
                     })
-    new_bicycles_cleaned = clean_duplicates_bicycles(new_bicycles)
-    
-    new_bicycles_data = scrape_new_bicycles(new_bicycles_cleaned, strategy)
-    create_new_bicycles(new_bicycles_data)
-
-    if len(bicycles_basic_data) != 0:
-        price_history_objects = []
-        for bicycle in bicycles_basic_data:
-            price_history_objects.append(PriceHistory(bicycle_id=bicycle["bicycle_id"], price=bicycle["current_price"]))
-
-            bicycle_references_in_db.discard(bicycle["reference"])
-            logger.debug({"event": "discard_reference", "reference": bicycle["reference"], "items": len(bicycle_references_in_db)})
-
-        price_drops = save_price_data(price_history_objects, id_to_current_price)
-
-        send_price_drop_emails(price_drops)
-
-    return bicycle_references_in_db
+    return price_history_updates, new_bicycles
 
 def clean_duplicates_bicycles(new_bicycles):
     seen = set()
@@ -114,28 +123,31 @@ def clean_duplicates_bicycles(new_bicycles):
 def save_price_data(price_history_objects, id_to_current_price):
     with transaction.atomic():
         logger.info({"event": f"Creating todays PriceHistory for {len(price_history_objects)} bicycles"})
-        news_price_histories = PriceHistory.objects.bulk_create(price_history_objects, update_conflicts=True, update_fields=["price"], unique_fields=["bicycle_id", "date"])
+        new_price_histories = PriceHistory.objects.bulk_create(price_history_objects, update_conflicts=True, update_fields=["price"], unique_fields=["bicycle_id", "date"])
 
-        bicycles_objects = []
-        price_drops = []
+        return update_current_prices(new_price_histories, id_to_current_price)
 
-        for new_price_histories in news_price_histories:
-            current_price = id_to_current_price.get(new_price_histories.bicycle_id)
-            if new_price_histories.price != current_price:
-                bicycles_objects.append(Bicycle(id=new_price_histories.bicycle_id, current_price=new_price_histories.price))
-                old_price = Decimal(current_price)
-                new_price = Decimal(new_price_histories.price)
-                if should_send_price_alert(old_price, new_price):
-                    price_drops.append({
-                        "bicycle_id": new_price_histories.bicycle_id,
-                        "old_price": old_price,
-                        "new_price": new_price,
-                    })
+def update_current_prices(new_price_histories, id_to_current_price):
+    bicycles_objects = []
+    price_drops = []
 
-        logger.info({"event": f"Updating current_price for {len(bicycles_objects)} bicycles"})
-        Bicycle.objects.bulk_update(bicycles_objects, ["current_price"])
+    for price_history in new_price_histories:
+        current_price = id_to_current_price.get(price_history.bicycle_id)
+        if price_history.price != current_price:
+            bicycles_objects.append(Bicycle(id=price_history.bicycle_id, current_price=price_history.price))
+            old_price = Decimal(current_price)
+            new_price = Decimal(price_history.price)
+            if should_send_price_alert(old_price, new_price):
+                price_drops.append({
+                    "bicycle_id": price_history.bicycle_id,
+                    "old_price": old_price,
+                    "new_price": new_price,
+                })
 
-        return price_drops
+    logger.info({"event": f"Updating current_price for {len(bicycles_objects)} bicycles"})
+    Bicycle.objects.bulk_update(bicycles_objects, ["current_price"])
+    
+    return price_drops
 
 def send_price_drop_emails(price_drops):
     if not price_drops:
@@ -163,25 +175,24 @@ def send_price_drop_emails(price_drops):
 
 @log_function
 def scrape_new_bicycles(new_bicycles, strategy):
-    with log_context("scrape_new_bicycles"):
-        new_bicycles_data = []
+    new_bicycles_data = []
 
-        for new_bicycle in new_bicycles:
-            logger.info({"event": "scrape_new_bicycle", "reference": new_bicycle["reference"]})
-            
-            product_element = new_bicycle["product_element"]
-            web = new_bicycle["web"]
-            reference = new_bicycle["reference"]
-            
-            current_price = strategy.get_price(product_element)
-            bicycle_name, bicycle_img = strategy.get_product_info(product_element)
-            
-            if current_price is None:
-                logger.warning({"event": "price_not_found", "web": web, "reference": reference})
-                increment("price_not_found")
-                continue
+    for new_bicycle in new_bicycles:
+        logger.info({"event": "scrape_new_bicycle", "reference": new_bicycle["reference"]})
+        
+        product_element = new_bicycle["product_element"]
+        web = new_bicycle["web"]
+        reference = new_bicycle["reference"]
+        
+        current_price = strategy.get_price(product_element)
+        bicycle_name, bicycle_img = strategy.get_product_info(product_element)
+        
+        if current_price is None:
+            logger.warning({"event": "price_not_found", "web": web, "reference": reference})
+            increment("price_not_found")
+            continue
 
-            new_bicycles_data.append({"name":bicycle_name, "img":bicycle_img, "url":new_bicycle["bicycle_href"], "reference":reference, "web":web, "current_price":current_price})
+        new_bicycles_data.append({"name":bicycle_name, "img":bicycle_img, "url":new_bicycle["bicycle_href"], "reference":reference, "web":web, "current_price":current_price})
     return new_bicycles_data
 
 @log_function

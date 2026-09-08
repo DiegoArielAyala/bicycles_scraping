@@ -18,7 +18,7 @@ class EscapaStrategy(ScrapingStrategy):
         return price_span.text if price_span else None
     
     def _extract_reference(self, product_element):
-        bicycle_reference = product_element.get("data-id-product")
+        bicycle_reference = str(product_element.get("data-id-product"))
 
         return bicycle_reference if bicycle_reference else None
      

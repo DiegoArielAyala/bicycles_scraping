@@ -12,5 +12,3 @@ def log_context(name, **kwargs):
     except Exception:
         logger.exception({"event": "error", "name": name, **kwargs})
         raise
-    finally:
-        logger.info({"event": "end", "name": name, **kwargs})
