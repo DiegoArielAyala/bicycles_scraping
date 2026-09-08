@@ -30,7 +30,7 @@ class EscapaStrategy(ScrapingStrategy):
     def _extract_img(self, product_element):
         img_tag = product_element.find("img")
 
-        return img_tag.get("src") if img_tag else None
+        return img_tag.get("data-src") or img_tag.get("src") if img_tag else None
     
     def get_product_elements_html(self, soup):
         product_elements_html = soup.find_all("article", class_="product-miniature js-product-miniature mb-3")
