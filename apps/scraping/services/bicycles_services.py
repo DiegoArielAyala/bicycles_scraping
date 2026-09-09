@@ -1,3 +1,4 @@
+from collections import Counter
 import logging
 
 from apps.scraping.context_managers import log_context
@@ -123,6 +124,11 @@ def clean_duplicates_bicycles(new_bicycles):
 def save_price_data(price_history_objects, id_to_current_price):
     with transaction.atomic():
         logger.info({"event": f"Creating todays PriceHistory for {len(price_history_objects)} bicycles"})
+
+        keys = [(obj.bicycle_id, obj.date) for obj in price_history_objects]
+        duplicates = [key for key, count in Counter(keys).items() if count > 1]
+        logger.debug({"event": "duplicates", "duplicates": duplicates})
+
         new_price_histories = PriceHistory.objects.bulk_create(price_history_objects, update_conflicts=True, update_fields=["price"], unique_fields=["bicycle_id", "date"])
 
         return update_current_prices(new_price_histories, id_to_current_price)
