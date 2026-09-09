@@ -201,7 +201,7 @@ async def delete_bicycles(bicycle_references_not_in_web, page):
             strategy = strategy_factory(bicycle.web)
 
             # Look for reference on the corresponding web
-            bicycle_exist = await strategy.bicycle_exists(page, reference)
+            bicycle_exist = await strategy.bicycle_exists(page, reference, bicycle.url)
             
             # If bicycle not exist in web, delete it
             if not bicycle_exist:

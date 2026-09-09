@@ -50,7 +50,7 @@ class BikingPointStrategy(ScrapingStrategy):
         
         return product_elements_html
     
-    async def bicycle_exists(self, page, reference):
+    async def bicycle_exists(self, page, reference, href):
         url = self.SEARCH_ENDPOINT
         await page.goto(url.format(reference))
         content = await page.content()
