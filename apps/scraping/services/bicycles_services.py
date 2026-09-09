@@ -125,7 +125,7 @@ def save_price_data(price_history_objects, id_to_current_price):
     with transaction.atomic():
         logger.info({"event": f"Creating todays PriceHistory for {len(price_history_objects)} bicycles"})
 
-        keys = [(obj.bicycle_id, obj.date) for obj in price_history_objects]
+        keys = [obj.bicycle_id for obj in price_history_objects]
         duplicates = [key for key, count in Counter(keys).items() if count > 1]
         logger.debug({"event": "duplicates", "duplicates": duplicates})
 
