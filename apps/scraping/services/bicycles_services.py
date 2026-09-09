@@ -195,7 +195,6 @@ def scrape_new_bicycles(new_bicycles, strategy):
         new_bicycles_data.append({"name":bicycle_name, "img":bicycle_img, "url":new_bicycle["bicycle_href"], "reference":reference, "web":web, "current_price":current_price})
     return new_bicycles_data
 
-@log_function
 def create_new_bicycles(new_bicycles_data):
     with log_context("create_new_bicycles"):
         validated_bicycle_forms = []

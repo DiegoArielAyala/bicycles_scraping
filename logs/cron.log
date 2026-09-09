@@ -5751,3 +5751,272 @@ django.db.utils.ProgrammingError: column "updated_at" of relation "scraping_bicy
 LINE 1: ...img", "current_price", "url", "reference", "web", "updated_a...
                                                              ^
 
+2026-09-08 19:03:04,273 - DEBUG - asyncio - Using selector: EpollSelector
+2026-09-08 19:03:04,276 - INFO - apps.scraping.decorators - Executing run_scraper
+2026-09-08 19:03:09,377 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=1
+2026-09-08 19:03:13,333 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=1'}
+2026-09-08 19:03:13,455 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:03:21,439 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=2
+2026-09-08 19:03:21,620 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=2'}
+2026-09-08 19:04:11,957 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:04:11,957 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=2', 'page': 2}
+2026-09-08 19:04:32,769 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=2'}
+2026-09-08 19:04:33,019 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:04:41,247 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=3
+2026-09-08 19:04:41,387 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=3'}
+2026-09-08 19:05:29,371 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:05:29,371 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=3', 'page': 3}
+2026-09-08 19:05:56,068 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=3'}
+2026-09-08 19:05:56,181 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:06:03,597 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=4
+2026-09-08 19:06:03,751 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=4'}
+2026-09-08 19:06:51,797 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:06:51,797 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=4', 'page': 4}
+2026-09-08 19:07:16,289 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=4'}
+2026-09-08 19:07:16,501 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:07:22,380 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=5
+2026-09-08 19:07:22,509 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=5'}
+2026-09-08 19:08:13,523 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:08:13,523 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=5', 'page': 5}
+2026-09-08 19:08:39,351 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=5'}
+2026-09-08 19:08:39,641 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:08:44,346 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=6
+2026-09-08 19:08:44,494 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=6'}
+2026-09-08 19:09:33,631 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:09:33,631 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=6', 'page': 6}
+2026-09-08 19:10:02,099 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=6'}
+2026-09-08 19:10:02,507 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:10:10,637 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=7
+2026-09-08 19:10:10,763 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=7'}
+2026-09-08 19:11:01,915 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:11:01,915 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=7', 'page': 7}
+2026-09-08 19:11:29,656 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=7'}
+2026-09-08 19:11:29,747 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:11:37,240 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=8
+2026-09-08 19:11:41,849 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=8'}
+2026-09-08 19:11:41,958 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:11:42,020 - INFO - apps.scraping.services.runner - {'event': 'rotate_browser_session', 'next_page': 9}
+2026-09-08 19:11:50,179 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=9
+2026-09-08 19:12:04,518 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=9'}
+2026-09-08 19:12:04,587 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:12:12,074 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=10
+2026-09-08 19:12:18,425 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=10'}
+2026-09-08 19:13:06,376 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:13:06,377 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=10', 'page': 10}
+2026-09-08 19:13:55,208 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=10'}
+2026-09-08 19:13:55,288 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:14:00,838 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=11
+2026-09-08 19:14:11,303 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=11'}
+2026-09-08 19:14:59,687 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:14:59,688 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=11', 'page': 11}
+2026-09-08 19:15:25,422 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=11'}
+2026-09-08 19:15:25,742 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:15:32,712 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=12
+2026-09-08 19:15:36,708 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=12'}
+2026-09-08 19:16:24,962 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:16:24,962 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=12', 'page': 12}
+2026-09-08 19:16:47,624 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=12'}
+2026-09-08 19:16:47,890 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:16:53,480 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=13
+2026-09-08 19:16:53,692 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=13'}
+2026-09-08 19:17:42,279 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:17:42,279 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=13', 'page': 13}
+2026-09-08 19:18:09,697 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=13'}
+2026-09-08 19:18:09,782 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:18:15,562 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=14
+2026-09-08 19:18:15,719 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=14'}
+2026-09-08 19:19:04,054 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:19:04,055 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=14', 'page': 14}
+2026-09-08 19:19:33,345 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=14'}
+2026-09-08 19:19:33,586 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:19:45,434 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=15
+2026-09-08 19:19:45,563 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=15'}
+2026-09-08 19:20:33,887 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:20:33,888 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=15', 'page': 15}
+2026-09-08 19:20:58,459 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=15'}
+2026-09-08 19:20:58,604 - INFO - apps.scraping.services.runner - {'event': 'cloudflare_challenge_cleared'}
+2026-09-08 19:21:03,622 - DEBUG - apps.scraping.services.runner - Url: https://www.bikingpoint.es/es/bicicletas.html/?p=16
+2026-09-08 19:21:03,725 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=16'}
+2026-09-08 19:21:51,963 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:21:51,964 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_rotate_session', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=16', 'page': 16}
+2026-09-08 19:22:12,353 - WARNING - apps.scraping.services.runner - {'event': 'cloudflare_challenge_detected', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=16'}
+2026-09-08 19:22:59,813 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_challenge_timeout'}
+2026-09-08 19:22:59,814 - ERROR - apps.scraping.services.runner - {'event': 'cloudflare_abort', 'url': 'https://www.bikingpoint.es/es/bicicletas.html/?p=16', 'page': 16}
+2026-09-08 19:22:59,814 - INFO - apps.scraping.decorators - Executing create_bicycles
+2026-09-08 19:22:59,814 - DEBUG - apps.scraping.services.bicycles_services - {'event': 'create_bicycles_start', 'web': 'biking_point', 'items': 222}
+2026-09-08 19:22:59,855 - ERROR - apps.scraping.decorators - Error during create_bicycles
+Traceback (most recent call last):
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/decorators.py", line 36, in sync_wrapper
+    result = func(*args, **kwargs)
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/bicycles_services.py", line 35, in create_bicycles
+    bicycles_data_in_db = list(Bicycle.objects.filter(reference__in=bicycle_references_in_db, web=web).values_list("reference", "id", "current_price"))
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/query.py", line 384, in __iter__
+    self._fetch_all()
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1935, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/query.py", line 232, in __iter__
+    return compiler.results_iter(
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1571, in results_iter
+    results = self.execute_sql(
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-09-08 19:22:59,955 - ERROR - apps.scraping.decorators - Error during run_scraper: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+Traceback (most recent call last):
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/decorators.py", line 22, in async_wrapper
+    result = await func(*args, **kwargs)
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/runner.py", line 114, in run_scraper
+    bicycle_references_in_db = await sync_to_async(create_bicycles)(all_product_elements_html, web, bicycle_references_in_db)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/asgiref/sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/asgiref/sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/decorators.py", line 36, in sync_wrapper
+    result = func(*args, **kwargs)
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/bicycles_services.py", line 35, in create_bicycles
+    bicycles_data_in_db = list(Bicycle.objects.filter(reference__in=bicycle_references_in_db, web=web).values_list("reference", "id", "current_price"))
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/query.py", line 384, in __iter__
+    self._fetch_all()
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1935, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/query.py", line 232, in __iter__
+    return compiler.results_iter(
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1571, in results_iter
+    results = self.execute_sql(
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+Traceback (most recent call last):
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/diegoayala/bike-price-tracker/scripts/run_scraper.py", line 22, in <module>
+    main()
+  File "/home/diegoayala/bike-price-tracker/scripts/run_scraper.py", line 19, in main
+    asyncio.run(run_scraper(args.start, args.end, args.web, args.delete))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/decorators.py", line 22, in async_wrapper
+    result = await func(*args, **kwargs)
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/runner.py", line 114, in run_scraper
+    bicycle_references_in_db = await sync_to_async(create_bicycles)(all_product_elements_html, web, bicycle_references_in_db)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/asgiref/sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/asgiref/sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/decorators.py", line 36, in sync_wrapper
+    result = func(*args, **kwargs)
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/bicycles_services.py", line 35, in create_bicycles
+    bicycles_data_in_db = list(Bicycle.objects.filter(reference__in=bicycle_references_in_db, web=web).values_list("reference", "id", "current_price"))
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/query.py", line 384, in __iter__
+    self._fetch_all()
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1935, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/query.py", line 232, in __iter__
+    return compiler.results_iter(
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1571, in results_iter
+    results = self.execute_sql(
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/diegoayala/bike-price-tracker/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
