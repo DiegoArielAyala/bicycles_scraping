@@ -289,3 +289,13 @@ GOOGLE_OAUTH_CALLBACK_URL = f"{FRONTEND_URL}/auth/google/callback/"
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 
 SITE_ID = 1
+
+CACHE = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.cache.DefaultClient",
+        },
+    }
+}

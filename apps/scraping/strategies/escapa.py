@@ -37,10 +37,6 @@ class EscapaStrategy(ScrapingStrategy):
         
         return product_elements_html
     
-    async def check_href(self, page, href):
-        await page.goto(href)
-        return href == page.url
-    
     async def bicycle_exists(self, page, reference, href):
         url = self.BASE_URL
         await page.goto(url)
@@ -58,7 +54,7 @@ class EscapaStrategy(ScrapingStrategy):
         soup = BeautifulSoup(content, "html.parser")
         div = soup.find("div", class_="dfd-card-flag", attrs={"data-availability":"out-of-stock"})
 
-        if (div and (div.text.strip() == "Agotado" or "Prueba de nuevo con otra búsqueda…" in soup.text)) or not await self.check_href(page, href):
+        if (div and (div.text.strip() == "Agotado" or "Prueba de nuevo con otra búsqueda…" in soup.text)) or await self.check_href(page, href):
             logger.info({"event": "bicycle_not_exists", "web": "escapa", "reference": reference})
             return False
         
@@ -69,4 +65,9 @@ class EscapaStrategy(ScrapingStrategy):
     def get_list_url(self, counter):
         return self.SEARCH_ENDPOINT.format(counter)
 
-    
+    async def check_href(self, page, href):
+        await page.goto(href)
+        logger.debug({"event": "url_not_equal_to_href", "url": page.url, "href": href})
+        return href == page.url
+
+""" CORREGIR check_href porque se estan eliminando bicicletas que existen aparentemente """

@@ -75,6 +75,7 @@ def update_price_histories(price_history_updates, id_to_current_price):
 def process_product_elements_html(product_elements_html, web, strategy, bicycle_references_in_db, reference_to_id):
     price_history_updates = []
     new_bicycles = []
+    seen_references = set()
     bicycle_index = 1
 
     for product_element in product_elements_html:
@@ -101,12 +102,15 @@ def process_product_elements_html(product_elements_html, web, strategy, bicycle_
                 new_bicycles.append({"product_element":product_element, "web":web, "bicycle_href":bicycle_href, "reference":reference, "strategy":strategy})
                 continue
 
-            else:
-                price_history_updates.append({
-                    "reference":reference,
-                    "current_price":current_price,
-                    "bicycle_id":reference_to_id.get(reference),
-                    })
+            if reference in seen_references:
+                continue
+
+            seen_references.add(reference)
+            price_history_updates.append({
+                "reference":reference,
+                "current_price":current_price,
+                "bicycle_id":reference_to_id.get(reference),
+                })
     return price_history_updates, new_bicycles
 
 def clean_duplicates_bicycles(new_bicycles):

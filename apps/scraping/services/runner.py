@@ -194,7 +194,7 @@ def is_last_page(soup):
     return number_bicycles == search_number
 
 async def delete_bicycles(bicycle_references_not_in_web, page):
-    logger.info({"event": "deleting_bicycles", "references_to_delete": bicycle_references_not_in_web})
+    logger.info({"event": "deleting_bicycles", "number_of_references": len(bicycle_references_not_in_web), "references_to_delete": bicycle_references_not_in_web})
     for reference in bicycle_references_not_in_web:
         try:
             bicycle = await sync_to_async(lambda: get_object_or_404(Bicycle, reference=str(reference)))()

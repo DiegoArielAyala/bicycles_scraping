@@ -46,6 +46,7 @@ def validated_bicycle_form(bicycle_name, bicycle_img, bicycle_price, bicycle_hre
     return bicycle_form
 
 def save_new_bicycle(validated_bicycle_forms):
+    logger.info({"event": "saving_new_bicycles", "number_of_new_bicycles": len(validated_bicycle_forms)})
     with transaction.atomic():
         new_bicycles = Bicycle.objects.bulk_create(validated_bicycle_forms)
         new_price_histories = []

@@ -163,7 +163,6 @@ bicycles = Bicycle.objects.prefetch_related("price_history")[:3]
 
 for bicycle in bicycles:
     print(bicycle.values())
-"""
 
 references = ["80050", "59165", "80053"]
 
@@ -172,3 +171,28 @@ print(bicycles)
 
 bicycle = bicycles.filter(reference="80050").first()
 print(bicycle.name)
+
+price_history_updates = []
+
+price_history_updates.append({
+    "reference": "11111",
+    "current_price":1000,
+    "bicycle_id": 1,
+    })
+price_history_updates.append({
+    "reference": "22222",
+    "current_price":2000,
+    "bicycle_id": 2,
+    })
+
+for i, item in enumerate(price_history_updates):
+    if item["reference"] == "11111":
+        print(i)
+"""
+
+from django.core.cache import cache
+
+cache.set("test", "hello", timeout=60)
+print(cache.get("test"))
+cache.delete("test")
+print(cache.get("test"))
