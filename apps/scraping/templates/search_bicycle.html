@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<main class="container py-3">
+    <section class="card shadow-lg rounded-4 border-0 p-4 bg-dark text-light">
+        <div class="text-center mb-3">
+            <h2 class="display-4 mb-3 text-accent fw-bold">Search Bicycle</h2>
+            <p class="text-secondary fs-5">Find a bicycle by name or reference</p>
+        </div>
+
+        <form class="d-flex flex-column align-items-center gap-3" id="search-form" action="/search_bicycle/" method="GET">
+            <label class="text-secondary fs-4" for="">Name or Reference:</label>
+            <input class="form-control w-75 text-center fs-5 py-2 bg-dark border-accent text-light placeholder-light" type="text" name="q" placeholder="Scott - 34208 - Team Race">
+            <div class="w-75">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="text-secondary fs-5">Min Price:</label>
+                        <input class="form-control text-center fs-5 py-2 bg-dark border-accent text-light" type="number" name="min_price">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="text-secondary fs-5">Max Price:</label>
+                        <input class="form-control text-center fs-5 py-2 bg-dark border-accent text-light" type="number" name="max_price">
+                    </div>
+                </div>
+            </div>
+            <div class="text-center py-3">
+                <button class="btn btn-accent btn-lg px-5 shadow-sm">Search</button>
+            </div>
+        </form>
+    </section>
+
+    <div id="search-results"></div>
+
+</main>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+        <script type="module" src="{% static 'js/search_bicycle.js' %}"></script>
+{% endblock %}

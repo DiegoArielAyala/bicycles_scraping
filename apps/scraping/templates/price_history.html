@@ -1,0 +1,22 @@
+{% extends "base.html"%}
+{% load static %}
+
+{% block content %}
+<main class="container py-5">
+    <section class="card shadow-lg rounded-4 border-0 p-4 bg-dark text-light">
+        <div class="text-center mb-4">
+            <h2 class="display-6 mb-3 text-accent">Get Price History</h2>
+        </div>
+        <div class="card card-body mt-5 bg-dark border-0 text-light" style="min-height: 500px;">
+            <div class="w-100" id="chart"></div>
+        </div>
+    </section>
+
+</main>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+        <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+        <script type="module" src="{% static 'js/price_history.js' %}"></script>
+{% endblock %}

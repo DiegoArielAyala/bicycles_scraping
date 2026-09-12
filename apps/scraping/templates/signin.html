@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<main class="container py-3">
+    <section class="card shadow-lg rounded-4 border-0 p-4 bg-dark text-light">
+        <div class="text-center mb-3">
+            <h2 class="display-4 mb-3 text-accent fw-bold">Sign in</h2>
+            
+
+            <form class="d-flex flex-column align-item-center gap-3" id="signin-form" action="" method="POST">
+                {% csrf_token %}
+
+                <div class="d-flex text-center mt-3 mb-3 w-100 justify-content-center">
+                    <label class="text-end w-25 text-secondary fs-4 my-auto me-3" for="username-input">Username:</label>
+                    <input class=" my-auto form-control w-50 fs-5 py-2 bg-dark border-accent text-light placeholder-light" type="text" name="username" id="username-input" autofocus placeholder=""  required  >
+                </div>
+
+                <div class="d-flex text-center mb-3 w-100 justify-content-center">
+                    <label class="text-end w-25 text-secondary fs-4 my-auto me-3" for="password-input">Password:</label>
+                    <input class=" my-auto form-control w-50  fs-5 py-2 bg-dark border-accent text-light placeholder-light" type="password" name="password" id="password-input" placeholder="" required  >
+                </div>
+
+                <div class="text-secondary fs-5">
+                    {{error}}
+                </div>
+
+                <div class="text-center py-3">
+                    <button class="btn btn-accent btn-lg px-5 shadow-sm">Sign in</button>
+                </div>
+            </form>
+                <div class="text-center">
+                    Or
+                </div>
+                <div class="text-center py-3">
+                    <button id="signin-google-button" data-client-id="{{ google_client_id }}" data-redirect-uri="{{ google_redirect_uri }}" class="btn btn-accent btn-lg px-5 shadow-sm">Continue with Google</button>
+                </div>
+
+            <hr class="my-3 border-secondary">
+
+            <div class="text-warning fs-5" id="status-message"></div>
+
+            <div class="text-center">
+                <p class="mb-3 fs-5 text-secondary">Don't have account?</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'signup' %}" class="btn btn-light px-4 py-2">Sign Up</a>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+        <script type="module" src="{% static 'js/signin.js' %}"></script>
+        <script type="module" src="{% static 'js/signin_google.js' %}"></script>
+{% endblock %}
