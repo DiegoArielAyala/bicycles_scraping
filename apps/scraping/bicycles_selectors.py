@@ -1,4 +1,6 @@
-from apps.scraping.models import Bicycle
+from django.core.cache import cache
+from django.shortcuts import get_object_or_404
+from apps.scraping.models import Bicycle, PriceHistory
 
 def get_bicycles(q=None, min_price=None, max_price=None):
     qs = Bicycle.objects.all()
@@ -15,3 +17,20 @@ def get_bicycles(q=None, min_price=None, max_price=None):
         qs = qs.filter(current_price__lte=max_price)
 
     return qs
+
+def get_price_history(reference):
+    cached = cache.get(f"price_history:{reference}")
+    
+    if cached is not None:
+        return cached
+
+    bicycle = get_object_or_404(Bicycle, reference=reference)
+    price_histories = PriceHistory.objects.filter(bicycle=bicycle).order_by("date")
+
+    dates = [price.date for price in price_histories]
+    prices = [price.price for price in price_histories]
+    data = {"name": bicycle.name, "dates": dates, "prices": prices}
+
+    cache.set(f"price_history:{reference}", data , timeout=120)
+
+    return data

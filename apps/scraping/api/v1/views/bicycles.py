@@ -2,7 +2,7 @@ from apps.scraping.api.v1.pagination import BicyclePagination
 from apps.scraping.api.v1.serializers import BicycleSerializer, ShowPriceHistorySerializer
 from apps.scraping.api.v1.views.filters import BicyclesFilter
 from apps.scraping.models import Bicycle, PriceHistory
-from apps.scraping.bicycles_selectors import get_bicycles
+from apps.scraping.bicycles_selectors import get_bicycles, get_price_history
 from apps.scraping.utils.pricing import clean_price
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView
@@ -25,13 +25,7 @@ class SearchBicycleView(ListAPIView):
 
 class ShowPriceHistoryView(APIView):
     def get(self, request, reference):
-        bicycle = get_object_or_404(Bicycle, reference=reference)
-        price_history_objects = PriceHistory.objects.filter(bicycle=bicycle).order_by("date")
-
-        dates = [price.date for price in price_history_objects]
-        prices = [price.price for price in price_history_objects]
-
-        data = {"name": bicycle.name, "dates": dates, "prices": prices}
+        data = get_price_history(reference)
 
         serializer = ShowPriceHistorySerializer(data=data)
         serializer.is_valid(raise_exception=True)
