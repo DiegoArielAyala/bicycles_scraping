@@ -46,7 +46,6 @@ if (canUseScraping && scrapingForm) {
         const lastPage = document.getElementById("last_page_input").value;
         const web = document.getElementById("web_selector").value;
         const deleteCheckbox = document.getElementById("delete_checkbox").checked;
-        const cronToken = document.querySelector("input[name='token']").value;
         const accessToken = localStorage.getItem("access");
 
         try {
@@ -55,7 +54,6 @@ if (canUseScraping && scrapingForm) {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
-                    "X-CRON-TOKEN": cronToken,
                 },
                 body: JSON.stringify({
                     start_page: Number(startPage),

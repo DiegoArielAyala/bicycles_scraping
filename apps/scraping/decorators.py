@@ -1,14 +1,8 @@
 import asyncio
 import logging
-from os import sync
 import time
 
 from functools import wraps
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s - %(levelname)s - %(name)s - %(message)s"
-)
 
 logger = logging.getLogger(__name__)
 

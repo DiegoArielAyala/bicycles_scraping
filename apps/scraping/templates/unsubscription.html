@@ -8,8 +8,6 @@
             <h2 class="display-4 mb-3 text-accent fw-bold">Unsubscription</h2>
             
             <form class="d-flex flex-column align-items-center gap-3" id="unsubscribe-form" action="">
-                {% csrf_token %}
-
                 <div class="text-center d-flex mt-3 mb-3 w-100 justify-content-center">
                     <label class="text-end text-secondary fs-4 my-auto me-3 w-25" for="email-input">Email:</label>
                     <input class="form-control w-50 border-accent bg-dark my-auto text-light placeholder-light" type="email" name="email" id="email-input" placeholder="">

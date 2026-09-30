@@ -193,9 +193,6 @@ LOGOUT_REDIRECT_URL = "/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
-CRON_SECRET_TOKEN = os.environ.get("CRON_SECRET_TOKEN")
-
 SESSION_COOKIE_AGE = 3600
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -214,7 +211,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://bicycles-scraping-staging.onrender.com",
 ]
 
-LOGGER = {
+LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
 
@@ -290,7 +287,7 @@ GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 
 SITE_ID = 1
 
-CACHE = {
+CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://redis:6379/1",

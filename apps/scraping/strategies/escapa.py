@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import random
+import re
 
 from apps.scraping.strategies.base import ScrapingStrategy
 from bs4 import BeautifulSoup
@@ -70,4 +71,9 @@ class EscapaStrategy(ScrapingStrategy):
         logger.debug({"event": "url_not_equal_to_href", "url": page.url, "href": href})
         return href == page.url
 
-""" CORREGIR check_href porque se estan eliminando bicicletas que existen aparentemente """
+    def is_last_page(soup):
+        search_number = (re.search(r"Mostrando \d+-(\d+)", soup.text)).group(1)
+        number_bicycles = (re.search(r"de (\d+) producto", soup.text)).group(1)
+        logger.debug(search_number)
+        logger.debug(number_bicycles)
+        return number_bicycles == search_number

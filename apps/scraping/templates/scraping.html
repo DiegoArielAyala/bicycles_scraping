@@ -8,9 +8,6 @@
             <h1 class="display-4 mb-3 text-accent fw-bold">Create Bicycles</h1>
             
             <form id="scraping-form" class="d-flex flex-column align-items-center gap-3">
-                {% csrf_token %}
-                <input type="hidden" name="token" value="{{ cron_token }}">
-                
                 <div class="text-center d-flex mt-3 mb-3 w-100 justify-content-center">
                     <label class="text-end text-secondary fs-4 my-auto me-3 w-25" for="start_page_input">Start page</label>
                     <input class="form-control w-50 border-accent bg-dark my-auto text-light placeholder-light" type="number" name="start_page" id="start_page_input">

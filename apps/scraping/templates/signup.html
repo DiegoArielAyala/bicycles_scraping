@@ -8,10 +8,7 @@
             <h2 class="display-4 text-accent fw-bold mb-3">Sign up</h2>
         </div>
 
-        <form class="d-flex flex-column align-items-center gap-3" id="signup-form" action="/signup/" method="POST">
-            {% csrf_token %}
-            
-
+        <form class="d-flex flex-column align-items-center gap-3" id="signup-form" action="/signup/" method="POST">           
             <div class="d-flex w-100 text-center my-3 justify-content-center">
                 <label class="text-end w-25 text-secondary fs-4 my-auto me-3" for="username-input">Username:</label>
                 <input class="bg-dark w-50 my-auto form-control fs-5 border-accent text-light placeholder-light" type="text" name="username" id="username-input" placeholder="" autofocus required>

@@ -2,7 +2,6 @@ import re
 import logging
 
 from apps.scraping.strategies.base import ScrapingStrategy
-from core.utils import is_last_product
 
 """ Error de import circular - chat envio de emails gratis"""
 
@@ -42,7 +41,7 @@ class BikingPointStrategy(ScrapingStrategy):
         return img_tag.get("data-src") or img_tag.get("src")
 
     def get_product_elements_html(self, soup):
-        if is_last_product(soup):
+        if self.is_last_product(soup):
             logger.info({"event": "is_last_product", "web": "biking_point"})
             return []
         
@@ -61,3 +60,6 @@ class BikingPointStrategy(ScrapingStrategy):
         
     def get_list_url(self, counter):
         return self.BASE_URL.format(counter)
+
+    def is_last_product(self, soup):
+        return "No podemos encontrar productos que coincida con la selección." in soup.text

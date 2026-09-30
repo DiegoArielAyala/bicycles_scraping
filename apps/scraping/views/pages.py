@@ -17,9 +17,7 @@ def price_history_page(request, reference):
     return render(request, "price_history.html")
 
 def scraping_page(request):
-    return render(request, "scraping.html", {
-        "cron_token": settings.CRON_SECRET_TOKEN,
-    })
+    return render(request, "scraping.html")
 
 def subscription_page(request):
     reference = request.GET.get("reference")

@@ -1,7 +1,6 @@
 import uuid
 
 from django.contrib.auth import get_user_model
-from django.contrib.postgres.indexes import GinIndex
 from django.db import models
 from django.utils import timezone
 

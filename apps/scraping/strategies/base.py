@@ -1,3 +1,4 @@
+from decimal import Decimal
 import logging
 
 from abc import ABC, abstractmethod
@@ -12,11 +13,11 @@ class ScrapingStrategy(ABC):
     BASE_URL = None
     SEARCH_ENDPOINT = None
 
-    def get_price(self, product_element: Tag) -> Optional[str]:
+    def get_price(self, product_element: Tag) -> Optional[Decimal]:
         raw_price = self._extract_price(product_element)
         if raw_price is None:
             raise PriceNotFoundError
-        return self.clean_price(raw_price)
+        return Decimal(self.clean_price(raw_price))
   
     def get_product_info(self, product_element: Tag) -> Tuple[str, Optional[str]]:
         bicycle_name = self._extract_name(product_element)

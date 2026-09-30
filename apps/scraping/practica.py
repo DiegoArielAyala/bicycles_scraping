@@ -188,7 +188,6 @@ price_history_updates.append({
 for i, item in enumerate(price_history_updates):
     if item["reference"] == "11111":
         print(i)
-"""
 
 from django.core.cache import cache
 
@@ -196,3 +195,23 @@ cache.set("test", "hello", timeout=60)
 print(cache.get("test"))
 cache.delete("test")
 print(cache.get("test"))
+
+
+bicycles_data_in_db = list(Bicycle.objects.filter(web="biking_point").values_list("reference", "id", "current_price"))
+
+bicycles_data = {
+    reference: {
+        "bicycle_id": bicycle_id,
+        "current_price": current_price,
+    }
+    for reference, bicycle_id, current_price in bicycles_data_in_db
+}
+print(bicycles_data.get("32784")["current_price"])
+
+print("32784" in bicycles_data)
+"""
+bicycle_references = ["57733", "59971"]
+bicycles = Bicycle.objects.filter(reference__in=bicycle_references).values_list("reference")
+print(bicycles)
+for bicycle in bicycles:
+    print(bicycle)
