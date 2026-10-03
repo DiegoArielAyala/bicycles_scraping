@@ -59,12 +59,14 @@ print(next(gen))
 print(next(gen))
 print(next(gen))
 """
+from datetime import datetime, timedelta
 import os
 import sys
 from pathlib import Path
 
 from django.db.models import F, Avg, Case, CharField, Count, Exists, Max, OuterRef, Subquery, Value, When
 from django.db.models.functions import Coalesce
+from django.utils import timezone
 
 
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -163,7 +165,6 @@ bicycles = Bicycle.objects.prefetch_related("price_history")[:3]
 
 for bicycle in bicycles:
     print(bicycle.values())
-"""
 
 references = ["80050", "59165", "80053"]
 
@@ -172,3 +173,59 @@ print(bicycles)
 
 bicycle = bicycles.filter(reference="80050").first()
 print(bicycle.name)
+
+price_history_updates = []
+
+price_history_updates.append({
+    "reference": "11111",
+    "current_price":1000,
+    "bicycle_id": 1,
+    })
+price_history_updates.append({
+    "reference": "22222",
+    "current_price":2000,
+    "bicycle_id": 2,
+    })
+
+for i, item in enumerate(price_history_updates):
+    if item["reference"] == "11111":
+        print(i)
+
+from django.core.cache import cache
+
+cache.set("test", "hello", timeout=60)
+print(cache.get("test"))
+cache.delete("test")
+print(cache.get("test"))
+
+
+bicycles_data_in_db = list(Bicycle.objects.filter(web="biking_point").values_list("reference", "id", "current_price"))
+
+bicycles_data = {
+    reference: {
+        "bicycle_id": bicycle_id,
+        "current_price": current_price,
+    }
+    for reference, bicycle_id, current_price in bicycles_data_in_db
+}
+print(bicycles_data.get("32784")["current_price"])
+
+print("32784" in bicycles_data)
+bicycle_references = ["57733", "59971"]
+bicycles = Bicycle.objects.filter(reference__in=bicycle_references).values_list("reference")
+print(bicycles)
+for bicycle in bicycles:
+    print(bicycle)
+
+now = timezone.now() - timedelta(days=3)
+print(now)
+"""
+
+
+price_history_updates = {
+    "reference":1,
+    "current_price":2,
+    "bicycle_id":3,
+    }
+
+print(price_history_updates["bicycle_id"])
