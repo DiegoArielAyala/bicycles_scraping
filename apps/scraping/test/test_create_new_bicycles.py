@@ -5,8 +5,8 @@ from django.test import SimpleTestCase
 from rest_framework.test import APITestCase
 
 from apps.scraping.models import Bicycle, PriceHistory
-from apps.scraping.services.bicycles_services import clean_duplicates_bicycles, create_new_bicycles
-from core.utils import create_price_history
+from apps.scraping.services.bicycles import create_new_bicycles
+from apps.scraping.services.price_history import create_price_history_objects
 
 class TestCreateNewBicycles(APITestCase):
     def setUp(self):
@@ -52,47 +52,7 @@ class TestCreateNewBicycles(APITestCase):
         bicycle = Bicycle.objects.get(reference="11111")
         price_history = [PriceHistory(bicycle_id=bicycle.id, date=datetime.now().date(), price=500)]
         self.assertEqual(PriceHistory.objects.get(bicycle_id=bicycle.id).price, 1000)
-        create_price_history(price_history)
+        create_price_history_objects(price_history)
         self.assertEqual(PriceHistory.objects.get(bicycle_id=bicycle.id).price, 500)
 
-class TestCleanDuplicatedBicycles(SimpleTestCase):
-    def setUp(self):
-        self.new_bicycles = [{
-            "name": "Bike Test 1",
-            "current_price": 1000,
-            "url": "www.biketest1.com",
-            "img": "www.imagetest1.com",
-            "bicycle_reference": "11111",
-            "web": "test",
-        }, {
-            "name": "Bike Test 2",
-            "current_price": 1000,
-            "url": "www.biketest2.com",
-            "img": "www.imagetest2.com",
-            "bicycle_reference": "11111",
-            "web": "test",
-        }]
-    
-    def test_clean_duplicated_bicycles(self):
-        self.assertEqual(len(self.new_bicycles), 2)
-        self.cleaned_bicycles = clean_duplicates_bicycles(self.new_bicycles)
-        self.assertEqual(len(self.cleaned_bicycles), 1)
-        self.assertEqual(self.cleaned_bicycles[0]["name"], "Bike Test 1")
 
-class TestCreateBicycles(APITestCase):
-    def setUp(self):    
-        self.new_test_bicycles = [{
-            "name": "Bike Test 1",
-            "current_price": 1000,
-            "url": "www.biketest1.com",
-            "img": "www.imagetest1.com",
-            "reference": "11111",
-            "web": "test",
-        }, {
-            "name": "Bike Test 2",
-            "current_price": 2000,
-            "url": "www.biketest2.com",
-            "img": "www.imagetest2.com",
-            "reference": "22222",
-            "web": "test",
-        }]

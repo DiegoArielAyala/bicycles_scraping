@@ -6,7 +6,6 @@ from django.utils import timezone
 
 User = get_user_model()
 
-# Create your models here.
 class Bicycle(models.Model):
     name=models.TextField(max_length=200)
     img=models.URLField(default="Image not available")
@@ -15,6 +14,8 @@ class Bicycle(models.Model):
     reference=models.CharField(max_length=30)
     web=models.TextField(max_length=30)
     updated_at = models.DateTimeField(auto_now=True)
+    last_seen_at = models.DateField()
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         app_label="scraping"
@@ -40,7 +41,7 @@ class Bicycle(models.Model):
         return f"{self.name} - {self.id}"
 
 class PriceHistory(models.Model):
-    bicycle=models.ForeignKey(Bicycle, on_delete=models.CASCADE, related_name="price_history")
+    bicycle=models.ForeignKey(Bicycle, on_delete=models.PROTECT, related_name="price_history")
     date=models.DateField(default=timezone.now)
     price=models.DecimalField(max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -59,8 +60,8 @@ class PriceHistory(models.Model):
 
 class Subscription(models.Model):
     email=models.EmailField(max_length=120)
-    bicycle=models.ForeignKey(Bicycle, on_delete=models.CASCADE, related_name="subscriptions")
-    user=models.ForeignKey(User, on_delete=models.CASCADE, related_name="subscriptions", null=True, blank=True)
+    bicycle=models.ForeignKey(Bicycle, on_delete=models.PROTECT, related_name="subscriptions")
+    user=models.ForeignKey(User, on_delete=models.PROTECT, related_name="subscriptions", null=True, blank=True)
     unsubscribe_token=models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     created_at=models.DateTimeField(auto_now_add=True)
 

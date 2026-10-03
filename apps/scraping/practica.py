@@ -59,12 +59,14 @@ print(next(gen))
 print(next(gen))
 print(next(gen))
 """
+from datetime import datetime, timedelta
 import os
 import sys
 from pathlib import Path
 
 from django.db.models import F, Avg, Case, CharField, Count, Exists, Max, OuterRef, Subquery, Value, When
 from django.db.models.functions import Coalesce
+from django.utils import timezone
 
 
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -209,9 +211,21 @@ bicycles_data = {
 print(bicycles_data.get("32784")["current_price"])
 
 print("32784" in bicycles_data)
-"""
 bicycle_references = ["57733", "59971"]
 bicycles = Bicycle.objects.filter(reference__in=bicycle_references).values_list("reference")
 print(bicycles)
 for bicycle in bicycles:
     print(bicycle)
+
+now = timezone.now() - timedelta(days=3)
+print(now)
+"""
+
+
+price_history_updates = {
+    "reference":1,
+    "current_price":2,
+    "bicycle_id":3,
+    }
+
+print(price_history_updates["bicycle_id"])

@@ -5,7 +5,7 @@ from core.exceptions import InvalidFormError
 class BicycleForm(forms.ModelForm):
     class Meta:
         model = Bicycle
-        fields = ["name", "img", "current_price", "url", "reference", "web"]
+        fields = ["name", "img", "current_price", "url", "reference", "web", "last_seen_at", "is_active"]
 
 
 class SubscriptionForm(forms.ModelForm):

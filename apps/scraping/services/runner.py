@@ -16,8 +16,7 @@ django.setup()
 
 from apps.scraping.constants import CHROME_USER_AGENT
 from apps.scraping.services.metrics import get_metrics
-from apps.scraping.services.bicycles import create_bicycles 
-from apps.scraping.models import Bicycle
+from apps.scraping.services.bicycles import create_bicycles, delete_bicycles
 from apps.scraping.strategies.factory import strategy_factory
 from apps.scraping.decorators import log_function
 from core.exceptions import CloudflareChallengeError 
@@ -46,10 +45,8 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
             if scrape_aborted and not all_product_elements_html:
                 logger.error({"event": "scrape_aborted_without_products", "web": web})
             else:
-                bicycles_to_delete = await sync_to_async(create_bicycles)(all_product_elements_html, web)
-
-                if delete and bicycles_to_delete:
-                    await delete_bicycles(bicycles_to_delete, page, web)
+                await sync_to_async(create_bicycles)(all_product_elements_html, web)
+                await sync_to_async(delete_bicycles)()
         finally:
             await close_session(context, page)
             await browser.close()
@@ -186,24 +183,4 @@ async def wait_for_cloudflare_clear(page):
     return html
 
 
-"Se podria mejorar cambiando la estrategia para buscar si la bicycleta existe. Si delete_references es mayor a cierto numero, extraer las referencias de todas las paginas de busqueda de bicicleta y eliminarlas de delete_references. Esto se puede hacer mas eficiente si se guardan las referencias ya encontradas en el scraping (esto es util si se pudo scrapear la mayoria de paginas y delete_references queda de un tamaño pequeño). Si delete_references no es tan extenso, buscar bicicleta por bicicleta si existe o no"
-async def delete_bicycles(delete_references, page, web):
-    logger.info({"event": "deleting_bicycles", "number_of_references": len(delete_references), "references_to_delete": delete_references})
-    bicycles = await sync_to_async(lambda: list(Bicycle.objects.filter(reference__in=delete_references)))()
-    strategy = strategy_factory(web)
-
-    for bicycle in bicycles:
-        try:
-            # Look for reference on the corresponding web
-            bicycle_exist = await strategy.bicycle_exists(page, bicycle.reference, bicycle.url)
-
-            # If bicycle not exist in web, delete it
-            if not bicycle_exist:
-                await sync_to_async(bicycle.delete)()
-                logger.info({"event": "bicycle_deleted", "reference": bicycle.reference})
-            else:
-                logger.info({"event": "bicycle_exists", "reference": bicycle.reference})
-
-        except Exception as e:
-            logger.error({"event": "delete_bicycle_error", "reference": bicycle.reference, "error": str(e)})
 

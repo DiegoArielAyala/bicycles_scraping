@@ -9,8 +9,9 @@ from apps.scraping.services.price_history import update_price_histories
 from apps.scraping.strategies.factory import strategy_factory
 from apps.scraping.utils.html import get_href
 from core.exceptions import InvalidFormError, ReferenceNotFoundError, PriceNotFoundError
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.db import transaction
+from django.utils import timezone
 
 logger = logging.getLogger(__name__)
 
@@ -30,12 +31,10 @@ def create_bicycles(product_elements_html, web):
         
     create_new_bicycles(new_bicycles)
 
-    bicycles_to_delete = []
     if price_history_updates:
-        bicycles_to_delete = update_price_histories(price_history_updates, current_prices_by_id, bicycles_by_reference)
+        update_price_histories(price_history_updates, current_prices_by_id)
+        update_last_seen_at(price_history_updates)
         
-    return bicycles_to_delete
-
 def create_new_bicycles(new_bicycles):
     with log_context("create_new_bicycles"):
         validated_bicycle_forms = []
@@ -51,8 +50,8 @@ def create_new_bicycles(new_bicycles):
 
 
 def process_product_elements_html(product_elements_html, web, strategy, bicycles_by_reference):
-    price_history_updates = []
     new_bicycles = []
+    price_history_updates = []
     seen_references = set()
     bicycle_index = 1
 
@@ -90,6 +89,7 @@ def process_product_elements_html(product_elements_html, web, strategy, bicycles
                 "current_price":current_price,
                 "bicycle_id":bicycles_by_reference[reference]["bicycle_id"],
                 })
+
     return price_history_updates, new_bicycles
 
 def prepare_new_bicycle(product_element, web, reference, current_price, strategy):
@@ -101,7 +101,7 @@ def prepare_new_bicycle(product_element, web, reference, current_price, strategy
     
     bicycle_name, bicycle_img = strategy.get_product_info(product_element)
 
-    return {"name": bicycle_name, "img": bicycle_img, "url":bicycle_href, "reference":reference, "current_price": current_price, "web":web}
+    return {"name": bicycle_name, "img": bicycle_img, "url":bicycle_href, "reference":reference, "current_price": current_price, "web":web, "last_seen_at":timezone.localdate()}
 
 def save_new_bicycles(validated_bicycle_forms):
     logger.info({"event": "saving_new_bicycles", "number_of_new_bicycles": len(validated_bicycle_forms)})
@@ -129,3 +129,32 @@ def get_bicycles_data(web):
         current_prices_by_id[bicycle_id] = current_price
 
     return bicycles_by_reference, current_prices_by_id
+
+def delete_bicycles():
+    logger.info({"event": "start_inactive_bicycles"})
+    bicycles = Bicycle.objects.all()
+    now = timezone.localdate()
+
+    inactive_bicycles = []
+    for bicycle in bicycles:
+        if now - bicycle.last_seen_at > timedelta(days=3):
+            bicycle.is_active = False
+            inactive_bicycles.append(bicycle)
+            
+    logger.info({"event": "inactive_bicycles", "inactive bicycles": inactive_bicycles})
+    Bicycle.objects.bulk_update(inactive_bicycles, ["is_active"])
+
+
+def update_last_seen_at(price_history_updates):
+    bicycles_id = []
+    for price_history in price_history_updates:
+        print(price_history)
+        print(type(price_history))
+        bicycles_id.append(price_history["bicycle_id"])
+    
+    bicycles = list(Bicycle.objects.filter(id__in=bicycles_id))
+
+    for bicycle in bicycles:
+        bicycle.last_seen_at = timezone.localdate()
+    
+    Bicycle.objects.bulk_update(bicycles, ["last_seen_at"])

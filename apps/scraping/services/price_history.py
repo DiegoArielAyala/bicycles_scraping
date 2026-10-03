@@ -6,7 +6,7 @@ from django.db import transaction
 logger = logging.getLogger(__name__)
 
 
-def update_price_histories(price_history_updates, current_prices_by_id, bicycles_by_reference):
+def update_price_histories(price_history_updates, current_prices_by_id):
     price_history_objects = create_price_history_objects(price_history_updates)
 
     new_price_histories = save_price_histories(price_history_objects)
@@ -17,11 +17,7 @@ def update_price_histories(price_history_updates, current_prices_by_id, bicycles
 
     if price_drops:
         send_price_drop_emails(price_drops)
-
-    for price_history in price_history_updates:
-        bicycles_by_reference.pop(price_history["reference"])
     
-    return bicycles_by_reference
 
 def create_price_history_objects(price_history_updates):
     price_history_objects = []
