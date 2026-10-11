@@ -18,9 +18,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from pages import home_page
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", home_page, name="home"),
+    path("", include("apps.accounts.urls")),
+    path("", include("apps.alerts.urls")),
+    path("", include("apps.catalog.urls")),
     path("", include("apps.scraping.urls")),
+    path("api/v1/", include("apps.accounts.api.v1.urls")),
+    path("api/v1/", include("apps.alerts.api.v1.urls")),
+    path("api/v1/", include("apps.catalog.api.v1.urls")),
     path("api/v1/", include("apps.scraping.api.v1.urls")),
     path("accounts/", include("allauth.urls")),
 ]

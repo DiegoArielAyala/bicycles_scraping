@@ -68,6 +68,8 @@ from django.db.models import F, Avg, Case, CharField, Count, Exists, Max, OuterR
 from django.db.models.functions import Coalesce
 from django.utils import timezone
 
+from apps.scraping.dataclasses import ScrapedProduct
+
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(BASE_DIR))
@@ -76,7 +78,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
 import django
 django.setup()
-from apps.scraping.models import Bicycle, PriceHistory
+from apps.catalog.models import Bicycle, PriceHistory
 """
 print(list(Bicycle.objects.values_list("current_price", flat=True)[:10]))
 print(Bicycle.objects.values("web").distinct())
@@ -219,7 +221,6 @@ for bicycle in bicycles:
 
 now = timezone.now() - timedelta(days=3)
 print(now)
-"""
 
 
 price_history_updates = {
@@ -229,3 +230,8 @@ price_history_updates = {
     }
 
 print(price_history_updates["bicycle_id"])
+"""
+
+scraped_product = timezone.localdate()
+print(scraped_product)
+print(type(scraped_product))

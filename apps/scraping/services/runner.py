@@ -14,9 +14,9 @@ from playwright_stealth import Stealth
 os.environ.setdefault("DJANGO_SETTINGS_MODULE","config.settings")
 django.setup()
 
+from apps.catalog.services.bicycles import create_bicycles, delete_bicycles
 from apps.scraping.constants import CHROME_USER_AGENT
 from apps.scraping.services.metrics import get_metrics
-from apps.scraping.services.bicycles import create_bicycles, delete_bicycles
 from apps.scraping.strategies.factory import strategy_factory
 from apps.scraping.decorators import log_function
 from core.exceptions import CloudflareChallengeError 

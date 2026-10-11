@@ -5,7 +5,7 @@ from asgiref.sync import sync_to_async
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
-from apps.scraping.models import Bicycle
+from apps.catalog.models import Bicycle
 
 async def search_bicycles(reference):
     database_url=os.getenv("DATABASE_URL_PRODUCTION")

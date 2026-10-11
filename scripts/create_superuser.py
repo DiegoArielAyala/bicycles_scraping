@@ -1,10 +1,11 @@
 import django
 import os
 
+from apps.accounts.permissions import ROLE_ADMIN
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
-from apps.scraping.permissions import ROLE_ADMIN
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 

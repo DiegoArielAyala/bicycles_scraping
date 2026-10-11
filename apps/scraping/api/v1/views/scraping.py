@@ -1,5 +1,5 @@
 from apps.scraping.api.v1.serializers import ScrapingSerializer
-from apps.scraping.permissions import IsAdminOrCronService
+from apps.accounts.permissions import IsAdminOrCronService
 from apps.scraping.services.github_actions import trigger_github_action
 from rest_framework import status
 from rest_framework.response import Response

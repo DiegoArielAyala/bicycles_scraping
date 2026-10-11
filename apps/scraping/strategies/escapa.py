@@ -3,9 +3,10 @@ import logging
 import random
 import re
 
-from apps.scraping.strategies.base import ScrapingStrategy
 from bs4 import BeautifulSoup
 from playwright.async_api import TimeoutError
+
+from apps.scraping.strategies.base import ScrapingStrategy
 
 logger = logging.getLogger(__name__)
 

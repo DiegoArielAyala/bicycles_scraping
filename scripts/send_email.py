@@ -1,8 +1,9 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.scraping.emails.services import EmailService
-from apps.scraping.models import Bicycle, Subscription
+from apps.alerts.emails.services import EmailService
+from apps.alerts.models import Subscription
+from apps.catalog.models import Bicycle
 
 
 class TestEmailView(APIView):

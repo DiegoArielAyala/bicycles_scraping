@@ -4786,3 +4786,43 @@ server closed the connection unexpectedly
 	This probably means the server terminated abnormally
 	before or while processing the request.
 
+Traceback (most recent call last):
+  File "/home/diegoayala/bike-price-tracker/scripts/run_scraper.py", line 9, in <module>
+    from apps.scraping.services.runner import run_scraper
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/runner.py", line 19, in <module>
+    from apps.scraping.services.bicycles import create_bicycles, delete_bicycles
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/bicycles.py", line 8, in <module>
+    from apps.scraping.services.price_history import update_price_histories
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/price_history.py", line 3, in <module>
+    from apps.scraping.services.price_alerts import send_price_drop_emails, should_send_price_alert
+ModuleNotFoundError: No module named 'apps.scraping.services.price_alerts'
+Traceback (most recent call last):
+  File "/home/diegoayala/bike-price-tracker/scripts/run_scraper.py", line 9, in <module>
+    from apps.scraping.services.runner import run_scraper
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/runner.py", line 19, in <module>
+    from apps.scraping.services.bicycles import create_bicycles, delete_bicycles
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/bicycles.py", line 8, in <module>
+    from apps.scraping.services.price_history import update_price_histories
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/price_history.py", line 3, in <module>
+    from apps.scraping.services.price_alerts import send_price_drop_emails, should_send_price_alert
+ModuleNotFoundError: No module named 'apps.scraping.services.price_alerts'
+Traceback (most recent call last):
+  File "/home/diegoayala/bike-price-tracker/scripts/run_scraper.py", line 9, in <module>
+    from apps.scraping.services.runner import run_scraper
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/runner.py", line 19, in <module>
+    from apps.scraping.services.bicycles import create_bicycles, delete_bicycles
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/bicycles.py", line 8, in <module>
+    from apps.scraping.services.price_history import update_price_histories
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/price_history.py", line 3, in <module>
+    from apps.scraping.services.price_alerts import send_price_drop_emails, should_send_price_alert
+ModuleNotFoundError: No module named 'apps.scraping.services.price_alerts'
+Traceback (most recent call last):
+  File "/home/diegoayala/bike-price-tracker/scripts/run_scraper.py", line 9, in <module>
+    from apps.scraping.services.runner import run_scraper
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/runner.py", line 19, in <module>
+    from apps.scraping.services.bicycles import create_bicycles, delete_bicycles
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/bicycles.py", line 8, in <module>
+    from apps.scraping.services.price_history import update_price_histories
+  File "/home/diegoayala/bike-price-tracker/apps/scraping/services/price_history.py", line 3, in <module>
+    from apps.scraping.services.price_alerts import send_price_drop_emails, should_send_price_alert
+ModuleNotFoundError: No module named 'apps.scraping.services.price_alerts'

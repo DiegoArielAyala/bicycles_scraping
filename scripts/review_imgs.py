@@ -1,18 +1,18 @@
 import asyncio
 import django
+import logging
 import os
 import random
-import logging
 
-from playwright.async_api import async_playwright, Error as PlaywrightError, TimeoutError as PlaywrightTimeoutError
-from bs4 import BeautifulSoup
 from asgiref.sync import sync_to_async
+from bs4 import BeautifulSoup
 from django.core.exceptions import ObjectDoesNotExist
+from playwright.async_api import async_playwright, Error as PlaywrightError, TimeoutError as PlaywrightTimeoutError
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
-from apps.scraping.models import Bicycle
+from apps.catalog.models import Bicycle
 from apps.scraping.constants import USER_AGENTS
 from apps.scraping.strategies.biking_point import BikingPointStrategy
 

@@ -1,10 +1,11 @@
-from decimal import Decimal
 import logging
 
 from abc import ABC, abstractmethod
 from bs4 import Tag
-from core.exceptions import PriceNotFoundError
+from decimal import Decimal
 from typing import Optional, Tuple
+
+from core.exceptions import PriceNotFoundError
 
 
 logger = logging.getLogger(__name__)
