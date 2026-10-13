@@ -5,13 +5,14 @@ from datetime import datetime, timedelta
 from django.db import transaction
 from django.utils import timezone
 
+from apps.alerts.services.price_alerts import send_price_drop_emails
 from apps.catalog.forms import validated_bicycle_form
+from apps.catalog.services.price_history import create_price_history_objects, prepare_current_price_updates, save_current_prices, save_price_histories
 from apps.scraping.context_managers import log_context
 from apps.scraping.dataclasses import ScrapedProduct
 from apps.scraping.decorators import log_function
 from apps.catalog.models import Bicycle, PriceHistory
 from apps.scraping.services.metrics import increment
-from apps.catalog.services.price_history import update_existing_bicycles
 from apps.scraping.strategies.factory import strategy_factory
 from apps.scraping.utils.html import get_href
 from core.exceptions import InvalidFormError, ReferenceNotFoundError, PriceNotFoundError
@@ -36,6 +37,21 @@ def create_bicycles(product_elements_html, web):
 
     if price_history_updates:
         update_existing_bicycles(price_history_updates, current_prices_by_id)
+
+
+def update_existing_bicycles(price_history_updates, current_prices_by_id):
+    price_history_objects = create_price_history_objects(price_history_updates)
+
+    new_price_histories = save_price_histories(price_history_objects)
+
+    bicycles_objects, price_drops = prepare_current_price_updates(new_price_histories, current_prices_by_id)
+
+    save_current_prices(bicycles_objects)
+
+    update_last_seen_at(price_history_updates)
+
+    if price_drops:
+        send_price_drop_emails(price_drops)
         
 def create_new_bicycles(new_bicycles):
     with log_context("create_new_bicycles"):

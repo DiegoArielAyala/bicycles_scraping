@@ -2,26 +2,11 @@ import logging
 
 from django.db import transaction
 
-from apps.alerts.services.price_alerts import send_price_drop_emails, should_send_price_alert
+from apps.alerts.services.price_alerts import should_send_price_alert
 from apps.catalog.models import PriceHistory, Bicycle
-from apps.catalog.services.bicycles import update_last_seen_at
 
 logger = logging.getLogger(__name__)
 
-def update_existing_bicycles(price_history_updates, current_prices_by_id):
-    price_history_objects = create_price_history_objects(price_history_updates)
-
-    new_price_histories = save_price_histories(price_history_objects)
-
-    bicycles_objects, price_drops = prepare_current_price_updates(new_price_histories, current_prices_by_id)
-
-    save_current_prices(bicycles_objects)
-
-    update_last_seen_at(price_history_updates)
-
-    if price_drops:
-        send_price_drop_emails(price_drops)
-    
 
 def create_price_history_objects(price_history_updates):
     price_history_objects = []
