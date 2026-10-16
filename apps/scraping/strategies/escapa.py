@@ -1,10 +1,4 @@
-import asyncio
 import logging
-import random
-import re
-
-from bs4 import BeautifulSoup
-from playwright.async_api import TimeoutError
 
 from apps.scraping.strategies.base import ScrapingStrategy
 
@@ -39,31 +33,6 @@ class EscapaStrategy(ScrapingStrategy):
         
         return product_elements_html
     
-    async def bicycle_exists(self, page, reference, href):
-        url = self.BASE_URL
-        await page.goto(url)
-        
-        try:
-            await page.click("button#onetrust-accept-btn-handler", timeout=3000)
-        except TimeoutError:
-            pass
-
-        await page.fill("input[name='s']", str(reference))
-        await asyncio.sleep(random.uniform(3, 6))
-        await page.wait_for_selector("div.dfd-card-flag", timeout=5000)
-
-        content = await page.content()
-        soup = BeautifulSoup(content, "html.parser")
-        div = soup.find("div", class_="dfd-card-flag", attrs={"data-availability":"out-of-stock"})
-
-        if (div and (div.text.strip() == "Agotado" or "Prueba de nuevo con otra búsqueda…" in soup.text)) or await self.check_href(page, href):
-            logger.info({"event": "bicycle_not_exists", "web": "escapa", "reference": reference})
-            return False
-        
-        else:
-            logger.info({"event": "bicycle_exists", "web": "escapa", "reference": reference})
-            return True
-        
     def get_list_url(self, counter):
         return self.SEARCH_ENDPOINT.format(counter)
 
@@ -73,8 +42,4 @@ class EscapaStrategy(ScrapingStrategy):
         return href == page.url
 
     def is_last_page(soup):
-        search_number = (re.search(r"Mostrando \d+-(\d+)", soup.text)).group(1)
-        number_bicycles = (re.search(r"de (\d+) producto", soup.text)).group(1)
-        logger.debug(search_number)
-        logger.debug(number_bicycles)
-        return number_bicycles == search_number
+        return "No hay productos bajo esta categoría." in soup.text

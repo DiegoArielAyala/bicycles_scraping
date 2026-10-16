@@ -15,3 +15,5 @@ practica.py
 views.py
 views_anterior.py
 client google oauth/
+logs/
+wget-log

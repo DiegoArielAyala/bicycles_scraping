@@ -2,7 +2,6 @@ import asyncio
 import logging
 import random
 
-from contextlib import contextmanager
 from playwright.async_api import async_playwright
 from playwright.async_api import TimeoutError as PlaywrightTimeoutError
 from playwright_stealth import Stealth
@@ -129,7 +128,7 @@ class BrowserSession():
         except PlaywrightTimeoutError:
             logger.error({"event": "cloudflare_challenge_timeout"})
             raise CloudflareChallengeError("Cloudflare challenge did not clear")
-
+            
         html = await self.page.content()
         has_listing = await self.page.query_selector(self.LISTING_READY_SELECTOR)
         if self.CLOUDFLARE_MARKER in html and not has_listing:
@@ -139,11 +138,3 @@ class BrowserSession():
         return html
 
 
-@contextmanager
-def log_context(name, **kwargs):
-    logger.info({"event": "start", "name": name, **kwargs})
-    try:
-        yield
-    except Exception:
-        logger.exception({"event": "error", "name": name, **kwargs})
-        raise

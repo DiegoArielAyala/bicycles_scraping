@@ -4,7 +4,7 @@ from django.utils import timezone
 
 class Bicycle(models.Model):
     name=models.TextField(max_length=200)
-    img=models.URLField(default="Image not available")
+    img=models.URLField(null=True, blank=True)
     current_price=models.DecimalField(max_digits=8, decimal_places=2)
     url=models.URLField()
     reference=models.CharField(max_length=30)

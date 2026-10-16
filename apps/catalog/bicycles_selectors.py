@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from apps.catalog.models import Bicycle, PriceHistory
 
 def get_bicycles(q=None, min_price=None, max_price=None):
-    qs = Bicycle.objects.all()
+    qs = Bicycle.objects.filter(is_active=True)
 
     if q:
         if q.isdigit():

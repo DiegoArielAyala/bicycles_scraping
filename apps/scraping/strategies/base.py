@@ -50,10 +50,6 @@ class ScrapingStrategy(ABC):
         pass
 
     @abstractmethod
-    async def bicycle_exists(self, page, reference: str) -> bool:
-        pass
-
-    @abstractmethod
     def get_list_url(self, counter: int) -> str:
         pass
 

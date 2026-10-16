@@ -7,27 +7,12 @@ from unittest.mock import patch
 from apps.catalog.models import Bicycle, PriceHistory
 from apps.catalog.services.bicycles import create_new_bicycles
 from apps.catalog.services.price_history import save_price_histories
+from apps.scraping.dtos import ScrapedBycicles
 
 class TestCreateNewBicycles(APITestCase):
     def setUp(self):
-        self.new_bicycles = [{
-            "name": "Bike Test 1",
-            "current_price": 1000,
-            "url": "www.biketest1.com",
-            "img": "www.imagetest1.com",
-            "reference": "11111",
-            "web": "test",
-            "last_seen_at": timezone.localdate()
-        }, {
-            "name": "Bike Test 2",
-            "current_price": 1000,
-            "url": "www.biketest2.com",
-            "img": "www.imagetest2.com",
-            "reference": "22222",
-            "web": "test",
-            "last_seen_at": timezone.localdate()
-        }]
-    
+        self.new_bicycles = [ScrapedBycicles("11111", 1000, "Bike Test 1", "test",  "www.biketest1.com", timezone.localdate(), True), ScrapedBycicles("22222", 2000, "Bike Test 2", "test",  "www.biketest2.com", timezone.localdate(), True)]
+        
     def test_create_new_bicycles(self):
         create_new_bicycles(self.new_bicycles)
         bicycles = Bicycle.objects.filter(web="test")

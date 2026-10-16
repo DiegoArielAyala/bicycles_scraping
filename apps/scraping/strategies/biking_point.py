@@ -48,15 +48,6 @@ class BikingPointStrategy(ScrapingStrategy):
         product_elements_html = soup.find_all("li", class_="item product product-item")
         
         return product_elements_html
-    
-    async def bicycle_exists(self, page, reference, href):
-        url = self.SEARCH_ENDPOINT
-        await page.goto(url.format(reference))
-        content = await page.content()
-        if "La búsqueda no ha devuelto ningún resultado." in content:
-            return False
-        else:
-            return True
         
     def get_list_url(self, counter):
         return self.BASE_URL.format(counter)

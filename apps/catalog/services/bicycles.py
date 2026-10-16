@@ -8,31 +8,35 @@ from django.utils import timezone
 from apps.alerts.services.price_alerts import send_price_drop_emails
 from apps.catalog.forms import validated_bicycle_form
 from apps.catalog.services.price_history import create_price_history_objects, prepare_current_price_updates, save_current_prices, save_price_histories
-from apps.scraping.context_managers import log_context
-from apps.scraping.dataclasses import ScrapedProduct
-from apps.scraping.decorators import log_function
+from apps.scraping.dtos import ScrapedBycicles
 from apps.catalog.models import Bicycle, PriceHistory
-from apps.scraping.services.metrics import increment
-from apps.scraping.strategies.factory import strategy_factory
-from apps.scraping.utils.html import get_href
-from core.exceptions import InvalidFormError, ReferenceNotFoundError, PriceNotFoundError
+from core.exceptions import InvalidFormError
+from core.logging import log_function, log_context
 
 logger = logging.getLogger(__name__)
 
-@log_function
-def create_bicycles(product_elements_html, web):
-    logger.debug({"event": "create_bicycles_start", "web": web, "items": len(product_elements_html)})
 
-    if len(product_elements_html) == 0:
-        logger.debug({"event": "any_bicycle_scraped", "web": web, "items": len(product_elements_html)})
-        return
-
-    strategy = strategy_factory(web)
-
+def process_scraped_prices(scraped_prices, web):
     bicycles_by_reference, current_prices_by_id = get_bicycles_data_from_db(web)
+    new_scraped_prices = []
+    price_history_updates = []
 
-    price_history_updates, new_bicycles = process_product_elements_html(product_elements_html, web, strategy, bicycles_by_reference)
-        
+    for scraped_price in scraped_prices:
+        if scraped_price.reference not in bicycles_by_reference:
+            scraped_prices.append(scraped_price)
+
+        price_history_updates.append({
+            "reference":scraped_price.reference,
+            "current_price":scraped_price.current_price,
+            "bicycle_id":bicycles_by_reference[scraped_price.reference]["bicycle_id"],
+            })
+    
+    return new_scraped_prices, price_history_updates, current_prices_by_id
+
+@log_function
+def process_scraped_bicycles(new_bicycles: list[ScrapedBycicles], price_history_updates, current_prices_by_id):
+    logger.debug({"event": "process_scraped_bicycles", "new_bicycles": len(new_bicycles), "price_history_updates": len(price_history_updates)})
+
     create_new_bicycles(new_bicycles)
 
     if price_history_updates:
@@ -56,6 +60,7 @@ def update_existing_bicycles(price_history_updates, current_prices_by_id):
 def create_new_bicycles(new_bicycles):
     with log_context("create_new_bicycles"):
         validated_bicycle_forms = []
+        
         for new_bicycle in new_bicycles:
             new_bicycle_dict = asdict(new_bicycle)
             try:
@@ -67,62 +72,6 @@ def create_new_bicycles(new_bicycles):
         
         save_new_bicycles(validated_bicycle_forms)
 
-
-def process_product_elements_html(product_elements_html, web, strategy, bicycles_by_reference):
-    new_bicycles = []
-    price_history_updates = []
-    seen_references = set()
-    bicycle_index = 1
-
-    for product_element in product_elements_html:
-        bicycle_index += 1
-        
-        with log_context("process_product", web=web, index=bicycle_index):
-            try:
-                reference = strategy.get_reference(product_element)
-            except ReferenceNotFoundError:
-                logger.warning({"event": "reference_not_found", "web": web})
-                continue
-            
-            if reference in seen_references:
-                continue
-
-            try:
-                current_price = strategy.get_price(product_element)
-            except PriceNotFoundError:
-                increment("PriceNotFoundError", web=web)
-                logger.warning({"event": "price_not_found_error", "web": web, "reference": reference})
-                continue
-            
-            seen_references.add(reference)
-
-            if reference not in bicycles_by_reference:
-                new_bicycle = prepare_new_bicycle(product_element, web, reference, current_price, strategy)
-
-                if new_bicycle:
-                    new_bicycles.append(new_bicycle)
-                continue
-
-            price_history_updates.append({
-                "reference":reference,
-                "current_price":current_price,
-                "bicycle_id":bicycles_by_reference[reference]["bicycle_id"],
-                })
-
-    return price_history_updates, new_bicycles
-
-def prepare_new_bicycle(product_element, web, reference, current_price, strategy):
-    bicycle_href = get_href(product_element)
-
-    if not bicycle_href:
-        logger.error({"event": "href_not_found", "web": web})
-        return None
-    
-    bicycle_name, bicycle_img = strategy.get_product_info(product_element)
-
-    scraped_product = ScrapedProduct(reference, current_price, bicycle_name, web,  bicycle_href, timezone.localdate(), bicycle_img)
-
-    return scraped_product
 
 def save_new_bicycles(validated_bicycle_forms):
     logger.info({"event": "saving_new_bicycles", "number_of_new_bicycles": len(validated_bicycle_forms)})
@@ -151,29 +100,18 @@ def get_bicycles_data_from_db(web):
 
     return bicycles_by_reference, current_prices_by_id
 
-def delete_bicycles():
+def delete_bicycles(web):
     logger.info({"event": "start_inactive_bicycles"})
-    bicycles = Bicycle.objects.all()
-    now = timezone.localdate()
 
-    inactive_bicycles = []
-    for bicycle in bicycles:
-        if now - bicycle.last_seen_at > timedelta(days=3):
-            bicycle.is_active = False
-            inactive_bicycles.append(bicycle)
-            
-    logger.info({"event": "inactive_bicycles", "inactive bicycles": inactive_bicycles})
-    Bicycle.objects.bulk_update(inactive_bicycles, ["is_active"])
+    cutoff = timezone.localdate() - timedelta(days=2)
+    inactive_bicycles = Bicycle.objects.filter(web=web, is_active=True, last_seen_at__lt=cutoff).update(is_active=False)
+      
+    logger.info({"event": "inactive_bicycles", "count": len(inactive_bicycles), "inactive bicycles": inactive_bicycles})
 
 
 def update_last_seen_at(price_history_updates):
-    bicycles_id = []
-    for price_history in price_history_updates:
-        bicycles_id.append(price_history["bicycle_id"])
+    bicycles_ids = [update["bicycle_id"] for update in price_history_updates]
     
-    bicycles = list(Bicycle.objects.filter(id__in=bicycles_id))
+    bicycles = Bicycle.objects.filter(id__in=bicycles_ids).update(last_seen_at=timezone.localdate(), is_active=True)
 
-    for bicycle in bicycles:
-        bicycle.last_seen_at = timezone.localdate()
-    
-    Bicycle.objects.bulk_update(bicycles, ["last_seen_at"])
+    logger.info({"event": "update_last_seen_at", "count": bicycles})

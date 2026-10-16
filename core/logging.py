@@ -1,10 +1,22 @@
-import asyncio
 import logging
+import asyncio
 import time
 
 from functools import wraps
+from contextlib import contextmanager
+
 
 logger = logging.getLogger(__name__)
+
+@contextmanager
+def log_context(name, **kwargs):
+    logger.info({"event": "start", "name": name, **kwargs})
+    try:
+        yield
+    except Exception:
+        logger.exception({"event": "error", "name": name, **kwargs})
+        raise
+
 
 def log_function(func):
     if asyncio.iscoroutinefunction(func):
@@ -26,7 +38,6 @@ def log_function(func):
     def sync_wrapper(*args, **kwargs):
         logger.info(f"Executing {func.__name__}")
         try:
-            start = time.time()
             result = func(*args, **kwargs)
             logger.info(f"End function {func.__name__}")
             return result
