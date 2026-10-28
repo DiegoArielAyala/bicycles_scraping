@@ -11,8 +11,29 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env: 
+          POSTGRES_DB: bike_price_tracker_test
+          POSTGRES_USER: ci_user
+          POSTGRES_PASSWORD: ci_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ci_user -d bike_price_tracker_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     env:
       SECRET_KEY: "ci-test-only-not-a-real-secret"
+      DB_HOST: 127.0.0.1
+      DB_PORT: "5432"
+      DB_NAME: bike_price_tracker_test
+      DB_USER: ci_user
+      DB_PASSWORD: ci_password
 
     steps:
       - name: Checkout code

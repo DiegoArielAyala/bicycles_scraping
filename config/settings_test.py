@@ -6,13 +6,6 @@ Usage:
 
 from config.settings import *  # noqa: F403
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ":memory:",
-    }
-}
-
 # Speed up User.objects.create_user / signup in tests (hashing is not under test).
 
 PASSWORD_HASHERS = [
