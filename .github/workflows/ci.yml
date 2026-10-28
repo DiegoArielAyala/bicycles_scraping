@@ -11,6 +11,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
 
     steps:
       - name: Checkout code
@@ -28,6 +30,7 @@ jobs:
         
       - name: Checkout Django configuration
         run: python manage.py check --settings=config.settings_test
+
 
       - name: Run tests
         run: python manage.py test --settings=config.settings_test
