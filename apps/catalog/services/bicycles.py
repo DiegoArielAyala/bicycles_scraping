@@ -1,13 +1,13 @@
 import logging
 
 from dataclasses import asdict
-from datetime import datetime, timedelta
+from datetime import timedelta
 from django.db import transaction
 from django.utils import timezone
 
 from apps.alerts.services.price_alerts import send_price_drop_emails
 from apps.catalog.forms import validated_bicycle_form
-from apps.catalog.services.price_history import create_price_history_objects, prepare_current_price_updates, save_current_prices, save_price_histories
+from apps.catalog.services.price_history import prepare_price_history_objects, prepare_current_price_updates, save_prices
 from apps.scraping.dtos import ScrapedBycicles
 from apps.catalog.models import Bicycle, PriceHistory
 from core.exceptions import InvalidFormError
@@ -23,13 +23,13 @@ def process_scraped_prices(scraped_prices, web):
 
     for scraped_price in scraped_prices:
         if scraped_price.reference not in bicycles_by_reference:
-            scraped_prices.append(scraped_price)
-
-        price_history_updates.append({
-            "reference":scraped_price.reference,
-            "current_price":scraped_price.current_price,
-            "bicycle_id":bicycles_by_reference[scraped_price.reference]["bicycle_id"],
-            })
+            new_scraped_prices.append(scraped_price)
+        else:
+            price_history_updates.append({
+                "reference":scraped_price.reference,
+                "current_price":scraped_price.current_price,
+                "bicycle_id":bicycles_by_reference[scraped_price.reference]["bicycle_id"],
+                })
     
     return new_scraped_prices, price_history_updates, current_prices_by_id
 
@@ -44,15 +44,13 @@ def process_scraped_bicycles(new_bicycles: list[ScrapedBycicles], price_history_
 
 
 def update_existing_bicycles(price_history_updates, current_prices_by_id):
-    price_history_objects = create_price_history_objects(price_history_updates)
+    price_history_objects = prepare_price_history_objects(price_history_updates)
 
-    new_price_histories = save_price_histories(price_history_objects)
+    bicycles_objects, price_drops = prepare_current_price_updates(price_history_objects, current_prices_by_id)
 
-    bicycles_objects, price_drops = prepare_current_price_updates(new_price_histories, current_prices_by_id)
-
-    save_current_prices(bicycles_objects)
-
-    update_last_seen_at(price_history_updates)
+    with transaction.atomic():
+        save_prices(price_history_objects, bicycles_objects)
+        update_last_seen_at(price_history_objects)
 
     if price_drops:
         send_price_drop_emails(price_drops)
@@ -78,7 +76,7 @@ def save_new_bicycles(validated_bicycle_forms):
     with transaction.atomic():
         new_bicycles = Bicycle.objects.bulk_create(validated_bicycle_forms)
         new_price_histories = []
-        today = datetime.now().date()
+        today = timezone.localdate()
 
         for new_bicycle in new_bicycles:
             new_price_histories.append(PriceHistory(bicycle_id=new_bicycle.id, date=today, price=new_bicycle.current_price))
@@ -106,11 +104,11 @@ def delete_bicycles(web):
     cutoff = timezone.localdate() - timedelta(days=2)
     inactive_bicycles = Bicycle.objects.filter(web=web, is_active=True, last_seen_at__lt=cutoff).update(is_active=False)
       
-    logger.info({"event": "inactive_bicycles", "count": len(inactive_bicycles), "inactive bicycles": inactive_bicycles})
+    logger.info({"event": "inactive_bicycles", "count": inactive_bicycles})
 
 
-def update_last_seen_at(price_history_updates):
-    bicycles_ids = [update["bicycle_id"] for update in price_history_updates]
+def update_last_seen_at(price_history_objects):
+    bicycles_ids = [update.bicycle_id for update in price_history_objects]
     
     bicycles = Bicycle.objects.filter(id__in=bicycles_ids).update(last_seen_at=timezone.localdate(), is_active=True)
 

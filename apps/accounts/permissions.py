@@ -1,4 +1,3 @@
-from django.conf import settings
 from rest_framework.permissions import BasePermission
 
 ROLE_USER = "user"
@@ -40,11 +39,3 @@ class IsOwnerOrModerator(BasePermission):
         ):
             return True
         return getattr(obj, "user", None) == request.user
-
-
-class IsAdminOrCronService(BasePermission):
-    def has_permission(self, request, view):
-        cron_token = request.headers.get("X-CRON-TOKEN")
-        if cron_token and cron_token == settings.CRON_SECRET_TOKEN:
-            return True
-        return user_has_role(request.user, ROLE_ADMIN)

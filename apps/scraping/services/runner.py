@@ -36,7 +36,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
     if scrape_aborted and not all_product_elements_html:
         logger.error({"event": "scrape_aborted_without_products", "web": web})
     else:
-        scraped_prices, strategy = await sync_to_async(create_scraped_prices)(all_product_elements_html, web)
+        scraped_prices, strategy = await sync_to_async(get_scraped_prices)(all_product_elements_html, web)
 
         new_scraped_prices, price_history_updates, current_prices_by_id = await sync_to_async(process_scraped_prices)(scraped_prices, web)
 
@@ -50,7 +50,7 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
     get_metrics()    
     logger.info("Scrape finished.")
 
-def create_scraped_prices(all_product_elements_html, web):
+def get_scraped_prices(all_product_elements_html, web):
     logger.debug({"event": "create_scraped_prices", "items": len(all_product_elements_html)})
 
     if len(all_product_elements_html) == 0:
@@ -68,10 +68,10 @@ def process_product_elements_html(product_elements_html, web, strategy):
     seen_references = set()
     bicycle_index = 1
 
-    for product_element in product_elements_html:
-        bicycle_index += 1
+    with log_context("process_product", web=web, products=len(product_elements_html)):
+        for product_element in product_elements_html:
+            bicycle_index += 1
         
-        with log_context("process_product", web=web, index=bicycle_index):
             try:
                 reference = strategy.get_reference(product_element)
             except ReferenceNotFoundError:
@@ -102,7 +102,7 @@ def prepare_new_bicycles(new_scraped_prices, web, strategy):
 
         if not bicycle_href:
             logger.error({"event": "href_not_found", "web": web})
-            return None
+            continue
         
         bicycle_name, bicycle_img = strategy.get_product_info(new_scraped_price.product_element)
 
@@ -129,22 +129,19 @@ async def scrape_pages(start_page, last_page, web, delete):
             logger.debug({"event": "get_url", "url": url})
             
             try:
-                html = await browser_session.get_html(url, page_number)
+                html = await browser_session.get_html(url, page_number, strategy.get_end_of_catalog_text())
             except CloudflareChallengeError:
                 logger.error({"event": "cloudflare_abort", "url": url, "page": page_number})
                 scrape_aborted = True
-                if page_number <= last_page/2:
-                    delete = False
+                delete = False
                 break
             except PlaywrightTimeoutError:
                 logger.error({"event": "page_timeout", "url": url, "page": page_number})
-                if page_number <= last_page/2:
-                    delete = False
-                break
+                delete = False
+                raise
             except PlaywrightError as e:
                 logger.error({"event": "playwright_error", "url": url, "page": page_number, "error": str(e)})
-                if page_number <= last_page/2:
-                    delete = False
+                delete = False
                 break
 
             if not html:

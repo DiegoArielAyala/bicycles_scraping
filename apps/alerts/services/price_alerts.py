@@ -1,3 +1,5 @@
+import threading
+
 from decimal import Decimal
 
 from apps.alerts.emails.services import EmailService
@@ -24,11 +26,15 @@ def send_price_drop_emails(price_drops):
             ).select_related("bicycle")
         )
 
+    threads = []
     for subscription in subscriptions:
         drop = drops_by_bicycle_id[subscription.bicycle_id]
-        EmailService.send_price_drop_email(
-            subscription=subscription,
-            bicycle=subscription.bicycle,
-            old_price=drop["old_price"],
-            new_price=drop["new_price"],
+        thread = threading.Thread(
+            target=EmailService.send_price_drop_email,
+            args=[subscription, subscription.bicycle, drop["old_price"], drop["new_price"]]
         )
+        thread.start()
+        threads.append(thread)
+
+    for thread in threads:
+        thread.join()

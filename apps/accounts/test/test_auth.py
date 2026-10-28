@@ -1,5 +1,4 @@
 from django.contrib.auth.models import Group, User
-from django.test import override_settings
 from rest_framework import status
 from rest_framework.test import APITestCase
 from unittest.mock import patch
@@ -106,14 +105,6 @@ class ScrapingPermissionsTests(APITestCase):
     def test_admin_can_scraping_with_jwt(self, mock_trigger):
         self.client.force_authenticate(user=self.admin)
         response = self.client.post("/api/v1/scraping/", {"start_page": 1, "last_page": 2, "web": "test_web", "delete": False}, format="json")
-
-        self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
-        mock_trigger.assert_called_once()
-    
-    @override_settings(CRON_SECRET_TOKEN="cron-token-test")
-    @patch("apps.scraping.api.v1.views.scraping.trigger_github_action")
-    def test_valid_cron_token_can_scraping(self, mock_trigger):
-        response = self.client.post("/api/v1/scraping/", {"start_page": 1, "last_page": 2, "web": "test_web", "delete": False}, format="json", HTTP_X_CRON_TOKEN="cron-token-test",)
 
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
         mock_trigger.assert_called_once()

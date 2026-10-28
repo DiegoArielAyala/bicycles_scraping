@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 class BikingPointStrategy(ScrapingStrategy):
     BASE_URL = "https://www.bikingpoint.es/es/bicicletas.html/?p={}"
     SEARCH_ENDPOINT = "https://www.bikingpoint.es/es/catalogsearch/result/?q={}"
+    END_OF_CATALOG_TEXT = "No podemos encontrar productos que coincida con la selección."
 
     def _extract_price(self, product_element):
         prices = product_element.find_all("span", class_="price")
@@ -52,5 +53,8 @@ class BikingPointStrategy(ScrapingStrategy):
     def get_list_url(self, counter):
         return self.BASE_URL.format(counter)
 
+    def get_end_of_catalog_text(self):
+        return self.END_OF_CATALOG_TEXT
+
     def is_last_product(self, soup):
-        return "No podemos encontrar productos que coincida con la selección." in soup.text
+        return self.END_OF_CATALOG_TEXT in soup.text

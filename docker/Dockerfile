@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright/python:latest
+FROM mcr.microsoft.com/playwright/python:v1.51.0-jammy
 
 # Directorio de trabajo
 WORKDIR /app
@@ -16,10 +16,10 @@ RUN chown -R pwuser:pwuser /app
 # Variables de entorno
 ENV DJANGO_SETTINGS_MODULE=config.settings
 ENV PYTHONUNBUFFERED=1
-ENV SECRET_KEY=build-placeholder
+ARG SECRET_KEY=build-placeholder
 
 # Recolectar estáticos
-RUN python manage.py collectstatic --noinput
+RUN SECRET_KEY="$SECRET_KEY" python manage.py collectstatic --noinput
 
 # Usuario final
 USER pwuser

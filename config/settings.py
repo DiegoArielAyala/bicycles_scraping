@@ -13,9 +13,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import dj_database_url
 import os
 
+from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
 from pathlib import Path
-from datetime import timedelta 
+from datetime import timedelta
+from celery.schedules import crontab
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,12 +28,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY") 
+SECRET_KEY = os.environ.get("SECRET_KEY", "")
+if not SECRET_KEY:
+    raise ImproperlyConfigured("SECRET_KEY must be configured.") 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = "RENDER" not in os.environ
+DEBUG = os.environ.get("DEBUG", "False").lower() in ("true", "1", "yes")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    host for host in [
+        os.environ.get("RENDER_EXTERNAL_HOSTNAME"),
+        "bicycles-scraping-docker.onrender.com",
+        "bicycles-scraping-staging.onrender.com",
+    ]
+    if host
+]
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_EXTERNAL_HOSTNAME:
@@ -66,13 +77,13 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
 
@@ -99,8 +110,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-ENV = os.getenv("ENV", "local")
-
 DATABASE_URL = os.getenv("DATABASE_URL")
 DB_HOST_STAGING = os.getenv("DB_HOST_STAGING")
 DB_HOST = os.getenv("DB_HOST")
@@ -116,7 +125,7 @@ elif DB_HOST_STAGING:
         "default": {
             "ENGINE": "django.db.backends.postgresql",
             "NAME": os.getenv("DB_NAME_STAGING"),
-            "HOST": os.getenv("DB_HOST_STAGING"),
+            "HOST": DB_HOST_STAGING,
             "PORT": os.getenv("DB_PORT_STAGING"),
             "USER": os.getenv("DB_USER_STAGING"),
             "PASSWORD": os.getenv("DB_PASSWORD_STAGING")
@@ -127,18 +136,16 @@ elif DB_HOST:
         "default": {
             "ENGINE": "django.db.backends.postgresql",
             "NAME": os.getenv("DB_NAME"),
-            "HOST": os.getenv("DB_HOST"),
+            "HOST": DB_HOST,
             "PORT": os.getenv("DB_PORT"),
             "USER": os.getenv("DB_USER"),
             "PASSWORD": os.getenv("DB_PASSWORD")
         }
     }
 else:
-    DATABASES = {
-        "default": dj_database_url.config(
-            default=DATABASE_URL
-        )
-    }
+    raise RuntimeError(
+        "Database not configured: set DATABASE_URL, DB_HOST_STAGING or DB_HOST."
+    )
 
 
 # Password validation
@@ -182,8 +189,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/'),
 ]
 
-if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    }
+}
 
 
 LOGIN_URL = "/signin"
@@ -233,7 +246,7 @@ LOGGING = {
 
     "root": {
         "handlers": ["console"],
-        "level": "DEBUG",
+        "level": "DEBUG" if DEBUG else "INFO",
     },
 }
 
@@ -309,3 +322,19 @@ else:
             "LOCATION": "unique-bike-price-tracker",
         }
     }
+
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
+CELERY_BEAT_SCHEDULE = {
+    "scrape-daily": {
+        "task": "apps.scraping.tasks.run_scraper_task",
+        "schedule": crontab(hour=3, minute=0),
+        "kwargs": {
+            "start": 1,
+            "end": 20,
+            "web": "biking_point",
+            "delete": True,
+        }
+    }
+}
+CELERY_TIMEZONE = "Europe/Zurich"

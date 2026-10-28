@@ -53,6 +53,9 @@ class ScrapingStrategy(ABC):
     def get_list_url(self, counter: int) -> str:
         pass
 
+    def get_end_of_catalog_text(self) -> Optional[str]:
+        return None
+
     def clean_price(self, price_text):
         return (
             price_text

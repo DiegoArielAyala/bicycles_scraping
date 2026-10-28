@@ -8,25 +8,17 @@ from apps.catalog.models import PriceHistory, Bicycle
 logger = logging.getLogger(__name__)
 
 
-def create_price_history_objects(price_history_updates):
+def prepare_price_history_objects(price_history_updates):
     price_history_objects = []
     for price_history in price_history_updates:
         price_history_objects.append(PriceHistory(bicycle_id=price_history["bicycle_id"], price=price_history["current_price"])) 
     return price_history_objects
 
-def save_price_histories(price_history_objects):
-    with transaction.atomic():
-        logger.info({"event": f"Save today's PriceHistory for {len(price_history_objects)} bicycles"})
-
-        new_price_histories = PriceHistory.objects.bulk_create(price_history_objects, update_conflicts=True, update_fields=["price"], unique_fields=["bicycle_id", "date"])
-
-        return new_price_histories
-
-def prepare_current_price_updates(new_price_histories, current_prices_by_id):
+def prepare_current_price_updates(price_history_objects, current_prices_by_id):
     bicycles_objects = []
     price_drops = []
 
-    for price_history in new_price_histories:
+    for price_history in price_history_objects:
         current_price = current_prices_by_id[price_history.bicycle_id]
         if price_history.price != current_price:
             bicycles_objects.append(Bicycle(id=price_history.bicycle_id, current_price=price_history.price))
@@ -39,6 +31,13 @@ def prepare_current_price_updates(new_price_histories, current_prices_by_id):
     
     return bicycles_objects, price_drops
 
-def save_current_prices(bicycles_objects):
-    logger.info({"event": f"Updating current_price for {len(bicycles_objects)} bicycles"})
-    Bicycle.objects.bulk_update(bicycles_objects, ["current_price"])
+def save_prices(price_history_objects, bicycles_objects):
+    with transaction.atomic():
+        logger.info({"event": "save_prices", "count": {len(price_history_objects)}})
+
+        PriceHistory.objects.bulk_create(price_history_objects, update_conflicts=True, update_fields=["price"], unique_fields=["bicycle_id", "date"])
+
+        Bicycle.objects.bulk_update(bicycles_objects, ["current_price"])
+
+
+    

@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 from apps.catalog.models import Bicycle, PriceHistory
 from apps.catalog.services.bicycles import create_new_bicycles
-from apps.catalog.services.price_history import save_price_histories
+from apps.catalog.services.price_history import save_prices
 from apps.scraping.dtos import ScrapedBycicles
 
 class TestCreateNewBicycles(APITestCase):
@@ -36,10 +36,10 @@ class TestCreateNewBicycles(APITestCase):
 
     def test_price_history_on_conflict(self):
         create_new_bicycles(self.new_bicycles)
-        bicycle = Bicycle.objects.get(reference="11111")
-        price_history = [PriceHistory(bicycle_id=bicycle.id, date=datetime.now().date(), price=500)]
-        self.assertEqual(PriceHistory.objects.get(bicycle_id=bicycle.id).price, 1000)
-        save_price_histories(price_history)
-        self.assertEqual(PriceHistory.objects.get(bicycle_id=bicycle.id).price, 500)
+        bicycle = [Bicycle.objects.get(reference="11111")]
+        price_history = [PriceHistory(bicycle_id=bicycle[0].id, date=datetime.now().date(), price=500)]
+        self.assertEqual(PriceHistory.objects.get(bicycle_id=bicycle[0].id).price, 1000)
+        save_prices(price_history, bicycle)
+        self.assertEqual(PriceHistory.objects.get(bicycle_id=bicycle[0].id).price, 500)
 
 
