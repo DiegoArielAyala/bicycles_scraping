@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group, User
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APITestCase
 from unittest.mock import patch
@@ -35,7 +36,7 @@ class SubscriptionPermissionsTests(APITestCase):
         self.client.force_authenticate(user=user)
 
         Group.objects.get_or_create(name="user")
-        Bicycle.objects.create(reference="11111", current_price=1000, name="bicycle_test")
+        Bicycle.objects.create(reference="11111", current_price=1000, name="bicycle_test", last_seen_at=timezone.localdate())
 
     def test_user_can_create_subscription(self):
         response = self.client.post("/api/v1/subscription/", {"email": "test@mail.com", "reference": "11111"}, format="json")
@@ -71,7 +72,7 @@ class AdminSubscriptionsPermissionTests(APITestCase):
         self.client.force_authenticate(user=user)
         references = ["11111", "22222"]
         for reference in references:
-            Bicycle.objects.create(reference=reference, name="Bicycle_test", current_price=1000)
+            Bicycle.objects.create(reference=reference, name="Bicycle_test", current_price=1000, last_seen_at=timezone.localdate())
             self.client.post("/api/v1/subscription/", {"email": "test@mail.com", "reference": reference}, format="json")
 
     def test_moderator_can_list_all_subscriptions(self):

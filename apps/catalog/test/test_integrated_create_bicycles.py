@@ -1,34 +1,24 @@
 from decimal import Decimal
-from bs4 import BeautifulSoup
+from django.db import IntegrityError, transaction
 from django.utils import timezone
 from rest_framework.test import APITestCase
 
 from apps.catalog.models import Bicycle, PriceHistory
-from apps.catalog.services.bicycles import create_bicycles
+from apps.catalog.services.bicycles import create_new_bicycles
+from apps.scraping.dtos import ScrapedBycicles
 
-def biking_point_card(reference, current_price, url, name="Bike Test", img="https://img.test/bike.jpg"):
-    html = f'''
-    <li class="item product product-item">
-      <a href="{url}">
-        <img src="{img}" data-src="https://cdn.test/{reference}_foto.jpg" />
-        <strong class="product-item-name">{name}</strong>
-        <span class="price">{current_price}</span>
-      </a>
-    </li>
-    '''
-    return BeautifulSoup(html, "html.parser").li
 
 class TestCreateBicycles(APITestCase):
     def setUp(self):
-        self.cards = [
-            biking_point_card("11111", "1.000,00 €", "https://bikingpoint.es/bike-1"),
-            biking_point_card("22222", "2.000,00 €", "https://bikingpoint.es/bike-2"),
+        self.new_bicycles = [
+            ScrapedBycicles("11111", 1000, "Bike Test 1", "test_web", "https://bikingpoint.es/bike-1", timezone.localdate(), True),
+            ScrapedBycicles("22222", 2000, "Bike Test 2", "test_web", "https://bikingpoint.es/bike-2", timezone.localdate(), True),
         ]
 
-    def test_creates_new_bicycles_from_html(self):
-        create_bicycles(self.cards, "biking_point")
-
-        bikes = Bicycle.objects.filter(web="biking_point")
+    def test_creates_new_bicycles(self):
+        create_new_bicycles(self.new_bicycles)
+ 
+        bikes = Bicycle.objects.filter(web="test_web")
         self.assertEqual(bikes.count(), 2)
         self.assertEqual(PriceHistory.objects.count(), 2)
         bike = Bicycle.objects.get(reference="11111")
@@ -37,12 +27,12 @@ class TestCreateBicycles(APITestCase):
         self.assertEqual(bike.last_seen_at, timezone.localdate())
     
     def test_existing_bicycle_with_same_price(self):
-        new_bicycle = Bicycle.objects.create(name="bike1", current_price=1000, url="www.biking.com/bike1", reference="11111", web="biking_point", last_seen_at=timezone.localdate())
-        cards = [biking_point_card("11111", "1.000,00 €", "https://bikingpoint.es/bike-1")]
+        create_new_bicycles(self.new_bicycles)
+        self.assertEqual(Bicycle.objects.count(), 2)
 
-        self.assertEqual(Bicycle.objects.count(), 1)
-        create_bicycles(cards, "biking_point")
-        self.assertEqual(Bicycle.objects.count(), 1)
-        self.assertEqual(PriceHistory.objects.count(), 1)
-        price_history = PriceHistory.objects.get(bicycle=new_bicycle)
-        self.assertEqual(new_bicycle.current_price, price_history.price)
+        with self.assertRaises(IntegrityError):
+            with transaction.atomic():
+                Bicycle.objects.create(name="bike1", current_price=1000, url="www.biking.com/bike1", reference="11111", web="test_web", last_seen_at=timezone.localdate())
+
+        self.assertEqual(Bicycle.objects.count(), 2)
+        self.assertEqual(PriceHistory.objects.count(), 2)
