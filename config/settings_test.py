@@ -11,8 +11,8 @@ from config.settings import *  # noqa: F403
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "bike_test",
-        "USER": "bike_test",
+        "NAME": "db_test",
+        "USER": "user_test",
         "PASSWORD": "password_test",
         "HOST": '127.0.0.1',
         "PORT": '5432',
