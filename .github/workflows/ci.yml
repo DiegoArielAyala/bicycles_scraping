@@ -63,6 +63,22 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
+      - name: Check deploy secrets
+        run: |
+          if [ -n "$STAGING_HOOK" ]; then
+            echo "STAGING_HOOK configured"
+          else
+            echo "STAGING_HOOK missing"
+          fi
+
+          if [ -n "$PRODUCTION_HOOK" ]; then
+            echo "PRODUCTION_HOOK configured"
+          else
+            echo "PRODUCTION_HOOK missing"
+          fi
+        env:
+          STAGING_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_STAGING }}
+          PRODUCTION_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_PRODUCTION }}
       - name: Deploy to Render
         run: |
           if [ "$GITHUB_REF" = "refs/heads/develop" ]; then
