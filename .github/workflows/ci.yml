@@ -4,8 +4,10 @@ on:
   push:
     branches: 
       - develop
+      - master
   pull_request:
     branches:
+      - develop
       - master
 
 jobs:
@@ -55,3 +57,19 @@ jobs:
 
       - name: Run tests
         run: python manage.py test --settings=config.settings_test
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Deploy to Render
+        env:
+          STAGING_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_STAGING }}
+          PRODUCTION_HOOK: $${{ secrets.RENDER_DEPLOY_HOOK_PRODUCTION }}
+        run: |
+          if [ "$GITHUB_REF" = "refs/heads/develop" ]; then
+            curl -fsS -X POST "$STAGING_HOOK"
+          elif [ "$GITHUB_REF" = "refs/heads/master" ]; then
+            curl -fsS -X POST "$PRODUCTION_HOOK"
+          fi
