@@ -66,7 +66,7 @@ jobs:
       - name: Deploy to Render
         env:
           STAGING_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_STAGING }}
-          PRODUCTION_HOOK: $${{ secrets.RENDER_DEPLOY_HOOK_PRODUCTION }}
+          PRODUCTION_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_PRODUCTION }}
         run: |
           if [ "$GITHUB_REF" = "refs/heads/develop" ]; then
             curl -fsS -X POST "$STAGING_HOOK"
