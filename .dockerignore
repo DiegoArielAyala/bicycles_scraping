@@ -1,3 +1,6 @@
 .git/
 *.sqlite3
 venv
+.env
+.env.production
+.env.staging
