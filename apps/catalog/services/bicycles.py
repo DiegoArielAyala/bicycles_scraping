@@ -99,12 +99,12 @@ def get_bicycles_data_from_db(web):
     return bicycles_by_reference, current_prices_by_id
 
 def delete_bicycles(web):
-    logger.info({"event": "start_inactive_bicycles"})
+    logger.debug({"event": "start_inactive_bicycles"})
 
     cutoff = timezone.localdate() - timedelta(days=2)
     inactive_bicycles = Bicycle.objects.filter(web=web, is_active=True, last_seen_at__lt=cutoff).update(is_active=False)
       
-    logger.info({"event": "inactive_bicycles", "count": inactive_bicycles})
+    logger.debug({"event": "inactive_bicycles", "count": inactive_bicycles})
 
 
 def update_last_seen_at(price_history_objects):

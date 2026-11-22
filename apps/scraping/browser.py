@@ -22,6 +22,7 @@ class BrowserSession():
 
     def __init__(self):
         self.pages_in_session = 0
+        self.rotations = 0
         self.context = None
         self.page = None
         self.browser = None
@@ -29,7 +30,7 @@ class BrowserSession():
     
 
     async def __aenter__(self):
-        logger.info({"event": "enter_browser_session"})
+        logger.debug({"event": "enter_browser_session"})
         self.playwright = await async_playwright().start()
 
         self.browser = await self.playwright.chromium.launch(
@@ -43,7 +44,7 @@ class BrowserSession():
     
 
     async def __aexit__(self, exc_type, exc_value, traceback):
-        logger.info({"event": "exit_browser_session"})
+        logger.info({"event": "exit_browser_session", "rotations": self.rotations})
         try:
             await self.close_session()
         finally:
@@ -72,7 +73,8 @@ class BrowserSession():
 
     async def get_html(self, url, page_number, end_of_catalog_text=None):
         if self.pages_in_session >= self.PAGES_PER_SESSION:
-            logger.info({"event": "rotate_browser_session", "next_page": page_number})
+            self.rotations += 1
+            logger.debug({"event": "rotate_browser_session", "next_page": page_number, "rotations": self.rotations})
             await self.close_session()
             self.context, self.page = await self.open_session()
             self.pages_in_session = 0
@@ -80,7 +82,8 @@ class BrowserSession():
             html = await self.fetch_html(url, end_of_catalog_text)
 
         except CloudflareChallengeError:
-            logger.warning({"event": "cloudflare_rotate_session", "url": url, "page": page_number})
+            self.rotations += 1
+            logger.warning({"event": "cloudflare_rotate_session", "url": url, "page": page_number, "rotations": self.rotations})
 
             await asyncio.sleep(random.uniform(*self.CLOUDFLARE_RETRY_DELAY_RANGE))
 
@@ -148,7 +151,7 @@ class BrowserSession():
         if self.CLOUDFLARE_MARKER in html and not has_listing:
             raise CloudflareChallengeError("Cloudflare challenge still present")
 
-        logger.info({"event": "cloudflare_challenge_cleared"})
+        logger.debug({"event": "cloudflare_challenge_cleared"})
         return html
 
     def catalog_has_ended(self, html, end_of_catalog_text):

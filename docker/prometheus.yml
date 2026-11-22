@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 60s
+
+scrape_configs:
+  - job_name: "bike_tracker"
+    metrics_path: "/api/v1/metrics/"
+    authorization:
+      type: Bearer
+      credentials_file: /run/secrets/prometheus_token
+    static_configs:
+      - targets: ["web:8000"]

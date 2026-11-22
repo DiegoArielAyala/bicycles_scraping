@@ -9,7 +9,6 @@ logger = logging.getLogger(__name__)
 
 
 class EmailService:
-
     @staticmethod
     def send_price_drop_email(
         subscription,
@@ -19,7 +18,6 @@ class EmailService:
     ):
 
         try:
-
             difference = old_price - new_price
 
             subject = f"Price Drop Alert: {bicycle.name}"
@@ -62,13 +60,8 @@ class EmailService:
             email.attach_alternative(html_content, "text/html")
 
             email.send()
-
-            logger.info(
-                f"Price drop email sent to {subscription.email}"
-            )
+            return True
 
         except Exception:
-
-            logger.exception(
-                f"Failed to send email to {subscription.email}"
-            )
+            logger.exception({"event": "email_send_failed", "email": subscription.email})
+            return False

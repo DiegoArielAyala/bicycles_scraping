@@ -1,3 +1,5 @@
+import secrets
+from django.conf import settings
 from rest_framework.permissions import BasePermission
 
 ROLE_USER = "user"
@@ -39,3 +41,13 @@ class IsOwnerOrModerator(BasePermission):
         ):
             return True
         return getattr(obj, "user", None) == request.user
+
+class PrometheusPermission(BasePermission):
+    def has_permission(self, request, view):
+        expected_token = settings.PROMETHEUS_TOKEN
+        recived_token = request.headers.get("Authorization", "")
+
+        if not expected_token:
+            return False
+        
+        return secrets.compare_digest(recived_token, f"Bearer {expected_token}")

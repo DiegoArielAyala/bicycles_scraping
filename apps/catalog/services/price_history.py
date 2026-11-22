@@ -33,7 +33,7 @@ def prepare_current_price_updates(price_history_objects, current_prices_by_id):
 
 def save_prices(price_history_objects, bicycles_objects):
     with transaction.atomic():
-        logger.info({"event": "save_prices", "count": {len(price_history_objects)}})
+        logger.info({"event": "save_prices", "count": len(price_history_objects)})
 
         PriceHistory.objects.bulk_create(price_history_objects, update_conflicts=True, update_fields=["price"], unique_fields=["bicycle_id", "date"])
 

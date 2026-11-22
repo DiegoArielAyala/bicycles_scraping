@@ -43,3 +43,5 @@ class TestCreateNewBicycles(APITestCase):
         self.assertEqual(PriceHistory.objects.get(bicycle_id=bicycle[0].id).price, 500)
 
 
+    def test_can_not_create_bicycle_without_web(self):
+        Bicycle.objects.create(name="test_name", current_price=1000, last_seen_at=timezone.localdate())

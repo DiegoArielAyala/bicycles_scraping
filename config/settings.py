@@ -40,6 +40,9 @@ ALLOWED_HOSTS = [
         os.environ.get("RENDER_EXTERNAL_HOSTNAME"),
         "bicycles-scraping-docker.onrender.com",
         "bicycles-scraping-staging.onrender.com",
+        "127.0.0.1",
+        "web",
+        "localhost"
     ]
     if host
 ]
@@ -76,6 +79,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "core.middleware.RequestIDMiddleware",
+    "core.middleware.MetricsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -235,15 +240,23 @@ LOGGING = {
     "disable_existing_loggers": False,
 
     "formatters": {
-        "standard": {
-            "format": "%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+        "json": {
+            "()": "pythonjsonlogger.json.JsonFormatter",
+            "fmt": "%(asctime)s - %(levelname)s - %(name)s - [%(request_id)s] - %(message)s",
+        },
+    },
+
+    "filters": {
+        "request_id_filter": {
+            "()": "core.logging_filters.RequestIDFilter",
         },
     },
 
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
-            "formatter": "standard",
+            "formatter": "json",
+            "filters": ["request_id_filter"],
         },
     },
 
@@ -341,3 +354,5 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 CELERY_TIMEZONE = "Europe/Zurich"
+
+PROMETHEUS_TOKEN = os.environ.get("PROMETHEUS_TOKEN", "")

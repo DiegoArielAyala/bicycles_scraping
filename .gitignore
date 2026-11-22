@@ -17,3 +17,4 @@ views_anterior.py
 client google oauth/
 logs/
 wget-log
+docker/secrets

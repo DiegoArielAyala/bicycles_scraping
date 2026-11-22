@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 @contextmanager
 def log_context(name, **kwargs):
-    logger.info({"event": "start", "name": name, **kwargs})
+    logger.debug({"event": "start", "name": name, **kwargs})
     try:
         yield
     except Exception:
@@ -22,12 +22,12 @@ def log_function(func):
     if asyncio.iscoroutinefunction(func):
         @wraps(func)
         async def async_wrapper(*args, **kwargs):
-            logger.info(f"Executing {func.__name__}")
+            logger.debug(f"Executing {func.__name__}")
             try:
                 start = time.time()
                 result = await func(*args, **kwargs)
                 end = time.time()
-                logger.info(f"End function {func.__name__}. Duration {end - start}s")
+                logger.debug(f"End function {func.__name__}. Duration {end - start}s")
                 return result
             except Exception as e:
                 logger.exception(f"Error during {func.__name__}: {e}")
@@ -36,10 +36,10 @@ def log_function(func):
 
     @wraps(func)
     def sync_wrapper(*args, **kwargs):
-        logger.info(f"Executing {func.__name__}")
+        logger.debug(f"Executing {func.__name__}")
         try:
             result = func(*args, **kwargs)
-            logger.info(f"End function {func.__name__}")
+            logger.debug(f"End function {func.__name__}")
             return result
         except Exception as e:
             logger.exception(f"Error during {func.__name__}")

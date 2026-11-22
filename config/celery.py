@@ -62,10 +62,11 @@ def log_task_retry(sender=None, request=None, reason=None, **extra):
 
 
 @task_failure.connect
-def log_task_failure(sender=None, task_id=None, exception=None, **extra):
+def log_task_failure(sender=None, task_id=None, exception=None, einfo=None, **extra):
     logger.error(
         "Task failed: task=%s task_id=%s error=%s",
         sender.name if sender else "unknown",
         task_id,
         exception,
+        exc_info=einfo,
     )

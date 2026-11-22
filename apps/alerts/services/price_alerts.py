@@ -1,9 +1,12 @@
+import logging
 import threading
 
 from decimal import Decimal
 
 from apps.alerts.emails.services import EmailService
 from apps.alerts.models import Subscription
+
+logger = logging.getLogger(__name__)
 
 MINIMUM_PRICE_DROP = Decimal("50.00")
 
@@ -26,11 +29,20 @@ def send_price_drop_emails(price_drops):
             ).select_related("bicycle")
         )
 
+    sent_count = 0
+    sent_count_lock = threading.Lock()
+
+    def send_one(subscription, bicycle, old_price, new_price):
+        nonlocal sent_count
+        if EmailService.send_price_drop_email(subscription, bicycle, old_price, new_price):
+            with sent_count_lock:
+                sent_count += 1
+
     threads = []
     for subscription in subscriptions:
         drop = drops_by_bicycle_id[subscription.bicycle_id]
         thread = threading.Thread(
-            target=EmailService.send_price_drop_email,
+            target=send_one,
             args=[subscription, subscription.bicycle, drop["old_price"], drop["new_price"]]
         )
         thread.start()
@@ -38,3 +50,5 @@ def send_price_drop_emails(price_drops):
 
     for thread in threads:
         thread.join()
+
+    logger.info({"event": "send_emails", "count": sent_count})
