@@ -38,7 +38,14 @@ class EscapaStrategy(ScrapingStrategy):
 
     async def check_href(self, page, href):
         await page.goto(href)
-        logger.debug({"event": "url_not_equal_to_href", "url": page.url, "href": href})
+        logger.debug(
+            "Url not equal to href",
+            extra={
+                "event": "url_not_equal_to_href",
+                "url": page.url,
+                "href": href,
+            },
+        )
         return href == page.url
 
     def is_last_page(soup):

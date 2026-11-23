@@ -69,10 +69,13 @@ class MetricsMiddleware:
             duration_ms = duration * 1000
 
             logger.info(
-                "HTTP request method=%s path=%s status=%s duration_ms=%.2f",
-                request.method,
-                request.path,
-                status_code,
-                duration_ms,
+                "HTTP request",
+                extra={
+                    "event": "http_request",
+                    "method": request.method,
+                    "path": request.path,
+                    "status": status_code,
+                    "duration_ms": round(duration_ms, 2),
+                },
             )
         

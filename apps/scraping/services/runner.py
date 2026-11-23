@@ -79,7 +79,7 @@ def process_product_elements_html(product_elements_html, web, strategy):
     scraped_prices = []
     seen_references = set()
 
-    with log_context("process_product", web=web, products=len(product_elements_html)):
+    with log_context("process_product", web=web, logger=logger, products=len(product_elements_html)):
         references_not_found = 0
         prices_not_found = 0
         for product_element in product_elements_html:        
@@ -133,7 +133,7 @@ def prepare_new_bicycles(new_scraped_prices, web, strategy):
 
     return scraped_products
 
-
+@log_function
 async def scrape_pages(start_page, last_page, web):
     page_number = int(start_page)     
     strategy = strategy_factory(web)

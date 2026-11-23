@@ -20,11 +20,23 @@ email = os.environ.get("DJANGO_SUPERUSER_EMAIL", os.getenv("HOTMAIL"))
 password = os.environ.get("DJANGO_SUPERUSER_PASSWORD", os.getenv("SU_PASSWORD"))
 
 if not User.objects.filter(username=username).exists():
-    logger.info({"event": "creating_superuser", "username": username})
+    logger.info(
+        "Creating superuser",
+        extra={
+            "event": "creating_superuser",
+            "username": username,
+        },
+    )
     user = User.objects.create_superuser(username=username, email=email, password=password)
 
     group = Group.objects.get(name=ROLE_ADMIN)
 
     user.groups.add(group)
 else:
-    logger.info({"event": "superuser_already_exists", "username": username})
+    logger.info(
+        "Superuser already exists",
+        extra={
+            "event": "superuser_already_exists",
+            "username": username,
+        },
+    )

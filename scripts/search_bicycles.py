@@ -15,7 +15,14 @@ logger = logging.getLogger(__name__)
 
 async def search_bicycles(reference):
     bicycles = await sync_to_async(list)(Bicycle.objects.filter(reference=reference))
-    logger.info({"event": "search_bicycles", "reference": reference, "count": len(bicycles)})
+    logger.info(
+        "Search bicycles",
+        extra={
+            "event": "search_bicycles",
+            "reference": reference,
+            "count": len(bicycles),
+        },
+    )
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Search bicycle by reference")

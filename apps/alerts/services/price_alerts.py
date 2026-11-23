@@ -51,4 +51,10 @@ def send_price_drop_emails(price_drops):
     for thread in threads:
         thread.join()
 
-    logger.info({"event": "send_emails", "count": sent_count})
+    logger.info(
+        "Send emails",
+        extra={
+            "event": "send_emails",
+            "count": sent_count,
+        },
+    )

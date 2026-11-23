@@ -63,5 +63,11 @@ class EmailService:
             return True
 
         except Exception:
-            logger.exception({"event": "email_send_failed", "email": subscription.email})
+            logger.exception(
+                "Email send failed",
+                extra={
+                    "event": "email_send_failed",
+                    "email": subscription.email,
+                },
+            )
             return False

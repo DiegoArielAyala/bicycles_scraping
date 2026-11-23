@@ -43,7 +43,13 @@ class BikingPointStrategy(ScrapingStrategy):
 
     def get_product_elements_html(self, soup):
         if self.is_last_product(soup):
-            logger.info({"event": "is_last_product", "web": "biking_point"})
+            logger.info(
+                "Is last product",
+                extra={
+                    "event": "is_last_product",
+                    "web": "biking_point",
+                },
+            )
             return []
         
         product_elements_html = soup.find_all("li", class_="item product product-item")
