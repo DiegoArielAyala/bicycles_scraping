@@ -1,8 +1,5 @@
 from datetime import timedelta
-<<<<<<< HEAD
 from bs4 import Tag
-=======
->>>>>>> origin/master
 from django.utils import timezone
 from rest_framework.test import APITestCase
 

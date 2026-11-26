@@ -353,10 +353,6 @@ CELERY_BEAT_SCHEDULE = {
         }
     }
 }
-<<<<<<< HEAD
 CELERY_TIMEZONE = "Europe/Zurich"
 
 PROMETHEUS_TOKEN = os.environ.get("PROMETHEUS_TOKEN", "")
-=======
-CELERY_TIMEZONE = "Europe/Zurich"
->>>>>>> origin/master
