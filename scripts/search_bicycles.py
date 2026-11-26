@@ -1,5 +1,9 @@
-import django, os, argparse
+import argparse
 import asyncio
+import logging
+import os
+
+import django
 from asgiref.sync import sync_to_async
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
@@ -7,11 +11,18 @@ django.setup()
 
 from apps.catalog.models import Bicycle
 
+logger = logging.getLogger(__name__)
+
 async def search_bicycles(reference):
-    database_url=os.getenv("DATABASE_URL_PRODUCTION")
-    print(database_url)
     bicycles = await sync_to_async(list)(Bicycle.objects.filter(reference=reference))
-    print(bicycles)
+    logger.info(
+        "Search bicycles",
+        extra={
+            "event": "search_bicycles",
+            "reference": reference,
+            "count": len(bicycles),
+        },
+    )
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Search bicycle by reference")

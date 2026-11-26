@@ -22,6 +22,7 @@ class BrowserSession():
 
     def __init__(self):
         self.pages_in_session = 0
+        self.rotations = 0
         self.context = None
         self.page = None
         self.browser = None
@@ -29,7 +30,13 @@ class BrowserSession():
     
 
     async def __aenter__(self):
-        logger.info({"event": "enter_browser_session"})
+        logger.debug(
+            "Enter browser session", 
+            extra={
+                "event": "enter_browser_session"
+                },
+            )
+
         self.playwright = await async_playwright().start()
 
         self.browser = await self.playwright.chromium.launch(
@@ -43,7 +50,14 @@ class BrowserSession():
     
 
     async def __aexit__(self, exc_type, exc_value, traceback):
-        logger.info({"event": "exit_browser_session"})
+        logger.info(
+            "Exit browser session",
+            extra={
+                "event": "exit_browser_session", 
+                "rotations": self.rotations,
+                },
+            )
+        
         try:
             await self.close_session()
         finally:
@@ -60,11 +74,23 @@ class BrowserSession():
         html = await self.page.content()
 
         if self.catalog_has_ended(html, end_of_catalog_text):
-            logger.info({"event": "catalog_end_detected", "url": url})
+            logger.info(
+                "Catalog end detected",
+                extra={
+                    "event": "catalog_end_detected", 
+                    "url": url,
+                    },
+                )
             return html
 
         if self.CLOUDFLARE_MARKER in html:
-            logger.warning({"event": "cloudflare_challenge_detected", "url": url})
+            logger.warning(
+                "Cloudflare challenge detected",
+                extra={
+                    "event": "cloudflare_challenge_detected", 
+                    "url": url,
+                    },
+                )
             html = await self.wait_for_cloudflare_clear(end_of_catalog_text)
         
         return html
@@ -72,7 +98,15 @@ class BrowserSession():
 
     async def get_html(self, url, page_number, end_of_catalog_text=None):
         if self.pages_in_session >= self.PAGES_PER_SESSION:
-            logger.info({"event": "rotate_browser_session", "next_page": page_number})
+            self.rotations += 1
+            logger.debug(
+                "Rotate browser session",
+                extra={
+                    "event": "rotate_browser_session", 
+                    "next_page": page_number, 
+                    "rotations": self.rotations,
+                    },
+                )
             await self.close_session()
             self.context, self.page = await self.open_session()
             self.pages_in_session = 0
@@ -80,7 +114,16 @@ class BrowserSession():
             html = await self.fetch_html(url, end_of_catalog_text)
 
         except CloudflareChallengeError:
-            logger.warning({"event": "cloudflare_rotate_session", "url": url, "page": page_number})
+            self.rotations += 1
+            logger.warning(
+                "Cloudflare rotate session",
+                extra={
+                    "event": "cloudflare_rotate_session",
+                    "url": url,
+                    "page": page_number,
+                    "rotations": self.rotations,
+                },
+            )
 
             await asyncio.sleep(random.uniform(*self.CLOUDFLARE_RETRY_DELAY_RANGE))
 
@@ -135,20 +178,35 @@ class BrowserSession():
                 timeout=self.CLOUDFLARE_WAIT_MS,
             )
         except PlaywrightTimeoutError:
-            logger.error({"event": "cloudflare_challenge_timeout"})
+            logger.exception(
+                "Cloudflare challenge timeout",
+                extra={
+                    "event": "cloudflare_challenge_timeout",
+                },
+            )
             raise CloudflareChallengeError("Cloudflare challenge did not clear")
             
         html = await self.page.content()
         body_text = await self.page.inner_text("body")
         if self.catalog_has_ended(html, end_of_catalog_text) or self.catalog_has_ended(body_text, end_of_catalog_text):
-            logger.info({"event": "catalog_end_detected"})
+            logger.info(
+                "Catalog end detected",
+                extra={
+                    "event": "catalog_end_detected",
+                },
+            )
             return html
 
         has_listing = await self.page.query_selector(self.LISTING_READY_SELECTOR)
         if self.CLOUDFLARE_MARKER in html and not has_listing:
             raise CloudflareChallengeError("Cloudflare challenge still present")
 
-        logger.info({"event": "cloudflare_challenge_cleared"})
+        logger.debug(
+            "Cloudflare challenge cleared",
+            extra={
+                "event": "cloudflare_challenge_cleared",
+            },
+        )
         return html
 
     def catalog_has_ended(self, html, end_of_catalog_text):

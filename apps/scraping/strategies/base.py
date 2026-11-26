@@ -1,5 +1,3 @@
-import logging
-
 from abc import ABC, abstractmethod
 from bs4 import Tag
 from decimal import Decimal
@@ -7,8 +5,6 @@ from typing import Optional, Tuple
 
 from core.exceptions import PriceNotFoundError
 
-
-logger = logging.getLogger(__name__)
 
 class ScrapingStrategy(ABC):
     BASE_URL = None

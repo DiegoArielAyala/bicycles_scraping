@@ -31,10 +31,19 @@ PAGE_DELAY_RANGE = (4, 9)
 
 @log_function
 async def run_scraper(start_page, last_page, web=None, delete=False):
-    all_product_elements_html, scrape_aborted, delete = await scrape_pages(start_page, last_page, web, delete)
+    logger.info("Scraping started", extra={
+        "event": "scraping_started",
+        "web": web,
+        "start_page": start_page,
+        "last_page": last_page
+    })
+    all_product_elements_html = await scrape_pages(start_page, last_page, web)
 
-    if scrape_aborted and not all_product_elements_html:
-        logger.error({"event": "scrape_aborted_without_products", "web": web})
+    if not all_product_elements_html:
+        logger.warning("No products found", extra={
+            "event": "no_products_found",
+            "web": web
+        })
     else:
         scraped_prices, strategy = await sync_to_async(get_scraped_prices)(all_product_elements_html, web)
 
@@ -47,15 +56,18 @@ async def run_scraper(start_page, last_page, web=None, delete=False):
         if delete:
             await sync_to_async(delete_bicycles)(web)
 
+        logger.info("Scraping completed", extra={
+            "event": "scraping_completed", 
+            "web": web,
+        })
+    
     get_metrics()    
-    logger.info("Scrape finished.")
 
 def get_scraped_prices(all_product_elements_html, web):
-    logger.debug({"event": "create_scraped_prices", "items": len(all_product_elements_html)})
-
-    if len(all_product_elements_html) == 0:
-        logger.debug({"event": "any_bicycle_scraped", "items": len(all_product_elements_html)})
-        return
+    logger.debug("Get scraped prices", extra={
+        "event": "create_scraped_prices", 
+        "items": len(all_product_elements_html),
+        })
     
     strategy = strategy_factory(web)
 
@@ -66,16 +78,15 @@ def get_scraped_prices(all_product_elements_html, web):
 def process_product_elements_html(product_elements_html, web, strategy):
     scraped_prices = []
     seen_references = set()
-    bicycle_index = 1
 
-    with log_context("process_product", web=web, products=len(product_elements_html)):
-        for product_element in product_elements_html:
-            bicycle_index += 1
-        
+    with log_context("process_product", web=web, logger=logger, products=len(product_elements_html)):
+        references_not_found = 0
+        prices_not_found = 0
+        for product_element in product_elements_html:        
             try:
                 reference = strategy.get_reference(product_element)
             except ReferenceNotFoundError:
-                logger.warning({"event": "reference_not_found", "web": web})
+                references_not_found+=1
                 continue
             
             if reference in seen_references:
@@ -85,12 +96,19 @@ def process_product_elements_html(product_elements_html, web, strategy):
                 current_price = strategy.get_price(product_element)
             except PriceNotFoundError:
                 increment("PriceNotFoundError", web=web)
-                logger.warning({"event": "price_not_found_error", "web": web, "reference": reference})
+                prices_not_found+=1
                 continue
             
             seen_references.add(reference)
 
             scraped_prices.append(ScrapedPrices(reference, current_price, product_element))
+
+        if references_not_found > 0 or prices_not_found > 0:
+            logger.warning("Data not found", extra={
+                "event": "data_not_found", 
+                "references_not_found": references_not_found, 
+                "prices_not_found": prices_not_found,
+                })
 
     return scraped_prices
 
@@ -101,7 +119,10 @@ def prepare_new_bicycles(new_scraped_prices, web, strategy):
         bicycle_href = get_href(new_scraped_price.product_element)
 
         if not bicycle_href:
-            logger.error({"event": "href_not_found", "web": web})
+            logger.warning("Href not found", extra={
+                "event": "href_not_found", 
+                "web": web
+                })
             continue
         
         bicycle_name, bicycle_img = strategy.get_product_info(new_scraped_price.product_element)
@@ -112,11 +133,10 @@ def prepare_new_bicycles(new_scraped_prices, web, strategy):
 
     return scraped_products
 
-
-async def scrape_pages(start_page, last_page, web, delete):
+@log_function
+async def scrape_pages(start_page, last_page, web):
     page_number = int(start_page)     
     strategy = strategy_factory(web)
-    scrape_aborted = False
     all_product_elements_html = []
 
     async with BrowserSession() as browser_session:
@@ -126,26 +146,36 @@ async def scrape_pages(start_page, last_page, web, delete):
                 await asyncio.sleep(delay)
 
             url = strategy.get_list_url(page_number)
-            logger.debug({"event": "get_url", "url": url})
+            logger.debug("Get url", extra={
+                "event": "get_url", 
+                "url": url
+                })
             
             try:
                 html = await browser_session.get_html(url, page_number, strategy.get_end_of_catalog_text())
             except CloudflareChallengeError:
-                logger.error({"event": "cloudflare_abort", "url": url, "page": page_number})
-                scrape_aborted = True
-                delete = False
+                logger.warning("Cloudflare abort", extra={
+                    "event": "cloudflare_abort", 
+                    "url": url, 
+                    "page": page_number,
+                    })
                 break
             except PlaywrightTimeoutError:
-                logger.error({"event": "page_timeout", "url": url, "page": page_number})
-                delete = False
                 raise
             except PlaywrightError as e:
-                logger.error({"event": "playwright_error", "url": url, "page": page_number, "error": str(e)})
-                delete = False
+                logger.error("Playwright error interrupted scraping", extra={
+                    "event": "playwright_error",
+                    "url": url,
+                    "page": page_number,
+                    "error": str(e),
+                })
                 break
 
             if not html:
-                logger.debug({"event": "html_not_getted", "page_number": page_number})
+                logger.warning("Html not reviced", extra={
+                    "event": "html_not_recived", 
+                    "page_number": page_number,
+                    })
                 break
 
             soup = BeautifulSoup(html, "html.parser")
@@ -157,4 +187,4 @@ async def scrape_pages(start_page, last_page, web, delete):
             all_product_elements_html.extend(product_elements_html)
             page_number += 1
 
-    return all_product_elements_html, scrape_aborted, delete
+    return all_product_elements_html

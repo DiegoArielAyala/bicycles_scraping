@@ -35,7 +35,14 @@ def process_scraped_prices(scraped_prices, web):
 
 @log_function
 def process_scraped_bicycles(new_bicycles: list[ScrapedBycicles], price_history_updates, current_prices_by_id):
-    logger.debug({"event": "process_scraped_bicycles", "new_bicycles": len(new_bicycles), "price_history_updates": len(price_history_updates)})
+    logger.debug(
+        "Process scraped bicycles",
+        extra={
+            "event": "process_scraped_bicycles",
+            "new_bicycles": len(new_bicycles),
+            "price_history_updates": len(price_history_updates),
+        },
+    )
 
     create_new_bicycles(new_bicycles)
 
@@ -56,7 +63,7 @@ def update_existing_bicycles(price_history_updates, current_prices_by_id):
         send_price_drop_emails(price_drops)
         
 def create_new_bicycles(new_bicycles):
-    with log_context("create_new_bicycles"):
+    with log_context("create_new_bicycles", logger=logger):
         validated_bicycle_forms = []
         
         for new_bicycle in new_bicycles:
@@ -65,14 +72,27 @@ def create_new_bicycles(new_bicycles):
                 bicycle_form = validated_bicycle_form(new_bicycle_dict)
                 validated_bicycle_forms.append(bicycle_form.save(commit=False))
             except InvalidFormError as e:
-                logger.warning({"event": "invalid_form", "reference": new_bicycle_dict["reference"], "error": e})
+                logger.warning(
+                    "Invalid form",
+                    extra={
+                        "event": "invalid_form",
+                        "reference": new_bicycle_dict["reference"],
+                        "error": str(e),
+                    },
+                )
                 continue
-        
-        save_new_bicycles(validated_bicycle_forms)
+        if validated_bicycle_forms:
+            save_new_bicycles(validated_bicycle_forms)
 
 
 def save_new_bicycles(validated_bicycle_forms):
-    logger.info({"event": "saving_new_bicycles", "number_of_new_bicycles": len(validated_bicycle_forms)})
+    logger.info(
+        "Saving new bicycles",
+        extra={
+            "event": "saving_new_bicycles",
+            "number_of_new_bicycles": len(validated_bicycle_forms),
+        },
+    )
     with transaction.atomic():
         new_bicycles = Bicycle.objects.bulk_create(validated_bicycle_forms)
         new_price_histories = []
@@ -99,12 +119,23 @@ def get_bicycles_data_from_db(web):
     return bicycles_by_reference, current_prices_by_id
 
 def delete_bicycles(web):
-    logger.info({"event": "start_inactive_bicycles"})
+    logger.debug(
+        "Start inactive bicycles",
+        extra={
+            "event": "start_inactive_bicycles",
+        },
+    )
 
     cutoff = timezone.localdate() - timedelta(days=2)
     inactive_bicycles = Bicycle.objects.filter(web=web, is_active=True, last_seen_at__lt=cutoff).update(is_active=False)
       
-    logger.info({"event": "inactive_bicycles", "count": inactive_bicycles})
+    logger.info(
+        "Inactive bicycles",
+        extra={
+            "event": "inactive_bicycles",
+            "count": inactive_bicycles,
+        },
+    )
 
 
 def update_last_seen_at(price_history_objects):
@@ -112,4 +143,10 @@ def update_last_seen_at(price_history_objects):
     
     bicycles = Bicycle.objects.filter(id__in=bicycles_ids).update(last_seen_at=timezone.localdate(), is_active=True)
 
-    logger.info({"event": "update_last_seen_at", "count": bicycles})
+    logger.info(
+        "Update last seen at",
+        extra={
+            "event": "update_last_seen_at",
+            "count": bicycles,
+        },
+    )

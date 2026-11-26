@@ -1,11 +1,6 @@
-import logging
-
 from rest_framework import serializers
 
 from apps.catalog.models import Bicycle
-
-
-logger = logging.getLogger(__name__)
 
 
 class BicycleSerializer(serializers.ModelSerializer):

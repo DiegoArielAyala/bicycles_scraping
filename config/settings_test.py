@@ -7,16 +7,13 @@ Usage:
 from config.settings import *  # noqa: F403
 
 # Speed up User.objects.create_user / signup in tests (hashing is not under test).
+POSTGRES_HOST_AUTH_METHOD="trust"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "db_test",
-        "USER": "user_test",
-        "PASSWORD": "password_test",
-        "HOST": '127.0.0.1',
-        "PORT": '5432',
-    },
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "memory",
+    }
 }
 
 LOGGING = {
@@ -27,10 +24,9 @@ LOGGING = {
             "class": "logging.StreamHandler",
         },
     },
-    "loggers": {
-        "scraping": {
-            "handlers": ["console"],
-            "level": "DEBUG",
-        }
+    
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG",
     }
 }

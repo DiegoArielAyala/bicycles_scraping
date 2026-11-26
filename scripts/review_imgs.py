@@ -22,36 +22,83 @@ logger = logging.getLogger(__name__)
 
 async def update_bicycles_image_urls():
     references = await get_bicycles_references_from_db()
+    correct_imgs_counter = 0
+    img_url_saved_counter = 0
 
     for reference in references:
         try:
             html = await fetch_biking_point_html(reference)
             img_url = extract_image_url(html)
             if img_url is None:
-                logger.warning(f"Img url not found for reference {reference}")
+                logger.warning(
+                    "Image url not found",
+                    extra={
+                        "event": "img_url_not_found",
+                        "reference": reference,
+                    },
+                )
                 continue
             try:
                 bicycle = await get_bicycle_by_reference(reference)
+            
             except ObjectDoesNotExist:
-                print(f"Referencia {reference} no existe, continua al siguiente")
+                logger.warning(
+                    "Reference not exists",
+                    extra={
+                        "event": "reference_not_exists",
+                        "reference": reference,
+                    },
+                )
                 continue
+            
             if bicycle.img == img_url:
-                print(f"Img for reference {reference} is correct")
+                correct_imgs_counter+=1
                 continue
             bicycle.img = img_url
             await sync_to_async(lambda: bicycle.save())()
-            print(f"Img url for Bicycle reference {reference} saved.")
+            img_url_saved_counter+=1
+        
         except PlaywrightTimeoutError:
-            print(f"Timeout Error for reference {reference}")
+            logger.warning(
+                "Playwright timeout",
+                extra={
+                    "event": "playwright_timeout",
+                    "reference": reference,
+                },
+            )
             continue
-        except PlaywrightError as e:
-            print(f"Playwright error with reference {reference}: {e}")
-        except Exception as e:
-            print(f"Unexpected error for reference {reference}: {e}")
+        except PlaywrightError:
+            logger.warning(
+                "Playwright error",
+                extra={
+                    "event": "playwright_error",
+                    "reference": reference,
+                },
+            )
+        except Exception:
+            logger.exception(
+                "Unexpected error",
+                extra={
+                    "event": "unexpected_error",
+                    "reference": reference,
+                },
+            )
+        
+    logger.info(
+        "Correct images",
+        extra={
+            "event": "correct_imgs",
+            "count": correct_imgs_counter,
+        },
+    )
+    logger.info(
+        "Image urls saved",
+        extra={
+            "event": "img_urls_saved",
+            "count": img_url_saved_counter,
+        },
+    )
              
-
-        # Crear el cron para ejecutar el run_scraper de produccion.
-        # Agregar los try/except necesarios
         
 async def get_bicycles_references_from_db():
     bicycles_references = await sync_to_async(lambda: list(Bicycle.objects.filter(web="biking_point").values_list("reference", flat=True)))()

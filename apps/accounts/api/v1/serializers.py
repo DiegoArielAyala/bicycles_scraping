@@ -70,7 +70,12 @@ class SignoutSerializer(serializers.Serializer):
             data["refresh"] = refresh
             return data
         except TokenError:
-            logger.exception({"event": "token_error"})
+            logger.exception(
+                "Token error",
+                extra={
+                    "event": "token_error",
+                },
+            )
             raise serializers.ValidationError({"detail": "Invalid or expired token"})
 
 class MeSerializer(serializers.Serializer):

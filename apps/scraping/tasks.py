@@ -42,7 +42,13 @@ def emails_task():
     queue="scraping",
 )
 def retry_test_task(self):
-    logger.info({"event": "retry_test", "attemp": self.request.retries})
+    logger.info(
+        "Retry test",
+        extra={
+            "event": "retry_test",
+            "attemp": self.request.retries,
+        },
+    )
     raise self.retry(exc=ValueError("Error de prueba"))
 
 
