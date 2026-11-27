@@ -50,6 +50,7 @@ async function fetchBicycles(params, resultsContainer) {
         renderSearchResults(data, resultsContainer);
     } catch (error) {
         console.error("Search error", error);
+        renderErrorMessage(resultsContainer);
     }
 }
 
@@ -69,6 +70,14 @@ async function fetchBicyclesFromUrl(url, resultsContainer) {
     } catch (error) {
         console.error("Pagination error", error);
     }
+}
+
+function renderErrorMessage(resultsContainer) {
+    resultsContainer.innerHTML = `
+            <div class="text-secondary fs-5 text-center mt-3">
+                A temporary problem occurred. Please try again in a few minutes.
+            </div>
+        `;
 }
 
 function renderSearchResults(data, resultsContainer) {
